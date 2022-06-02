@@ -83,7 +83,8 @@ public class ControllerCart extends HttpServlet {
                 listMap.put("totalCart", listTotalCart);
 //                this.dis(listMap);
                 request.setAttribute("Cart", listMap);
-                dispath(request, response, "/cart.jsp");
+//                dispath(request, response, "/cart.jsp");
+                dispath(request, response, "/shoppingcart.jsp");
 
             } else if (service.equalsIgnoreCase("add2Cart")) {
                 ProductDAO dao = new ProductDAO();
@@ -121,7 +122,7 @@ public class ControllerCart extends HttpServlet {
                     }
                     notification = "Add to Cart Success";
                 }
-                String link = "Home?notification=" + notification;
+                String link = "home?notification=" + notification;
                 response.sendRedirect(link);
 
             }

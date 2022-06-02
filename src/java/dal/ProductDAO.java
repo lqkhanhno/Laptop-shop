@@ -13,7 +13,7 @@ import model.Product;
  *
  * @author LAPTOP VINH HA
  */
-public class ProductDAO extends DBContext{
+public class ProductDAO extends ConnectDB{
     public Vector<Product> listAll(String sql) {
         Vector<Product> listProduct = new Vector<>();
         ResultSet rs = getData(sql);
