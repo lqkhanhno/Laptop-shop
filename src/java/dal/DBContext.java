@@ -44,7 +44,7 @@ public class DBContext {
     }
     
     public static void main(String[] args) {
-        new DBContext();
+        DBContext dbContext = new DBContext();
     }
     
 }

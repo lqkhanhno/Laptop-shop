@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 public class Product {
     int productID;
     String productName;
@@ -14,11 +16,14 @@ public class Product {
     int salePercent;
     int amount;
     int suppliID;
+    Date releaseDate;
+    int isSell;
+    String image;
 
     public Product() {
     }
 
-    public Product(int productID, String productName, String description, int originalPrice, int categoryID, int sellPrice, int salePercent, int amount, int suppliID) {
+    public Product(int productID, String productName, String description, int originalPrice, int categoryID, int sellPrice, int salePercent, int amount, int suppliID, Date releaseDate, int isSell, String image) {
         this.productID = productID;
         this.productName = productName;
         this.description = description;
@@ -28,7 +33,13 @@ public class Product {
         this.salePercent = salePercent;
         this.amount = amount;
         this.suppliID = suppliID;
+        this.releaseDate = releaseDate;
+        this.isSell = isSell;
+        this.image = image;
     }
+
+    
+    
 
     public int getProductID() {
         return productID;
@@ -101,5 +112,31 @@ public class Product {
     public void setSuppliID(int suppliID) {
         this.suppliID = suppliID;
     }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public int getIsSell() {
+        return isSell;
+    }
+
+    public void setIsSell(int isSell) {
+        this.isSell = isSell;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
+    
     
 }
