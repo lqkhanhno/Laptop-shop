@@ -140,19 +140,23 @@
                         </div>
                         <!-- end page title -->
                         <%
-                            HashMap<String, ArrayList<String>> listMap = (HashMap<String, ArrayList<String>>)request.getAttribute("Cart");
-                            Set<String> keySet = listMap.keySet();
-
+                            HashMap<String, HashMap<String,String>> listIdPro = 
+                                    (HashMap<String, HashMap<String,String>>)
+                                    request.getAttribute("Cart");
+                            HashMap<String,String> order_Summary 
+                                    = (HashMap<String,String>)request.getAttribute("order_Summary");
+                            Set<String> keySet = listIdPro.keySet();
                         %>
-                        <%
-                            if(listMap.size()>1){
-                        %>
+                        
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-lg-8">
+                                        <%
+                                            if(!listIdPro.isEmpty()){
+                                        %>
+                                        <div class="row" id="cart-not-empty">
+                                            <div class="col-lg-8 " >
                                                 <div class="table-responsive">
                                                     <table class="table table-borderless table-centered mb-0">
                                                         <thead class="thead-light">
@@ -166,20 +170,14 @@
                                                         </thead>
                                                         <tbody>
                                                             <%
-                                                            int totalCart=0;
                                                             for(Object key: keySet){
-                                                                ArrayList<String> product = new ArrayList();
-                                                                if(key.toString().equalsIgnoreCase("totalCart")){
-                                                                    totalCart = Integer.parseInt(listMap.get(key).get(0));
-                                                                }else{
-                                                                    product = listMap.get(key);
-
+                                                                HashMap<String, String> infoProduct = listIdPro.get(key);
                                                             %>
                                                             <tr>
                                                                 <td>
-                                                                    <img src="assets/images/products/product-1.jpg" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
+                                                                    <img src="img/Laptop/<%= infoProduct.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
                                                                     <p class="m-0 d-inline-block align-middle font-16">
-                                                                        <a href="apps-ecommerce-products-details.html" class="text-body"><%= product.get(1) %></a>
+                                                                        <a href="apps-ecommerce-products-details.html" class="text-body"><%= infoProduct.get("name") %></a>
                                                                         <br>
                                                                         <small class="mr-2"><b>Size:</b> Large </small>
                                                                         <small><b>Color:</b> Light Green
@@ -187,22 +185,28 @@
                                                                     </p>
                                                                 </td>
                                                                 <td>
-                                                                    <%= product.get(2) %> VND
+                                                                    <%= infoProduct.get("price") %> VND
                                                                 </td>
                                                                 <td>
-                                                                    <input type="number" min="1" value="<%= product.get(0) %>" class="form-control" placeholder="Qty" style="width: 90px;">
+                                                                    <input type="number" min="1" value="<%= infoProduct.get("quantity") %>" class="form-control update-quantity" 
+                                                                           placeholder="Qty" style="width: 90px;" 
+                                                                           data-id="<%=key.toString()%>"
+                                                                    >
+                                                                </td>
+                                                                <td class="total">
+                                                                    <%= order_Summary.get(key) %> VND
                                                                 </td>
                                                                 <td>
-                                                                    <%= product.get(3) %> VND
-                                                                </td>
-                                                                <td>
-                                                                    <a href="ShoppingCart?s=showCart&id_product=<%= key.toString() %>" class="action-icon"> <i class="mdi mdi-delete"></i></a>
+                                                                    <a class="delete-product" href="cart?s=deleteProduct" class="action-icon" data-id="<%= infoProduct.get("id") %>"> 
+
+                                                                        <i class="mdi mdi-delete"></i>
+                                                                    </a>
                                                                 </td>
                                                             </tr>
-                                                                    <% 
-                                                                            }
-                                                                        }
-                                                                    %>
+                                                                <% 
+
+                                                                    }
+                                                                %>
                                                         </tbody>
                                                         
                                                     </table>
@@ -214,12 +218,12 @@
                                                 <!-- action buttons-->
                                                 <div class="row mt-4">
                                                     <div class="col-sm-6">
-                                                        <a href="apps-ecommerce-products.html" class="btn text-muted d-none d-sm-inline-block btn-link font-weight-semibold">
+                                                        <a href="home" class="btn text-muted d-none d-sm-inline-block btn-link font-weight-semibold">
                                                             <i class="mdi mdi-arrow-left"></i> Continue Shopping </a>
                                                     </div> <!-- end col -->
                                                     <div class="col-sm-6">
                                                         <div class="text-sm-right">
-                                                            <a href="apps-ecommerce-checkout.html" class="btn btn-danger">
+                                                            <a href="checkout?s=checkout" class="btn btn-danger">
                                                                 <i class="mdi mdi-cart-plus mr-1"></i> Checkout </a>
                                                         </div>
                                                     </div> <!-- end col -->
@@ -236,11 +240,11 @@
                                                             <tbody>
                                                                 <tr>
                                                                     <td>Grand Total :</td>
-                                                                    <td>$1571.19</td>
+                                                                    <td id="totalGrand"><%=order_Summary.get("totalGrand")%> VND</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Discount : </td>
-                                                                    <td>-$157.11</td>
+                                                                    <td id="discount"> - <%=order_Summary.get("discount")%> VND</td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Shipping Charge :</td>
@@ -252,7 +256,7 @@
                                                                 </tr>
                                                                 <tr>
                                                                     <th>Total :</th>
-                                                                    <th><%=totalCart%></th>
+                                                                    <th id="totalCart"><%=order_Summary.get("totalCart")%> VND</th>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -265,13 +269,31 @@
                                                 
 
                                             </div> <!-- end col -->
-                                            <%
-                                                }else{
-                                            %>
-                                                <p>Cart không có gì b oi</p>
-                                            <%}%>
+
+                                            
 
                                         </div> <!-- end row -->
+                                        <p style="display: none; text-align: center;" id="cart-empty">Cart is empty. Go shopping then come back here to pay <3 </p>
+                                        
+                                        <div class="row mt-4" id="continue-shopping" style="display: none; ">
+                                            <div class="col-sm-6">
+                                                <a href="home" class="btn text-muted d-none d-sm-inline-block btn-link font-weight-semibold">
+                                                    <i class="mdi mdi-arrow-left"></i> Continue Shopping </a>
+                                            </div> 
+                                        </div>
+                                            <!-- end col -->
+
+                                        <%
+                                            }else{
+                                        %>
+                                        <p style="text-align: center" id="cart-empty">Cart is empty. Go shopping then come back here to pay <3</p>
+                                            <div class="row mt-4" id="continue-shopping">
+                                                <div class="col-sm-6">
+                                                    <a href="home" class="btn text-muted d-none d-sm-inline-block btn-link font-weight-semibold">
+                                                        <i class="mdi mdi-arrow-left"></i> Continue Shopping </a>
+                                                </div> 
+                                            </div>
+                                        <%}%>
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
                             </div> <!-- end col -->
@@ -314,8 +336,75 @@
         <!-- END wrapper -->
 
         <!-- bundle -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="assets/js/vendor.min.js"></script>
         <script src="assets/js/app.min.js"></script>
+        <script>
 
+            $(".update-quantity").change(function() {
+                let tagInput = $(this);
+                let id = tagInput.data('id');
+                let value = tagInput.val();
+                console.log(id + " " + value);
+                $.ajax({
+                    url: '/Laptop-shop/cart?s=updateQuantity',
+                    type: 'get',
+                    data: {id_product: id,
+                            quantity: value
+                        },
+                })
+                .done(function(response) {
+                    console.log(response);
+                    Object.keys(response).forEach(function (key) {                        
+                       if(key == id){
+                            let parent_tr=tagInput.parents('tr');
+                            let total = response[key]+" VND";
+                            parent_tr.find('.total').html(total);
+                       }
+                    });
+                    $('#totalGrand').html(response['totalGrand']+" VND");
+                    $('#discount').html(response['discount'+" VND"]);
+                    $('#totalCart').html(response['totalCart']+" VND");
+                })
+                .fail(function(error) {
+                    alert(error['statusText']);
+                });
+                
+            });
+
+            $(".delete-product").click(function(event) {
+                event.preventDefault();
+                let tagInput = $(this);
+                let id = tagInput.data('id');
+                $.ajax({
+                    url: '/Laptop-shop/cart?s=deleteProduct',
+                    type: 'get',
+                    data: {id_product: id},
+                })
+                .done(function(response) {
+                    console.log(response);
+                    if(response['totalGrand'] != 0){
+                       tagInput.parents('tr').remove();
+
+                        $('#totalGrand').html(response['totalGrand']+" VND");
+                        $('#discount').html(response['discount'+" VND"]);
+                        $('#totalCart').html(response['totalCart']+" VND"); 
+                    }else{
+//                        console.log(12121212);
+                        tagInput.parents('tr').remove();
+                        document.getElementById('cart-empty').style.display = "block";
+                        document.getElementById('continue-shopping').style.display = "block";
+                        document.getElementById('cart-not-empty').remove();
+                    }
+                    
+                })
+                .fail(function(error) {
+                    alert(error['statusText']);
+                })
+                
+            });
+
+            
+        </script>
     
 </body></html>

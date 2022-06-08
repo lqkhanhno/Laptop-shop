@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -14,7 +15,7 @@ import model.Product;
  * @author LAPTOP VINH HA
  */
 public class ProductDAO extends ConnectDB{
-    public Vector<Product> listAll(String sql) {
+    public Vector<Product> ListAll(String sql) {
         Vector<Product> listProduct = new Vector<>();
         ResultSet rs = getData(sql);
         try {
@@ -28,8 +29,12 @@ public class ProductDAO extends ConnectDB{
                 int salePercent = rs.getInt(7);
                 int amount = rs.getInt(8);
                 int suppliID = rs.getInt(9);
-                Product product = new Product(productID, productName, description, 
-                        originalPrice, categoryID, sellPrice, salePercent, amount, suppliID);
+                Date releaseDate = rs.getDate(10);
+                int isSell = rs.getInt(11);
+                String image = rs.getString(12);
+
+                Product product = new Product(productID, productName, 
+                        description, originalPrice, categoryID, sellPrice, salePercent, amount, suppliID, releaseDate, isSell, image);
                 listProduct.add(product);
                 
             }
@@ -54,8 +59,11 @@ public class ProductDAO extends ConnectDB{
                 int salePercent = rs.getInt(7);
                 int amount = rs.getInt(8);
                 int suppliID = rs.getInt(9);
+                Date releaseDate = rs.getDate(10);
+                int isSell = rs.getInt(11);
+                String image = rs.getString(12);
                 product = new Product(productID, productName, description, 
-                        originalPrice, categoryID, sellPrice, salePercent, amount, suppliID);
+                        originalPrice, categoryID, sellPrice, salePercent, amount, suppliID, releaseDate, isSell, image);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -63,4 +71,6 @@ public class ProductDAO extends ConnectDB{
         
         return product;
     }
+    
+    
 }

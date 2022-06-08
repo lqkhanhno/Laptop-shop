@@ -21,7 +21,7 @@
             String notiCart = request.getParameter("notification");
         %>
         <div class="">
-            <a class="fa fa-shopping-cart" style="font-size:36px" href="Cart?s=showCart">
+            <a class="fa fa-shopping-cart" style="font-size:36px" href="cart?s=showCart">
                 Cart
             </a>
         </div>
@@ -34,7 +34,7 @@
                     <td><%= p.getProductName() %></td>
                     <td><%= p.getOriginalPrice() %></td>
                     <td><%= p.getSellPrice()%>  <%= p.getSalePercent() %>%</td>
-                    <td><a href="Cart?s=add2Cart&id_product=<%= p.getProductID() %>">add2Cart</a></td>
+                    <td><a href="cart?s=add2Cart&id_product=<%= p.getProductID() %>">add2Cart</a></td>
                 </tr>
             <%
                 }
