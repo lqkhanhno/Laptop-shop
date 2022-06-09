@@ -5,6 +5,7 @@
  */
 
 import dal.ProductDAO;
+import dal.TypeProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -24,8 +25,8 @@ public class listtest extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter pr = response.getWriter();
-        ProductDAO u = new ProductDAO();
-        List<Product> lst = u.getAll();
+        TypeProductDAO u = new TypeProductDAO();
+        List<Product> lst = u.getTopNewest();
         request.setAttribute("lst", lst);
         request.getRequestDispatcher("list.jsp").forward(request, response);
 

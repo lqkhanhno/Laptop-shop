@@ -273,7 +273,7 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">${i.categoryID}</p>
-												<h3 class="product-name"><a href="product?productID=${i.productID}">${i.productName}</a></h3>
+												<h3 class="product-name"><a href="product?productid=${i.productID}">${i.productName}</a></h3>
                                                                                                 <c:if test="${i.salePercent != 0}">
                                                                                                     <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
                                                                                                         <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>
@@ -397,7 +397,7 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">${i.categoryID}</p>
-												<h3 class="product-name"><a href="product?productID=${i.productID}">${i.productName}</a></h3>
+												<h3 class="product-name"><a href="product?pid=${i.productID}">${i.productName}</a></h3>
                                                                                                 <c:if test="${i.salePercent != 0}">
                                                                                                     <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
                                                                                                         <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>
@@ -473,7 +473,7 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">${i.categoryID}</p>
-												<h3 class="product-name"><a href="product?productid=${i.productID}">${i.productName}</a></h3>
+												<h3 class="product-name"><a href="product?pid=${i.productID}">${i.productName}</a></h3>
                                                                                                 <c:if test="${i.salePercent != 0}">
                                                                                                     <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
                                                                                                         <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>

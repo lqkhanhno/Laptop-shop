@@ -236,7 +236,8 @@
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">					
+                        <div class="modal-body">
+                            
                             <div class="form-group">
                                 <label>Product Name</label>
                                 <input name="name" type="text" class="form-control" required>
@@ -247,7 +248,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Original Price</label>
-                                <input name="Oprice" type="text" class="form-control" required>
+                                <input name="oprice" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Category ID</label>
@@ -259,7 +260,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Sale</label>
-                                <input name="sellprice" type="text" class="form-control" required>
+                                <input name="sale" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Amount</label>
@@ -267,11 +268,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Supplier</label>
-                                <input name="supppliID" type="text" class="form-control" required>
+                                <input name="suppliID" type="text" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Release date</label>
-                                <input name="releasedate" type="text" class="form-control" required>
+                                <input name="releasedate" type="Date" class="form-control" required>
                             </div>
                                 <div class="form-group">
                                 <label>Image</label>

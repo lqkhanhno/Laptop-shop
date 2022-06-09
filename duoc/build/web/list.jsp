@@ -1,3 +1,4 @@
+<%@page import="dal.TypeProductDAO"%>
 <%@page import="model.Product"%>
 <%@page import="dal.ProductDAO"%>
 
@@ -8,8 +9,8 @@
 <!DOCTYPE html>
 <%
     //List<car> lst = (List<car>) request.getAttribute("lst");
-    ProductDAO u = new ProductDAO();
-    List<Product> lst = u.getAll();
+    TypeProductDAO u = new TypeProductDAO();
+    List<Product> lst = u.getTopNewest();
 %>
 <html>
     <head>
@@ -23,8 +24,9 @@
                 <td> ID </td>
                 <td> Name </td>
                 <td> price </td>
-               
+             
             </tr>
+            <%  %>
             <%
                 for (Product x : lst) {
             %>

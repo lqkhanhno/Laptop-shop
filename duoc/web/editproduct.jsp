@@ -14,7 +14,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-		<title>Manage Product</title>
+		<title>Edit Product</title>
 
  		<!-- Google font -->
  		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -37,7 +37,12 @@
                 <link href="css/manager.css" rel="stylesheet" type="text/css"/>
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
                 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+                <style>
+                    form {
+                        width: 550px;
+                        margin: 0 auto;
+                    }
+                </style>
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -149,8 +154,8 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-                                            <li class="active"><a href="listmanage">Manage Product</a></li>
-                                            <li><a href="listuser">Manage User</a></li>
+                                            <li class="active"><a href="profile">Manage Product</a></li>
+                                            <li><a href="#">Manage User</a></li>
 					</ul>
 					<!-- /NAV -->
 				</div>
@@ -166,78 +171,20 @@
                 <div class="table-title">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h2>Manage <b>Product</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Product</span></a>
-                            <a href="#addBrand"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Category</span></a>
+                            <h2>Edit <b>Product</b></h2>
                         </div>
                     </div>
                 </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-<!--                            <th>Description</th>-->
-                            <th>Original price</th>
-                            <th>sell Price</th>
-                            <th>category</th>
-                            <th>salePercent</th>
-                            <th>Amount</th>
-                            <th>Supplier</th>
-                            <th>release date</th>
-                            <th>sold</th>
-                            <th>image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <c:forEach items="${requestScope.data}" var="i">
-                            <tr>
-                                <td>${i.productID}</td>
-                                <td>${i.productName}</td>
-                                <td><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.originalPrice}" type = "currency"/></td>
-                                <td><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></td>
-                                <td>${i.categoryID}</td>
-                                <td>${i.salePercent}</td>
-                                <td>${i.amount}</td>
-                                <td>${i.suppliID}</td>
-                                 <td><fmt:formatDate value="${i.releaseDate}" pattern="dd-MM-yyyy"/></td>
-                                 <td>${i.isSell}</td>
-                                <td><img src="./img/Laptop/${i.image}" alt=""></td>
-                                
-                                <td>
-                                    <c:set var="id" value="${i.productID}"/>
-                                    <a href="editproduct?id=${i.productID}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="deleteproduct?id=${i.productID}" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </tbody>
-                </table>
-                <div class="store-filter clearfix">
-                    <c:set var="page" value="${requestScope.page}"/>
-                        <ul class="store-pagination">
-                        <c:forEach begin="${1}" end="${requestScope.num}" var="i">
-                            <li><a class="${i==page?"active":""}" href="listmanage?page=${i}">${i}</a></li>
-                        </c:forEach>
-                        </ul>
-                </div>
-            </div>
-            <a href="home"><button type="button" class="btn btn-primary">Back to home</button></a>
-
-        </div>
-        <!-- Edit Modal HTML -->
-        <div id="addEmployeeModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="addproduct" method="post">
+                <form action="editproduct?id=${requestScope.id}" method="post">
+                    <c:set var="id" value="${requestScope.id}"/>
                         <div class="modal-header">						
-                            <h4 class="modal-title">Add Product</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title">Edit Product</h4>
                         </div>
-                        <div class="modal-body">
-                            
+                        <div class="modal-body">					
+<!--                            <div class="form-group">
+                                <label>Product ID</label>
+                                <input name="id" type="text" class="form-control" required>
+                            </div>-->
                             <div class="form-group">
                                 <label>Product Name</label>
                                 <input name="name" type="text" class="form-control" required>
@@ -274,41 +221,23 @@
                                 <label>Release date</label>
                                 <input name="releasedate" type="Date" class="form-control" required>
                             </div>
+                            <div class="form-group">
+                                <label>is Sell</label>
+                                <input name="issell" type="text" class="form-control" required>
+                            </div>
                                 <div class="form-group">
                                 <label>Image</label>
                                 <input name="image" type="text" class="form-control" required>
-                            </div>
+                            </div>			
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <a href="listmanage"><input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"></a>
+                            <input type="submit" class="btn btn-info" value="Save">
                         </div>
                     </form>
-                </div>
             </div>
-        </div>
-        
-        <div id="addBrand" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="addbrand" method="post">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Add Category</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">					
-                            <div class="form-group">
-                                <label>Name</label>
-                                <input name="name" type="text" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
-                        </div>
-                    </form>
-                </div>
-            </div>
+            <a href="home"><button type="button" class="btn btn-primary">Back to home</button></a>
+
         </div>
     
                 
@@ -374,8 +303,8 @@
 								<ul class="footer-links">
 									<li><a href="hotdeals">Hot deals</a></li>
 									<li><a href="laptops">Laptops</a></li>
-									<li><a href="#">Smartphones</a></li>
-									<li><a href="#">Cameras</a></li>
+									<li><a href="smartphones">Smartphones</a></li>
+									<li><a href="cameras">Cameras</a></li>
 								</ul>
 							</div>
 						</div>

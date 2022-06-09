@@ -17,58 +17,66 @@ import model.Category;
  *
  * @author LAM
  */
-public class ProductDAO extends DBContext{
-    
+public class ProductDAO extends DBContext {
+
     public List<Product> getAll() {
         List<Product> list = new ArrayList<Product>();
-        String sql = "select p.productID, p.productName, p.decription,p.originalPrice,p.categoryID,sc.ID,sc.categoryName ,p.sellPrice,p.salePercent, p.amount,p.suppliID, "
-                        + " p.salePercent,p.isSell,p.releaseDate,p.image \n" 
-                        + "from Product p inner join category sc on p.categoryID = sc.ID";
+        String sql = "select [productID]\n"
+                + "      ,[productName]\n"
+                + "      ,[decription]\n"
+                + "      ,[originalPrice]\n"
+                + "      ,[categoryID]\n"
+                + "      ,[sellPrice]\n"
+                + "      ,[salePercent]\n"
+                + "      ,[amount]\n"
+                + "      ,[suppliID]\n"
+                + "      ,[releaseDate]\n"
+                + "      ,[isSell]\n"
+                + "      ,[image]\n"
+                + "  FROM [LaptopShop].[dbo].[Product]";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            
+
             while (rs.next()) {
                 Product p = new Product();
-                
-               p.setProductID(rs.getInt("productID"));
+
+                p.setProductID(rs.getInt("productID"));
                 p.setProductName(rs.getString("productName"));
                 p.setDescription(rs.getString("decription"));
                 p.setOriginalPrice(rs.getInt("originalPrice"));
-                p.setCategoryID(rs.getInt("ID"));
-                
-                Category sc = new Category();
-                sc.setID(rs.getInt("ID"));
-                sc.setCategoryName(rs.getString("categoryName"));
-               p.setImage(rs.getString("image"));
-               p.setIsSell(rs.getInt("isSell"));
-               p.setReleaseDate(rs.getDate("releaseDate"));
+                p.setCategoryID(rs.getInt("categoryID"));
+
+                p.setImage(rs.getString("image"));
+                p.setIsSell(rs.getInt("isSell"));
+                p.setReleaseDate(rs.getDate("releaseDate"));
                 p.setSellPrice(rs.getInt("sellPrice"));
                 p.setSalePercent(rs.getInt("salePercent"));
                 p.setAmount(rs.getInt("amount"));
                 p.setSuppliID(rs.getInt("suppliID"));
-                
+
                 list.add(p);
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
         return list;
     }
-    
-    public List<Product> checkLaptops(int[] id, String sortby){
+
+    public List<Product> checkLaptops(int[] id, String sortby) {
         List<Product> list = new ArrayList<>();
-        String sql ="select p.productID, p.productName, p.decription,p.originalPrice,p.categoryID,sc.ID,sc.categoryName ,p.sellPrice,p.salePercent, p.amount,p.suppliID, "
-                        + " p.salePercent,p.isSell,p.releaseDate,p.image \n" 
-                        + "from Product p inner join category sc on p.categoryID = sc.ID";
-        if(id != null){
+        String sql = "select p.productID, p.productName, p.decription,p.originalPrice,p.categoryID,sc.ID,sc.categoryName ,p.sellPrice,p.salePercent, p.amount,p.suppliID, "
+                + " p.salePercent,p.isSell,p.releaseDate,p.image \n"
+                + "from Product p inner join category sc on p.categoryID = sc.ID";
+        if (id != null) {
             sql += " and p.categoryID in(";
             for (int i = 0; i < id.length; i++) {
                 sql += id[i] + ",";
             }
-            if (sql.endsWith(","))
-                sql = sql.substring(0, sql.length()-1);
+            if (sql.endsWith(",")) {
+                sql = sql.substring(0, sql.length() - 1);
+            }
             sql += ")";
         }
         if (sortby != null && !sortby.equals("")) {
@@ -93,81 +101,81 @@ public class ProductDAO extends DBContext{
                     break;
             }
         }
-      
-        try{
-            PreparedStatement st=connection.prepareStatement(sql);
-            
-            ResultSet rs=st.executeQuery();
-            while(rs.next()){
-                Product p = new Product();
-                
-             p.setProductID(rs.getInt("productID"));
-                p.setProductName(rs.getString("productName"));
-                p.setDescription(rs.getString("decription"));
-                p.setOriginalPrice(rs.getInt("originalPrice"));
-                p.setCategoryID(rs.getInt("ID"));
-                
-                Category sc = new Category();
-                sc.setID(rs.getInt("ID"));
-                sc.setCategoryName(rs.getString("categoryName"));
-               p.setImage(rs.getString("image"));
-               p.setIsSell(rs.getInt("isSell"));
-               p.setReleaseDate(rs.getDate("releaseDate"));
-                p.setSellPrice(rs.getInt("sellPrice"));
-                p.setSalePercent(rs.getInt("salePercent"));
-                p.setAmount(rs.getInt("amount"));
-                p.setSuppliID(rs.getInt("suppliID"));
-                list.add(p);
-            }
-        }catch(SQLException e){
-            System.out.println(e);
-        }
-        return list;
-    }
-    
-    public List<Product> getByName(String name) {
-        List<Product> list = new ArrayList<Product>();
-        String sql = "select p.productID, p.productName, p.decription,p.originalPrice,p.categoryID,sc.ID,sc.categoryName ,p.sellPrice,p.salePercent, p.amount,p.suppliID, "
-                        + " p.salePercent,p.isSell,p.releaseDate,p.image \n" 
-                        + "from Product p inner join category sc on p.categoryID = sc.ID"
-                        + "where name like '%" + name + "%'";
+
         try {
             PreparedStatement st = connection.prepareStatement(sql);
+
             ResultSet rs = st.executeQuery();
-            
             while (rs.next()) {
                 Product p = new Product();
-                
-              p.setProductID(rs.getInt("productID"));
+
+                p.setProductID(rs.getInt("productID"));
                 p.setProductName(rs.getString("productName"));
                 p.setDescription(rs.getString("decription"));
                 p.setOriginalPrice(rs.getInt("originalPrice"));
                 p.setCategoryID(rs.getInt("ID"));
-                
+
                 Category sc = new Category();
                 sc.setID(rs.getInt("ID"));
                 sc.setCategoryName(rs.getString("categoryName"));
-               p.setImage(rs.getString("image"));
-               p.setIsSell(rs.getInt("isSell"));
-               p.setReleaseDate(rs.getDate("releaseDate"));
+                p.setImage(rs.getString("image"));
+                p.setIsSell(rs.getInt("isSell"));
+                p.setReleaseDate(rs.getDate("releaseDate"));
                 p.setSellPrice(rs.getInt("sellPrice"));
                 p.setSalePercent(rs.getInt("salePercent"));
                 p.setAmount(rs.getInt("amount"));
                 p.setSuppliID(rs.getInt("suppliID"));
-                
                 list.add(p);
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
         return list;
     }
-   
+
+    public List<Product> getByName(String name) {
+        List<Product> list = new ArrayList<Product>();
+        String sql = "select p.productID, p.productName, p.decription,p.originalPrice,p.categoryID,sc.ID,sc.categoryName ,p.sellPrice,p.salePercent, p.amount,p.suppliID, "
+                + " p.salePercent,p.isSell,p.releaseDate,p.image \n"
+                + "from Product p inner join category sc on p.categoryID = sc.ID"
+                + "where name like '%" + name + "%'";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Product p = new Product();
+
+                p.setProductID(rs.getInt("productID"));
+                p.setProductName(rs.getString("productName"));
+                p.setDescription(rs.getString("decription"));
+                p.setOriginalPrice(rs.getInt("originalPrice"));
+                p.setCategoryID(rs.getInt("ID"));
+
+                Category sc = new Category();
+                sc.setID(rs.getInt("ID"));
+                sc.setCategoryName(rs.getString("categoryName"));
+                p.setImage(rs.getString("image"));
+                p.setIsSell(rs.getInt("isSell"));
+                p.setReleaseDate(rs.getDate("releaseDate"));
+                p.setSellPrice(rs.getInt("sellPrice"));
+                p.setSalePercent(rs.getInt("salePercent"));
+                p.setAmount(rs.getInt("amount"));
+                p.setSuppliID(rs.getInt("suppliID"));
+
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return list;
+    }
+
     public List<Product> getListByPage(List<Product> list,
-            int start,int end){
+            int start, int end) {
         ArrayList<Product> arr = new ArrayList<>();
-        for(int i = start; i < end; i++){
+        for (int i = start; i < end; i++) {
             arr.add(list.get(i));
         }
         return arr;

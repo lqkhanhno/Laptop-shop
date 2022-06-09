@@ -6,7 +6,6 @@
 package controller.manage;
 
 import dal.ManageDAO;
-import dal.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -15,13 +14,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Product;
-import model.Category;
 
 /**
  *
  * @author LAM
  */
-public class AddProductServlet extends HttpServlet {
+public class EditProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +38,10 @@ public class AddProductServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddProductServlet</title>");            
+            out.println("<title>Servlet EditProductServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddProductServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditProductServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +59,9 @@ public class AddProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("listmanage");
+        String id = request.getParameter("id");
+        request.setAttribute("id", id);
+        request.getRequestDispatcher("editproduct.jsp?id=" + id).forward(request, response);
     }
 
     /**
@@ -76,7 +76,7 @@ public class AddProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-//        String pid = request.getParameter("id");
+        String pid = request.getParameter("id");
         String name = request.getParameter("name");
         String decription = request.getParameter("description");
         String oprice = request.getParameter("oprice");
@@ -87,18 +87,24 @@ public class AddProductServlet extends HttpServlet {
         String sale = request.getParameter("sale");
         String supid = request.getParameter("suppliID");
         String rdate = request.getParameter("releasedate");
+        String issell = request.getParameter("issell");
         
         
         
         int oprice1,sprice1,sale1,supid1;
-        int amount1, categoryID;
+        int amount1, categoryID,id1;
+        int issell1;
         Date release_date;
-        
-//        try {
-//            id1 = Integer.parseInt(pid);
-//        } catch (NumberFormatException e) {
-//            id1 = 0;
-//        }
+        try {
+            issell1 = Integer.parseInt(issell);
+        } catch (NumberFormatException e) {
+            issell1 = 0;
+        }
+        try {
+            id1 = Integer.parseInt(pid);
+        } catch (NumberFormatException e) {
+            id1 = 0;
+        }
         try {
             oprice1 = Integer.parseInt(oprice);
         } catch (NumberFormatException e) {
@@ -138,13 +144,16 @@ public class AddProductServlet extends HttpServlet {
             release_date = (Date) new java.util.Date();
         }
         
-
         
-        Product p = new Product(0, name, image, decription, oprice1, categoryID,sprice1 , sale1 ,amount1,supid1 ,release_date ,0);
+        
+        
         ManageDAO mdb = new ManageDAO();
-        mdb.addProduct(p);
+        Product p = new Product(id1,name, image, decription, oprice1, categoryID,sprice1 , sale1 ,amount1,supid1 ,release_date ,issell1);
+        mdb.editProduct(p);
+        
         response.sendRedirect("listmanage");
     }
+    
 
     /**
      * Returns a short description of the servlet.
@@ -155,5 +164,5 @@ public class AddProductServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }

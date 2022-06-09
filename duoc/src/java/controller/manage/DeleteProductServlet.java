@@ -6,22 +6,18 @@
 package controller.manage;
 
 import dal.ManageDAO;
-import dal.CategoryDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Product;
-import model.Category;
 
 /**
  *
  * @author LAM
  */
-public class AddProductServlet extends HttpServlet {
+public class DeleteProductServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +36,10 @@ public class AddProductServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddProductServlet</title>");            
+            out.println("<title>Servlet DeleteProductServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddProductServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteProductServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,6 +57,9 @@ public class AddProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String id = request.getParameter("id");
+        ManageDAO mdb = new ManageDAO();
+        mdb.deleteProduct(id);
         response.sendRedirect("listmanage");
     }
 
@@ -75,75 +74,7 @@ public class AddProductServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-//        String pid = request.getParameter("id");
-        String name = request.getParameter("name");
-        String decription = request.getParameter("description");
-        String oprice = request.getParameter("oprice");
-        String image = request.getParameter("image");
-        String cate = request.getParameter("category");
-        String sprice = request.getParameter("sellprice");
-        String amount = request.getParameter("amount");
-        String sale = request.getParameter("sale");
-        String supid = request.getParameter("suppliID");
-        String rdate = request.getParameter("releasedate");
-        
-        
-        
-        int oprice1,sprice1,sale1,supid1;
-        int amount1, categoryID;
-        Date release_date;
-        
-//        try {
-//            id1 = Integer.parseInt(pid);
-//        } catch (NumberFormatException e) {
-//            id1 = 0;
-//        }
-        try {
-            oprice1 = Integer.parseInt(oprice);
-        } catch (NumberFormatException e) {
-            oprice1 = 0;
-        }
-        try {
-            sprice1 = Integer.parseInt(sprice);
-        } catch (NumberFormatException e) {
-            sprice1 = 0;
-        }
-        
-        try {
-            amount1 = Integer.parseInt(amount);
-        } catch (NumberFormatException e) {
-            amount1 = 0;
-        }
-        try {
-            sale1 = Integer.parseInt(sale);
-        } catch (NumberFormatException e) {
-            sale1 = 0;
-        }
-        try {
-            supid1 = Integer.parseInt(supid);
-        } catch (NumberFormatException e) {
-            supid1 = 0;
-        }
-        
-        try {
-            categoryID = Integer.parseInt(cate);
-        } catch (NumberFormatException e) {
-            categoryID = 0;
-        }
-        
-        try {
-            release_date = Date.valueOf(rdate);
-        } catch (NumberFormatException e) {
-            release_date = (Date) new java.util.Date();
-        }
-        
-
-        
-        Product p = new Product(0, name, image, decription, oprice1, categoryID,sprice1 , sale1 ,amount1,supid1 ,release_date ,0);
-        ManageDAO mdb = new ManageDAO();
-        mdb.addProduct(p);
-        response.sendRedirect("listmanage");
+        processRequest(request, response);
     }
 
     /**

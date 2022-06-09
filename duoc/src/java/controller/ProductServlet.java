@@ -60,20 +60,20 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pid = request.getParameter("productID");
+        String pid = request.getParameter("productid");
         int id = Integer.parseInt(pid);
         System.out.println(id);
         
         DetailDAO db = new DetailDAO();
         Product p = db.getByPid(id);
-        Category c = db.getCat(id);
-        List<Product> list = db.getRelated(id);
+//        Category c = db.getCat(id);
+//        List<Product> list = db.getRelated(id);
         
         if (p == null) {
             response.sendRedirect("home");
         } else {
-            request.setAttribute("list", list);
-            request.setAttribute("cat", c);
+//            request.setAttribute("list", list);
+//            request.setAttribute("cat", c);
             request.setAttribute("data", p);
             request.getRequestDispatcher("product.jsp").forward(request, response);
         }
