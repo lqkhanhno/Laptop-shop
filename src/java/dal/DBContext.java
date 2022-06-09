@@ -7,7 +7,9 @@ package dal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,14 +20,31 @@ public class DBContext {
     {
         try {
             //Change the username password and url to connect your own database
-            String username = "sa";
-            String password = "sa";
-            String url = "jdbc:sqlserver://DCNG249\\SQLEXPRESS:1433;databaseName=project_prj301";
+            String username = "lelong";
+            String password = "123";
+            String url = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=LaptopShop";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, username, password);
+            System.out.println("connected");
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public ResultSet getData(String sql){
+        ResultSet rs =null;
+        try {
+            Statement state= connection.createStatement(
+                    ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+            rs=state.executeQuery(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return rs;
+    }
+    
+    public static void main(String[] args) {
+        new DBContext();
     }
     
 }
