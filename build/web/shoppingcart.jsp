@@ -403,7 +403,22 @@
                 })
                 
             });
-
+            var focused = true;
+            window.onfocus = function(){
+                console.log("focus");
+                focused = true;
+            };
+            window.onblur = function(){
+                console.log("lost");
+                $.ajax({
+                    url: '/Laptop-shop/cart?s=updateDB',
+                    type: 'get',
+                })
+                .done(function(response) {
+                    console.log("updated");
+                })
+                focused = false;
+            };
             
         </script>
     
