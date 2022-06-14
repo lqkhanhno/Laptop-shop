@@ -219,7 +219,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Supplier</label>
-                                <select name="supplieID" class="form-select" aria-label="Default select example">
+                                <select name="suppliID" class="form-select" aria-label="Default select example">
                                     <c:forEach items="${requestScope.splist}" var="o">
                                         <option value="${o.ID}">${o.name}</option>
                                     </c:forEach>

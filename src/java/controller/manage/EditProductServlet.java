@@ -98,7 +98,7 @@ public class EditProductServlet extends HttpServlet {
         String sprice = request.getParameter("sellprice");
         String amount = request.getParameter("amount");
         String sale = request.getParameter("sale");
-        String supid = request.getParameter("suppliID");
+        String supid = request.getParameter("supplieID");
         String rdate = request.getParameter("releasedate");
         String issell = request.getParameter("issell");
         
@@ -176,5 +176,9 @@ public class EditProductServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    public static void main(String[] args) {
+        EditProductServlet m = new EditProductServlet();
+        
+    }
     
 }

@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Product;
 import model.Category;
+import model.Supplier;
 
 /**
  *
@@ -99,22 +100,26 @@ public class ManageDAO extends DBContext {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
 
-            st.setString(1, p.getProductName());
+           st.setString(1, p.getProductName());
             st.setString(2, p.getDescription());
             st.setInt(3, p.getOriginalPrice());
-            st.setInt(4, p.getCategory().getID());
+            int cid = p.getCategory().getID();
+            st.setInt(4,  cid);
             st.setInt(5, p.getSellPrice());
             st.setInt(6, p.getSalePercent());
             st.setInt(7, p.getAmount());
-            st.setInt(8, p.getSupplier().getID());
+            int pid =  p.getSupplier().getID();
+            st.setInt(8,pid);
             st.setDate(9, p.getReleaseDate());
             st.setInt(10, p.getIsSell());
             st.setString(11, p.getImage());
-            st.setInt(12, p.getProductID());
-            st.executeUpdate();
+            
+            st.setInt(12,p.getProductID());
 
+            st.executeUpdate();
+            System.out.println("Succes");
         } catch (SQLException e) {
-            System.out.println("abcxya");
+            e.printStackTrace();
         }
 
     }
