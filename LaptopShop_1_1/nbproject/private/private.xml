@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/java/LaptopShop_1_1/web/checkout.jsp</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/ShoppingCartDAO.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/ProductDAO.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/controller/CheckoutController.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/DetailDAO.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/web/shoppingcart.jsp</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/DBContext.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/SupplierDAO.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/web/manageproduct.jsp</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/model/OrderDetail.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/UserDAO.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/controller/CartController.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/web/assets/css/app-creative-dark.min.css</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/Cart_ItemDAO.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/web/css/style.css</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/Order_DetailDAO.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/web/assets/css/app-creative.min.css</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/model/Order.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/OrderDAO.java</file>
+            <file>file:/C:/java/LaptopShop_1_1/src/java/dal/TypeProductDAO.java</file>
+        </group>
+    </open-files>
+</project-private>
