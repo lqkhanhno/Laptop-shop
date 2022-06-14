@@ -143,8 +143,6 @@
                             HashMap<String, HashMap<String,String>> listIdPro = 
                                     (HashMap<String, HashMap<String,String>>)
                                     request.getAttribute("Cart");
-                            HashMap<String,String> order_Summary 
-                                    = (HashMap<String,String>)request.getAttribute("order_Summary");
                             Set<String> keySet = listIdPro.keySet();
                         %>
                         
@@ -153,7 +151,9 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <%
-                                            if(!listIdPro.isEmpty()){
+                                            if(listIdPro.size()>0){
+                                            HashMap<String,String> order_Summary 
+                                                    = (HashMap<String,String>)request.getAttribute("order_Summary");
                                         %>
                                         <div class="row" id="cart-not-empty">
                                             <div class="col-lg-8 " >
@@ -223,7 +223,7 @@
                                                     </div> <!-- end col -->
                                                     <div class="col-sm-6">
                                                         <div class="text-sm-right">
-                                                            <a href="checkout?s=checkout" class="btn btn-danger">
+                                                            <a href="checkout?s=checkOut" class="btn btn-danger">
                                                                 <i class="mdi mdi-cart-plus mr-1"></i> Checkout </a>
                                                         </div>
                                                     </div> <!-- end col -->

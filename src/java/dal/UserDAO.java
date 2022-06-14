@@ -5,8 +5,7 @@
 package dal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import model.User;
 
 public class UserDAO extends ConnectDB{
     public int getIdByEmail(String email){
@@ -23,9 +22,32 @@ public class UserDAO extends ConnectDB{
         return userid;
     }
     
+    public User getIn4UserByEmail(String emailParam){
+        User u = null;
+        String query = "select * from [User] where email = '" + emailParam + "'";
+        ResultSet rs = getData(query);
+        try {
+            if(rs.next()){
+                int userID = rs.getInt(1);
+                String fullname = rs.getString(2);
+                String username = rs.getString(3);
+                String password = rs.getString(4);
+                String email = rs.getString(5);
+                int roleID = rs.getInt(6);
+                String userAddress = rs.getString(7);
+                String phoneNumber = rs.getString(8);
+                u = new User(userID, fullname, username, password, email, roleID, userAddress, phoneNumber);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return u;
+    }
+    
     public static void main(String[] args) {
-        int id = new UserDAO().getIdByEmail("anhpn@gmail.com");
-        System.out.println(id);
+//        int id = new UserDAO().getIdByEmail("anhpn@gmail.com");
+        User u = new UserDAO().getIn4UserByEmail("anhpn@gmail.com");
+        System.out.println(u);
     }
 }
    

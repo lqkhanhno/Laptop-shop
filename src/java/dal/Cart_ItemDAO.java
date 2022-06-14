@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Cart_Item;
@@ -118,6 +119,21 @@ public class Cart_ItemDAO extends ConnectDB{
     
     public static void main(String[] args) {
         new Cart_ItemDAO().increase_1_Amount(1, 1);
+    }
+
+    public int removeListCartItemByCartId(HashMap<String, HashMap<String, String>> listIdPro, int cart_id) {
+        int m=0;
+        int n=0;
+        Set<String> keySet = listIdPro.keySet();
+        for(Object idProduct : keySet){
+            n = removeProductById(cart_id, idProduct.toString());
+            if(n==0){
+                System.out.println("Can't not delete product:"+idProduct +"cart_id: "+cart_id);
+                m=1;
+                break;
+            }
+        }
+        return m;
     }
 
     

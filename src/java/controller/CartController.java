@@ -13,8 +13,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -55,6 +56,7 @@ public class CartController extends HttpServlet {
             switch (service) {
                 case "showCart":
                     showCart(request,response);
+                    
                     break;
                 case "add2Cart":
                     add2Cart(request,response);
@@ -66,9 +68,6 @@ public class CartController extends HttpServlet {
                     break;
                 case "deleteProduct":
                     deleteProduct(request,response);
-                    break;
-                case "checkOut":
-                    checkOut(request,response);
                     break;
             }
 
@@ -117,7 +116,6 @@ public class CartController extends HttpServlet {
 
 
     private void showCart(HttpServletRequest request, HttpServletResponse response) {
-        try {
             HttpSession session = request.getSession();
             HashMap<String, HashMap<String,String>>listIdPro
                 = new HashMap<>();
@@ -127,24 +125,27 @@ public class CartController extends HttpServlet {
 //                dispath(request, response, "/index.html");
 //            }else{
                 //get cart by email
-                int cart_id =  Integer.parseInt(session.getAttribute("cart_id").toString());
-//                ShoppingCart cart = new ShoppingCartDAO().GetCartByEmail(email.toString());
+                Object cart_id =  session.getAttribute("cart_id");
+                if(cart_id!=null){
+                    listIdPro = new Cart_ItemDAO().getCartItemByCartId(Integer.parseInt(cart_id.toString()));
+                    moveToCartView(request,response,listIdPro);
+                    return;
+                }
+                ShoppingCart cart = new ShoppingCartDAO().getCartByEmail("anhpn@gmail.com");
+                if(cart!=null){
+                    //add session ("cart", cart_id);
+                    session.setAttribute("cart_id", cart.getID());
+                    listIdPro = new Cart_ItemDAO().getCartItemByCartId(cart.getID());
+                    moveToCartView(request,response,listIdPro); 
+                    return;
+                }
+                request.setAttribute("Cart", listIdPro);
+                dispath(request, response, "/shoppingcart.jsp");
                 //get cart item import to hashmap listidpro
-                listIdPro = new Cart_ItemDAO().getCartItemByCartId(cart_id);
+                
 //            }
 
-
-
-            HashMap<String, String> order_Summary = getIn4Cart(listIdPro);
-            request.setAttribute("order_Summary", order_Summary);
-            request.setAttribute("Cart", listIdPro);
-
-            dispath(request, response, "/shoppingcart.jsp");
-        } catch (ServletException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        
     }
 
     private void add2Cart(HttpServletRequest request, HttpServletResponse response) {
@@ -251,7 +252,7 @@ public class CartController extends HttpServlet {
                         //update amount in list to display for user
                         HashMap<String, String> infoProduct = listIdProduct.get(id_product);
                         infoProduct.put("quantity", String.valueOf(quantity));
-                        HashMap<String, String> order_summary = getIn4Cart(listIdProduct);
+                        HashMap<String, String> order_summary = new ShoppingCartDAO().getIn4Cart(listIdProduct);
                         
                         response.setContentType("application/json");
                         response.setCharacterEncoding("UTF-8");
@@ -264,7 +265,6 @@ public class CartController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
     }
 
     private void deleteProduct(HttpServletRequest request, HttpServletResponse response) {
@@ -285,7 +285,7 @@ public class CartController extends HttpServlet {
                 listIdProduct.remove(idDelete);
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
-                HashMap<String, String> order_summary = getIn4Cart(listIdProduct);
+                HashMap<String, String> order_summary = new ShoppingCartDAO().getIn4Cart(listIdProduct);
                 response.getWriter().write(new Gson().toJson(order_summary));
             }else{
                 response.sendError(400,"Cart does not have this product to delete !!");
@@ -296,29 +296,20 @@ public class CartController extends HttpServlet {
     }
     
     public void dispath(HttpServletRequest request, HttpServletResponse response, String page)
-            throws ServletException, IOException {
+             {
         //select jsp to view
         RequestDispatcher dispath
                 = request.getRequestDispatcher(page);
-        //run
-        dispath.forward(request, response);
-    }
-
-    void dis(HashMap<String, ArrayList<String>> listMap) {
-        Set<String> keySet = listMap.keySet();
-        int totalCart = 0;
-        for (String key : keySet) {
-            ArrayList<String> product = new ArrayList();
-            if (key.equalsIgnoreCase("totalCart")) {
-                totalCart = Integer.parseInt(listMap.get(key).get(0));
-            } else {
-                product = listMap.get(key);
-                System.out.println(product.toString());
-            }
+        try {
+            //run
+            dispath.forward(request, response);
+        } catch (ServletException ex) {
+            Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-   
     private boolean checkIdInListIdProduct(HashMap<String, HashMap<String, String>> listIdProduct, String id) {
         Set<String> keySet = listIdProduct.keySet();
         for(Object key: keySet){
@@ -327,30 +318,6 @@ public class CartController extends HttpServlet {
             }
         }
         return false;
-    }
-
-    private HashMap<String, String> getIn4Cart(HashMap<String, HashMap<String, String>> listIdProduct) {
-        HashMap<String, String> listIdPro = new HashMap<>();
-        Set<String> keySet = listIdProduct.keySet();
-        int totalCart=0;
-        int totalGrand=0;
-        int discount=0;
-        for(Object key: keySet){
-            Map<String, String> infoProduct = listIdProduct.get(key);
-            int quantity =Integer.parseInt(infoProduct.get("quantity"));
-            int sale_percent =Integer.parseInt(infoProduct.get("sale_percent"));
-            int price =Integer.parseInt(infoProduct.get("price"));
-            int total = price * quantity;
-            totalGrand+=total;
-            discount+=quantity*price*sale_percent;
-            totalCart+= total-(quantity*price*sale_percent);
-            listIdPro.put(infoProduct.get("id"), String.valueOf(total));
-        }
-        listIdPro.put("totalGrand",String.valueOf(totalGrand));
-        listIdPro.put("totalCart",String.valueOf(totalCart));
-        listIdPro.put("discount",String.valueOf(discount));
-        
-        return listIdPro;
     }
 
     private boolean checkExistProduct1(HashMap<String, HashMap<String, String>> listIdProduct, String idDelete) {
@@ -375,10 +342,18 @@ public class CartController extends HttpServlet {
         return false;
     }
 
-    private void checkOut(HttpServletRequest request, HttpServletResponse response) {
+    private void moveToCartView(HttpServletRequest request, HttpServletResponse response, HashMap<String, HashMap<String, String>> listIdPro) {
+        HashMap<String, String> order_Summary = new ShoppingCartDAO().getIn4Cart(listIdPro);
+        request.setAttribute("order_Summary", order_Summary);
+        request.setAttribute("Cart", listIdPro);
+
+        dispath(request, response, "/shoppingcart.jsp");
         
     }
+
     
+
+   
     
 
 }
