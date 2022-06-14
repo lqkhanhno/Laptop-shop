@@ -7,17 +7,13 @@ package model;
 
 public class ShoppingCart {
     int ID;
-    int productID;
-    int amount;
     int userID;
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(int ID, int productID, int amount, int userID) {
+    public ShoppingCart(int ID, int userID) {
         this.ID = ID;
-        this.productID = productID;
-        this.amount = amount;
         this.userID = userID;
     }
 
@@ -29,22 +25,6 @@ public class ShoppingCart {
         this.ID = ID;
     }
 
-    public int getProductID() {
-        return productID;
-    }
-
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
     public int getUserID() {
         return userID;
     }
@@ -52,7 +32,8 @@ public class ShoppingCart {
     public void setUserID(int userID) {
         this.userID = userID;
     }
-    
-    
+
+   
+
     
 }

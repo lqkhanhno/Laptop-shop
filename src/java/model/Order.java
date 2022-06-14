@@ -13,11 +13,12 @@ public class Order {
     String status;
     Date orderDate;
     String note;
+    int shipperID;
 
     public Order() {
     }
 
-    public Order(int ID, int userID, int totalPrice, String status, Date orderDate, String note) {
+    public Order(int ID, int userID, int totalPrice, String status, Date orderDate, String note, int shipperID) {
         this.ID = ID;
         this.userID = userID;
         this.totalPrice = totalPrice;
@@ -26,6 +27,15 @@ public class Order {
         this.note = note;
     }
 
+    public Order(int userID, int totalPrice, String status, Date orderDate, String note) {
+        this.userID = userID;
+        this.totalPrice = totalPrice;
+        this.status = status;
+        this.orderDate = orderDate;
+        this.note = note;
+    }
+
+    
     public int getID() {
         return ID;
     }
@@ -73,6 +83,16 @@ public class Order {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public int getShipperID() {
+        return shipperID;
+    }
+
+    public void setShipperID(int shipperID) {
+        this.shipperID = shipperID;
+    }
+    
+    
     
     
 }
