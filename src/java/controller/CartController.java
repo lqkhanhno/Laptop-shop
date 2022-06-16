@@ -6,12 +6,12 @@ package controller;
 
 import com.google.gson.Gson;
 import dal.Cart_ItemDAO;
+import dal.DetailDAO;
 import dal.ProductDAO;
 import dal.ShoppingCartDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
@@ -224,7 +224,11 @@ public class CartController extends HttpServlet {
     private void updateQuantity(HttpServletRequest request, HttpServletResponse response) {
         //get cart id in session
         HttpSession session = request.getSession();
-        int cart_id =  Integer.parseInt(session.getAttribute("cart_id").toString());
+        Object cartID = session.getAttribute("cart_id");
+        int cart_id=0;
+        if(cartID != null){
+            cart_id =  Integer.parseInt(cartID.toString());
+        }
         //get cart 
         HashMap<String, HashMap<String,String>>listIdProduct
                     =new Cart_ItemDAO().getCartItemByCartId(cart_id);
@@ -334,8 +338,8 @@ public class CartController extends HttpServlet {
     }
 
     private boolean checkExistProduct(int product_id) {
-        ProductDAO dao = new ProductDAO();
-        Product p = dao.GetProductByID(product_id);
+        DetailDAO dao = new DetailDAO();
+        Product p = dao.getByPid(product_id);
         if(p!=null){
             return true;
         }

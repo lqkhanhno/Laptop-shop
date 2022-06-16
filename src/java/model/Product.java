@@ -7,39 +7,36 @@ package model;
 import java.sql.Date;
 
 public class Product {
+
     int productID;
-    String productName;
+    String productName, image;
     String description;
     int originalPrice;
-    int categoryID;
+    Category category;
     int sellPrice;
     int salePercent;
     int amount;
-    int suppliID;
+    Supplier supplier;
     Date releaseDate;
     int isSell;
-    String image;
 
     public Product() {
     }
 
-    public Product(int productID, String productName, String description, int originalPrice, int categoryID, int sellPrice, int salePercent, int amount, int suppliID, Date releaseDate, int isSell, String image) {
+    public Product(int productID, String productName, String image, String description, int originalPrice, Category category, int sellPrice, int salePercent, int amount, Supplier supplier, Date releaseDate, int isSell) {
         this.productID = productID;
         this.productName = productName;
+        this.image = image;
         this.description = description;
         this.originalPrice = originalPrice;
-        this.categoryID = categoryID;
+        this.category = category;
         this.sellPrice = sellPrice;
         this.salePercent = salePercent;
         this.amount = amount;
-        this.suppliID = suppliID;
+        this.supplier = supplier;
         this.releaseDate = releaseDate;
         this.isSell = isSell;
-        this.image = image;
     }
-
-    
-    
 
     public int getProductID() {
         return productID;
@@ -55,6 +52,14 @@ public class Product {
 
     public void setProductName(String productName) {
         this.productName = productName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getDescription() {
@@ -73,12 +78,12 @@ public class Product {
         this.originalPrice = originalPrice;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getSellPrice() {
@@ -105,12 +110,12 @@ public class Product {
         this.amount = amount;
     }
 
-    public int getSuppliID() {
-        return suppliID;
+    public Supplier getSupplier() {
+        return supplier;
     }
 
-    public void setSuppliID(int suppliID) {
-        this.suppliID = suppliID;
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     public Date getReleaseDate() {
@@ -129,14 +134,11 @@ public class Product {
         this.isSell = isSell;
     }
 
-    public String getImage() {
-        return image;
+    @Override
+    public String toString() {
+        return "Product{" + "productID=" + productID + ", productName=" + productName + ", image=" + image + ", description=" + description + ", originalPrice=" + originalPrice + ", category=" + category + ", sellPrice=" + sellPrice + ", salePercent=" + salePercent + ", amount=" + amount + ", supplier=" + supplier + ", releaseDate=" + releaseDate + ", isSell=" + isSell + '}';
     }
 
-    public void setImage(String image) {
-        this.image = image;
-    }
     
-    
-    
+
 }

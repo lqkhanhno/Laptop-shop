@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.User;
 
-public class UserDAO extends ConnectDB{
+public class UserDAO extends DBContext{
     public int getIdByEmail(String email){
         int userid=0;
         String query="select userID from [User] where email='"+email+"'";

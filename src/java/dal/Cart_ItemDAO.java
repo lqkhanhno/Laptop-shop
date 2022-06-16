@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 import model.Cart_Item;
 import model.Product;
 
-public class Cart_ItemDAO extends ConnectDB{
+public class Cart_ItemDAO extends DBContext{
 
     public boolean checkExist_Cart_Item_W_ID_And_PId(String cart_id, int product_id) {
         String query="select * from Cart_Item where cart_ID="+cart_id+" and product_ID="+product_id;
@@ -34,7 +34,7 @@ public class Cart_ItemDAO extends ConnectDB{
         int n=0;
         String query="INSERT INTO [Cart_Item] ([cart_ID],[product_ID],[amount]) VALUES (?,?,?)";
         try {
-            PreparedStatement pre = conn.prepareStatement(query);
+            PreparedStatement pre = connection.prepareStatement(query);
             pre.setInt(1, cart_item.getCart_ID());
             pre.setInt(2, cart_item.getProduct_ID());
             pre.setInt(3, cart_item.getAmount());
@@ -49,7 +49,7 @@ public class Cart_ItemDAO extends ConnectDB{
         int n=0;
         String query = "update Cart_Item set amount=amount+1 where cart_ID="+cart_Id+" and product_ID="+product_Id;
         try {
-            Statement state=conn.createStatement();
+            Statement state=connection.createStatement();
             n=state.executeUpdate(query);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -62,6 +62,7 @@ public class Cart_ItemDAO extends ConnectDB{
         HashMap<String, HashMap<String,String>>listIdPro
                 = new HashMap<>();
         ProductDAO dao= new ProductDAO();
+        DetailDAO m = new DetailDAO();
         String query ="select *from Cart_Item where cart_ID="+id;
         ResultSet rs = getData(query);
         try {
@@ -70,7 +71,7 @@ public class Cart_ItemDAO extends ConnectDB{
                 int product_ID = rs.getInt(2);
                 int amount = rs.getInt(3);
                 
-                Product product = dao.GetProductByID(product_ID);
+                Product product = m.getByPid(product_ID);
                 Cart_Item c = new Cart_Item(cart_ID, product_ID, amount);
                 
                 HashMap<String, String> infoProduct = new HashMap<>();
@@ -97,7 +98,7 @@ public class Cart_ItemDAO extends ConnectDB{
         String query = "update Cart_Item set amount="+cItem.getAmount()+" where cart_ID = "+cItem.getCart_ID()+" and product_ID="+cItem.getProduct_ID();
         Statement state;
         try {
-            state = conn.createStatement();
+            state = connection.createStatement();
             n=state.executeUpdate(query);
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -109,7 +110,7 @@ public class Cart_ItemDAO extends ConnectDB{
         int n=0;
         String query = "delete from Cart_Item where cart_ID = "+cart_id+" and product_ID="+idDelete;
         try {
-            Statement state = conn.createStatement();
+            Statement state = connection.createStatement();
             n=state.executeUpdate(query);
         } catch (SQLException ex) {
             ex.printStackTrace();
