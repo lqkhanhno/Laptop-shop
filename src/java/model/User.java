@@ -6,6 +6,7 @@ package model;
 
 public class User {
     int userID;
+    String fullname;
     String username;
     String password;
     String email;
@@ -16,8 +17,9 @@ public class User {
     public User() {
     }
 
-    public User(int userID, String username, String password, String email, int roleID, String userAddress, String phoneNumber) {
+    public User(int userID, String fullname, String username, String password, String email, int roleID, String userAddress, String phoneNumber) {
         this.userID = userID;
+        this.fullname = fullname;
         this.username = username;
         this.password = password;
         this.email = email;
@@ -80,6 +82,19 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "userID=" + userID + ", username=" + username + ", password=" + password + ", email=" + email + ", roleID=" + roleID + ", userAddress=" + userAddress + ", phoneNumber=" + phoneNumber + '}';
     }
     
     

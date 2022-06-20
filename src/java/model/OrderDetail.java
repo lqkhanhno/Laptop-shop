@@ -5,33 +5,21 @@
 package model;
 
 public class OrderDetail {
-    int ID;
     int orderID;
     int productID;
     String productName;
     int productPrice;
     int quantity;
-    int shipperID;
 
     public OrderDetail() {
     }
 
-    public OrderDetail(int ID, int orderID, int productID, String productName, int productPrice, int quantity, int shipperID) {
-        this.ID = ID;
+    public OrderDetail(int orderID, int productID, String productName, int productPrice, int quantity) {
         this.orderID = orderID;
         this.productID = productID;
         this.productName = productName;
         this.productPrice = productPrice;
         this.quantity = quantity;
-        this.shipperID = shipperID;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
     }
 
     public int getOrderID() {
@@ -72,14 +60,6 @@ public class OrderDetail {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public int getShipperID() {
-        return shipperID;
-    }
-
-    public void setShipperID(int shipperID) {
-        this.shipperID = shipperID;
     }
     
 }

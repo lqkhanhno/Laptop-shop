@@ -49,6 +49,11 @@ public class Supplier {
         return address;
     }
 
+    @Override
+    public String toString() {
+        return "Supplier{" + "ID=" + ID + ", name=" + name + ", phone=" + phone + ", address=" + address + '}';
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
