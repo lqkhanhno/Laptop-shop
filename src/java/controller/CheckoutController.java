@@ -7,6 +7,7 @@ package controller;
 import dal.Cart_ItemDAO;
 import dal.OrderDAO;
 import dal.Order_DetailDAO;
+import dal.ProductDAO;
 import dal.ShoppingCartDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -117,6 +118,9 @@ public class CheckoutController extends HttpServlet {
         HashMap<String, String> order_Summary = new ShoppingCartDAO().getIn4Cart(listPro);
         listPro.put("order_summary", order_Summary);
         
+        int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart_id);
+        request.setAttribute("quantityCart", quantityCart);
+        
         request.setAttribute("in4User", u);
         request.setAttribute("listProduct", listPro);
         
@@ -183,13 +187,17 @@ public class CheckoutController extends HttpServlet {
             System.out.println("Can't add to Orderdetail");
             return;
         }
-        
+                
         //remove list cart in cart_item by cartId
         m = new Cart_ItemDAO().removeListCartItemByCartId(listIdPro,cart_id);
         if(m==1){
             System.out.println("Can't remove Cart Item");
         }
+        
+        //decrease quantity product after checkout
+//        m = new ProductDAO().decreaseQuantityProductAfterCheckout(listIdPro);
         System.out.println("Checkout success");
+        
         
     }
     

@@ -112,22 +112,7 @@
                                     <div class="col-md-3 clearfix">
                                         <div class="header-ctn">
                                             <!-- Cart -->
-                                            <div class="dropdown">
-                                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                    <span>Your Cart</span>
-                                                </a>
-                                                <div class="cart-dropdown">
-                                                    <div class="cart-list">
-                                                        <div class="product-widget">
-                                                            <div class="product-img">
-                                                                <img src="./img/product01.png" alt="">
-                                                            </div>
-                                                            <button class="delete"><i class="fa fa-close"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                             <!-- /Cart -->
 
                                             <!-- Menu Toogle -->
@@ -193,7 +178,7 @@
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
                                                                         <label for="billing-last-name">Full Name</label>
-                                                                        <input class="form-control" type="text" name="fullname" value="<%= u.getFullname()%>" placeholder="Enter your last name" id="billing-last-name">
+                                                                        <input readonly class="form-control" type="text" name="fullname" value="<%= u.getFullname()%>" placeholder="Enter your last name" id="billing-last-name">
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end row -->
@@ -201,13 +186,13 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label for="billing-email-address">Email Address <span class="text-danger">*</span></label>
-                                                                        <input class="form-control" type="email" name="email" value="<%= u.getEmail()%>" placeholder="Enter your email" id="billing-email-address">
+                                                                        <input readonly class="form-control" type="email" name="email" value="<%= u.getEmail()%>" placeholder="Enter your email" id="billing-email-address">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label for="billing-phone">Phone <span class="text-danger">*</span></label>
-                                                                        <input class="form-control" type="text" name="phone" value="<%= u.getPhoneNumber()%>" placeholder="(xx) xxx xxxx xxx" id="billing-phone">
+                                                                        <input readonly class="form-control" type="text" name="phone" value="<%= u.getPhoneNumber()%>" placeholder="(xx) xxx xxxx xxx" id="billing-phone">
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end row -->
@@ -215,7 +200,7 @@
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
                                                                         <label for="billing-address">Address</label>
-                                                                        <input class="form-control" type="text" name="address" value="<%= u.getUserAddress()%>" placeholder="Enter full address" id="billing-address">
+                                                                        <input readonly class="form-control" type="text" name="address" value="<%= u.getUserAddress()%>" placeholder="Enter full address" id="billing-address">
                                                                     </div>
                                                                 </div>
                                                             </div> <!-- end row -->

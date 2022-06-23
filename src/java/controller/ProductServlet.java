@@ -5,8 +5,10 @@
  */
 package controller;
 
+import dal.Cart_ItemDAO;
 import dal.CategoryDAO;
 import dal.DetailDAO;
+import dal.ShoppingCartDAO;
 import dal.SupplierDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,8 +17,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Category;
 import model.Product;
+import model.ShoppingCart;
 import model.Supplier;
 
 /**
@@ -80,6 +84,18 @@ public class ProductServlet extends HttpServlet {
 //        Category c = db.getCat(id);
 //        List<Product> list = db.getRelated(id);
 
+        HttpSession session = request.getSession();
+//        Object email = session.getAttribute("email");
+            Object email = "anhpn@gmail.com";
+        if(email!=null){
+            ShoppingCart cart = new ShoppingCartDAO().getCartByEmail(email.toString());
+            int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+            request.setAttribute("quantityCart", quantityCart);
+        }else{
+            request.setAttribute("quantityCart", 0);
+        }
+        
+        
         if (p == null) {
             response.sendRedirect("home");
         } else {

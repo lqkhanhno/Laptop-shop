@@ -96,7 +96,7 @@
 							<div class="header-search">
                                                                 <form action="search">
                                                                         <input name="searchname" class="input" placeholder="Search here">
-                                                                        <button type="submit" class="search-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                                        <button type="submit" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
 								</form>
 							</div>
 						</div>
@@ -111,19 +111,10 @@
                                                                     <a href="cart">
 										<i class="fa fa-shopping-cart"></i>
 										<span>Your Cart</span>
-										<div class="qty">3</div>
+                                                                                <% int qty = Integer.parseInt(request.getAttribute("quantityCart").toString()); %>
+										<div class="qty"><%= qty %></div>
 									</a>
-									<div class="cart-dropdown">
-										<div class="cart-list">
-											<div class="product-widget">
-												<div class="product-img">
-													<img src="./img/product01.png" alt="">
-												</div>
-												
-												<button class="delete"><i class="fa fa-close"></i></button>
-											</div>
-											
-									</div>
+									
 								</div>
 								<!-- /Cart -->
 

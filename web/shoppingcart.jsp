@@ -108,23 +108,6 @@
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
                                 <!-- Cart -->
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span>Your Cart</span>
-                                        <div class="qty">3</div>
-                                    </a>
-                                    <div class="cart-dropdown">
-                                        <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.png" alt="">
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <!-- /Cart -->
 
                                 <!-- Menu Toogle -->
@@ -147,7 +130,7 @@
         </header>
         <!-- /HEADER -->
 
-      
+
 
 
         <div class="container">
@@ -426,83 +409,83 @@
     <!-- jQuery Plugins -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-            $(".update-quantity").change(function() {
-                let tagInput = $(this);
-                let id = tagInput.data('id');
-                let value = tagInput.val();
-                console.log(id + " " + value);
-                $.ajax({
-                    url: '/Laptop-shop/cart?s=updateQuantity',
-                    type: 'get',
-                    data: {id_product: id,
-                            quantity: value
-                        },
-                })
-                .done(function(response) {
-                    console.log(response);
-                    Object.keys(response).forEach(function (key) {                        
-                       if(key == id){
-                            let parent_tr=tagInput.parents('tr');
-                            let total = response[key]+" VND";
-                            parent_tr.find('.total').html(total);
-                       }
-                    });
-                    $('#totalGrand').html(response['totalGrand']+" VND");
-                    $('#discount').html(response['discount']+" VND");
-                    $('#totalCart').html(response['totalCart']+" VND");
-                })
-                .fail(function(error) {
-                    alert(error['statusText']);
-                });
-                
-            });
-            $(".delete-product").click(function(event) {
-                event.preventDefault();
-                let tagInput = $(this);
-                let id = tagInput.data('id');
-                $.ajax({
-                    url: '/Laptop-shop/cart?s=deleteProduct',
-                    type: 'get',
-                    data: {id_product: id},
-                })
-                .done(function(response) {
-                    console.log(response);
-                    if(response['totalGrand'] != 0){
-                       tagInput.parents('tr').remove();
-                        $('#totalGrand').html(response['totalGrand']+" VND");
-                        $('#discount').html(response['discount'+" VND"]);
-                        $('#totalCart').html(response['totalCart']+" VND"); 
-                    }else{
+                                $(".update-quantity").change(function () {
+                                    let tagInput = $(this);
+                                    let id = tagInput.data('id');
+                                    let value = tagInput.val();
+                                    console.log(id + " " + value);
+                                    $.ajax({
+                                        url: '/Laptop-shop/cart?s=updateQuantity',
+                                        type: 'get',
+                                        data: {id_product: id,
+                                            quantity: value
+                                        },
+                                    })
+                                            .done(function (response) {
+                                                console.log(response);
+                                                Object.keys(response).forEach(function (key) {
+                                                    if (key == id) {
+                                                        let parent_tr = tagInput.parents('tr');
+                                                        let total = response[key] + " VND";
+                                                        parent_tr.find('.total').html(total);
+                                                    }
+                                                });
+                                                $('#totalGrand').html(response['totalGrand'] + " VND");
+                                                $('#discount').html(response['discount'] + " VND");
+                                                $('#totalCart').html(response['totalCart'] + " VND");
+                                            })
+                                            .fail(function (error) {
+                                                alert(error['statusText']);
+                                            });
+
+                                });
+                                $(".delete-product").click(function (event) {
+                                    event.preventDefault();
+                                    let tagInput = $(this);
+                                    let id = tagInput.data('id');
+                                    $.ajax({
+                                        url: '/Laptop-shop/cart?s=deleteProduct',
+                                        type: 'get',
+                                        data: {id_product: id},
+                                    })
+                                            .done(function (response) {
+                                                console.log(response);
+                                                if (response['totalGrand'] != 0) {
+                                                    tagInput.parents('tr').remove();
+                                                    $('#totalGrand').html(response['totalGrand'] + " VND");
+                                                    $('#discount').html(response['discount' + " VND"]);
+                                                    $('#totalCart').html(response['totalCart'] + " VND");
+                                                } else {
 //                        console.log(12121212);
-                        tagInput.parents('tr').remove();
-                        document.getElementById('cart-empty').style.display = "block";
-                        document.getElementById('continue-shopping').style.display = "block";
-                        document.getElementById('cart-not-empty').remove();
-                    }
-                    
-                })
-                .fail(function(error) {
-                    alert(error['statusText']);
-                })
-                
-            });
-            var focused = true;
-            window.onfocus = function(){
-                console.log("focus");
-                focused = true;
-            };
-            window.onblur = function(){
-                console.log("lost");
-                $.ajax({
-                    url: '/Laptop-shop/cart?s=updateDB',
-                    type: 'get',
-                })
-                .done(function(response) {
-                    console.log("updated");
-                })
-                focused = false;
-            };
-            
-        </script>
+                                                    tagInput.parents('tr').remove();
+                                                    document.getElementById('cart-empty').style.display = "block";
+                                                    document.getElementById('continue-shopping').style.display = "block";
+                                                    document.getElementById('cart-not-empty').remove();
+                                                }
+
+                                            })
+                                            .fail(function (error) {
+                                                alert(error['statusText']);
+                                            })
+
+                                });
+                                var focused = true;
+                                window.onfocus = function () {
+                                    console.log("focus");
+                                    focused = true;
+                                };
+                                window.onblur = function () {
+                                    console.log("lost");
+                                    $.ajax({
+                                        url: '/Laptop-shop/cart?s=updateDB',
+                                        type: 'get',
+                                    })
+                                            .done(function (response) {
+                                                console.log("updated");
+                                            })
+                                    focused = false;
+                                };
+
+    </script>
 </body>
 </html>

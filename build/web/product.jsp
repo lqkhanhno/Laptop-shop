@@ -106,22 +106,14 @@
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
                                 <!-- Cart -->
-                                <div class="dropdown">
+                                <div >
                                     <a href="cart">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Your Cart</span>
-                                        <div class="qty">3</div>
+                                        <% int qty = Integer.parseInt(request.getAttribute("quantityCart").toString());%>
+                                        <div id="quantityCart" data-value="<%= qty%>" class="qty"><%= qty%></div>
                                     </a>
-                                    <div class="cart-dropdown">
-                                        <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.png" alt="">
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
+
                                 </div>
                                 <!-- /Cart -->
 
@@ -201,25 +193,26 @@
                                 <c:if test="${requestScope.data.salePercent == 0}">
                                     <h3 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice}" type = "currency"/></h3>
                                 </c:if>
-                               
+
 
                             </div>
                             <p>${requestScope.data.description}</p>
-                            
+
                             <c:if test="${requestScope.data.amount > 0}">
                                 <div class="add-to-cart">
                                     <% Product p = (Product) request.getAttribute("data");%>
-                                    <a  href="cart?s=add2Cart&id_product=<%= p.getProductID()%>"  class="btn btn-danger"><i class="fa fa-shopping-cart"></i> add to cart</a>
+                                    <a id="btn-add2cart" data-id="<%= p.getProductID()%>"  href="cart?s=add2Cart"  class="btn btn-danger"><i class="fa fa-shopping-cart"></i> Add to cart</a>
                                 </div>
                             </c:if>
                             <c:if test="${requestScope.data.amount <= 0}">
                                 <div class="add-to-cart">
-                                    <a  href="cart?s=add2Cart"  class="btn btn-danger"><i class="fa fa-shopping-cart"></i>Out of stock</a>
+                                    <a class="btn btn-danger"><i class="fa fa-shopping-cart"></i>Out of stock</a>
                                 </div>
                             </c:if>
-                            
 
-                        </div>	</div>
+
+                        </div>	
+                    </div>
                     <!-- /Product details -->
 
                 </div>
@@ -369,6 +362,30 @@
         <script src="js/nouislider.min.js"></script>
         <script src="js/jquery.zoom.min.js"></script>
         <script src="js/main.js"></script>
+        <script>
+            $('#btn-add2cart').click(function(event) {
+                event.preventDefault();
+                let btn_add2cart = $(this);
+                let id = btn_add2cart.data('id');
+                $.ajax({
+                     url: '/Laptop-shop/cart?s=add2Cart',
+                     type: 'get',
+                     data: {id_product: id},
+                 })
+                 .done(function(respond) {
+//                     let qty = $('#quantityCart').data('value');
+                     $('#quantityCart').html(respond);
+                     $('#quantityCart').data('value',respond);
+                     console.log("servel" + respond) ;
 
+                 })
+                 .fail(function(error) {
+                     console.log(error);
+                     alert(error['statusText']);
+                 })
+                 
+                  
+            });
+        </script>
     </body>
 </html>
