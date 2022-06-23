@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.ShoppingCart;
 
-public class ShoppingCartDAO extends ConnectDB {
+public class ShoppingCartDAO extends DBContext {
     public ShoppingCart getCartByEmail (String email){
         String query = "select s.* from ShoppingCart s join [user] u on u.userID=s.userID where u.email= '"+email+"'";
         ResultSet rs = getData(query);
@@ -37,7 +37,7 @@ public class ShoppingCartDAO extends ConnectDB {
                     "([userID]) " +
                     "VALUES (?)";
         try {
-            PreparedStatement pre = conn.prepareStatement(query);
+            PreparedStatement pre = connection.prepareStatement(query);
             pre.setInt(1, userID);
             n = pre.executeUpdate();
         } catch (SQLException ex) {

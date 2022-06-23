@@ -11,13 +11,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Order;
 
-public class OrderDAO extends ConnectDB{
+public class OrderDAO extends DBContext{
     public int addOrder(Order o){
         int n=0;
         String query = "INSERT INTO [Order] ([userID],[totalprice], [status], [date], [note])" +
             " VALUES(?,?,?,?,?)";
         try {
-            PreparedStatement pre = conn.prepareStatement(query);
+            PreparedStatement pre = connection.prepareStatement(query);
             pre.setInt(1, o.getUserID());
             pre.setInt(2, o.getTotalPrice());
             pre.setString(3, o.getStatus());
