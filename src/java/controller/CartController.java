@@ -178,7 +178,13 @@ public class CartController extends HttpServlet {
 //        }else{
         //yes
         //get product_id
-        int product_id = Integer.parseInt(request.getParameter("id_product"));
+        int product_id = -1 ;
+        try {
+            product_id = Integer.parseInt(request.getParameter("id_product"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
 
         if (!checkExistProduct(product_id)) {
             try {
@@ -221,16 +227,18 @@ public class CartController extends HttpServlet {
             int n = new Cart_ItemDAO().addCart_Item(cart_item);
             if (n == 0) {
                 System.out.println("Can't add cart item");
+                return;
             }
-            return;
         } 
+        else{
             //yes:
-        //update amount to cart_item
-        int n = new Cart_ItemDAO().increase_1_Amount(Integer.parseInt(cartID.toString()), product_id);
-        if (n == 0) {
-            System.out.println("Can't increace ");
+            //update amount to cart_item
+            int n = new Cart_ItemDAO().increase_1_Amount(Integer.parseInt(cartID.toString()), product_id);
+            if (n == 0) {
+                System.out.println("Can't increace ");
+                return;
+            }
         }
-        
         int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(Integer.parseInt(cartID.toString()));
         try {
             response.setContentType("application/json");
@@ -261,7 +269,7 @@ public class CartController extends HttpServlet {
         Product p = new DetailDAO().getByPid(Integer.parseInt(id_product));
         if(quantity > p.getAmount()){
             try {
-                response.sendError(400, "fuck quantity nhiu zay");
+                response.sendError(400, "The number of products in stock is not enough");
                 return;
             } catch (IOException ex) {
                 ex.printStackTrace();

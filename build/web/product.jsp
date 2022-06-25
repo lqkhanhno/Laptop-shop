@@ -363,29 +363,31 @@
         <script src="js/jquery.zoom.min.js"></script>
         <script src="js/main.js"></script>
         <script>
-            $('#btn-add2cart').click(function(event) {
-                event.preventDefault();
-                let btn_add2cart = $(this);
-                let id = btn_add2cart.data('id');
-                $.ajax({
-                     url: '/Laptop-shop/cart?s=add2Cart',
-                     type: 'get',
-                     data: {id_product: id},
-                 })
-                 .done(function(respond) {
-//                     let qty = $('#quantityCart').data('value');
-                     $('#quantityCart').html(respond);
-                     $('#quantityCart').data('value',respond);
-                     console.log("servel" + respond) ;
+                $('#btn-add2cart').click(function(event) {
+                    event.preventDefault();
+                    let btn_add2cart = $(this);
+                    let id = btn_add2cart.data('id');
+                    $.ajax({
+                         url: '/Laptop-shop/cart?s=add2Cart',
+                         type: 'get',
+                         data: {id_product: id},
+                     })
+                     .done(function(respond) {
+    //                     let qty = $('#quantityCart').data('value');
+                         console.log("servel" + respond) ;
+                         $('#quantityCart').html(respond);
+                         $('#quantityCart').data('value',respond);
+                         
 
-                 })
-                 .fail(function(error) {
-                     console.log(error);
-                     alert(error['statusText']);
-                 })
-                 
-                  
-            });
+                     })
+                     .fail(function(error) {
+                         console.log(error);
+                         alert(error['statusText']);
+                     })
+
+
+                });
+            
         </script>
     </body>
 </html>

@@ -1,40 +1,33 @@
-
-<%@page import="model.Product"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<jsp:useBean id="ourDate" class="java.util.Date"/>
-<jsp:setProperty name="ourDate" property="time" value="${ourDate.time - 86400000*270}"/>
-
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Locale"%>
+<%@page import="java.util.Vector"%>
+<%@page import="model.Order"%>
+<html lang="en"><head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <title>Product Detail</title>
+        <title>Electro - HTML Ecommerce Template</title>
 
         <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
         <!-- Bootstrap -->
-        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
 
         <!-- Slick -->
-        <link type="text/css" rel="stylesheet" href="css/slick.css"/>
-        <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
+        <link type="text/css" rel="stylesheet" href="css/slick.css">
+        <link type="text/css" rel="stylesheet" href="css/slick-theme.css">
 
         <!-- nouislider -->
-        <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
+        <link type="text/css" rel="stylesheet" href="css/nouislider.min.css">
 
         <!-- Font Awesome Icon -->
         <link rel="stylesheet" href="css/font-awesome.min.css">
 
         <!-- Custom stlylesheet -->
-        <link type="text/css" rel="stylesheet" href="css/style.css"/>
+        <link type="text/css" rel="stylesheet" href="css/style.css">
 
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,25 +44,13 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +84-369-909-625</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> electrovn@gmail.com</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 162 Thai Ha</a></li>
+                        <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                            <c:if test="${sessionScope.account == null}">
-                            <li><a href="login.jsp"><i class="fa fa-user-o"></i> Login</a></li>
-                            </c:if>
-
-                        <c:if test="${sessionScope.account != null}">
-                            <c:if test="${sessionScope.account.role == 0}">
-                                <li><a href="listmanage"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
-                                </c:if>
-                                <c:if test="${sessionScope.account.role == 1}">
-                                <li><a href="profile"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
-                                </c:if>
-                            <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
-                            </c:if>
+                        <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
                     </ul>
                 </div>
             </div>
@@ -93,27 +74,63 @@
 
                         <!-- SEARCH BAR -->
                         <div class="col-md-6">
-                            <div class="header-search">
-                                <form action="search">
-                                    <input name="searchname" class="input" placeholder="Search here">
-                                    <button type="submit" class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                </form>
-                            </div>
+
                         </div>
                         <!-- /SEARCH BAR -->
 
                         <!-- ACCOUNT -->
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
+                                <!-- Wishlist -->
+                                <div>
+                                    <a href="#">
+                                        <i class="fa fa-heart-o"></i>
+                                        <span>Your Wishlist</span>
+                                        <div class="qty">2</div>
+                                    </a>
+                                </div>
+                                <!-- /Wishlist -->
+
                                 <!-- Cart -->
-                                <div >
-                                    <a href="cart">
+                                <div class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Your Cart</span>
-                                        <% int qty = Integer.parseInt(request.getAttribute("quantityCart").toString());%>
-                                        <div id="quantityCart" data-value="<%= qty%>" class="qty"><%= qty%></div>
+                                        <div class="qty">3</div>
                                     </a>
+                                    <div class="cart-dropdown">
+                                        <div class="cart-list">
+                                            <div class="product-widget">
+                                                <div class="product-img">
+                                                    <img src="./img/product01.png" alt="">
+                                                </div>
+                                                <div class="product-body">
+                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                                    <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
+                                                </div>
+                                                <button class="delete"><i class="fa fa-close"></i></button>
+                                            </div>
 
+                                            <div class="product-widget">
+                                                <div class="product-img">
+                                                    <img src="./img/product02.png" alt="">
+                                                </div>
+                                                <div class="product-body">
+                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
+                                                    <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
+                                                </div>
+                                                <button class="delete"><i class="fa fa-close"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="cart-summary">
+                                            <small>3 Item(s) selected</small>
+                                            <h5>SUBTOTAL: $2940.00</h5>
+                                        </div>
+                                        <div class="cart-btns">
+                                            <a href="#">View Cart</a>
+                                            <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- /Cart -->
 
@@ -145,13 +162,10 @@
                 <div id="responsive-nav">
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
-                        <li class="active"><a href="home">Home</a></li>
-
-                        <c:forEach items="${requestScope.sclist}" var="o">
-                            <li><a href="${o.categoryName.toLowerCase()}" value="${o.categoryName}">${o.categoryName}</a></li>
-                            </c:forEach>
-
-                        <li><a href="laptops">Laptops</a></li>
+                        <li><a href="order">Wait To Accept</a></li>
+                        <li><a href="order?s=Shipping">Shipping</a></li>
+                        <li class="active"><a href="order?s=Shipped">Shipped</a></li>
+                        <li><a href="order?s=Canceled">Canceled</a></li>
                     </ul>
                     <!-- /NAV -->
                 </div>
@@ -161,68 +175,71 @@
         </nav>
         <!-- /NAVIGATION -->
 
-
-
         <!-- SECTION -->
-        <div class="section">   
+        <div class="section">
             <!-- container -->
             <div class="container">
                 <!-- row -->
                 <div class="row">
-                    <!-- Product main img -->
-                    <div class="col-md-5 col-md-push-2">
-                        <div id="product-main-img">
-                            <div class="product-preview">
-                                <img src="./img/Laptop/${requestScope.data.image}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Product main img -->
-                    <div class="col-md-3"></div>
+                    <%
+                        Locale vn = new Locale("vi", "VN");
+                        // Create a formatter given the Locale
+                        NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
+                    %>
+                    <%
+                        Vector<Order> vec = (Vector<Order>) request.getAttribute("listShipped");
+                        if (!vec.isEmpty()) {
+                    %>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-centered mb-0">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Order Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%for (Order o : vec) {%>
+                                            <tr>
+                                                <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td>
+                                                    <%= o.getOrderDate()%> 
+                                                    <!--                                                    <small class="text-muted">10:29 PM</small>-->
+                                                </td>
+                                                <td>
 
-                    <!-- Product details -->
-                    <div  class="col-md-4">
-                        <div class="product-details">
-                            <h2 class="product-name">${requestScope.data.productName}</h2>
-                            <div class="product-body">
-                                <c:if test="${requestScope.data.salePercent != 0}">
-                                    <h3 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice * (100 - requestScope.data.salePercent) / 100}" type = "currency"/>
-                                        <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice}" type = "currency"/></del>
-                                    </h3>
-                                </c:if>
-                                <c:if test="${requestScope.data.salePercent == 0}">
-                                    <h3 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice}" type = "currency"/></h3>
-                                </c:if>
+                                                    <%= vnFormat.format(o.getTotalPrice())%>
+                                                </td>
+                                                <td>
+                                                    <h5><span class="badge badge-info-lighten"><%= o.getStatus()%></span></h5>
+                                                </td>
+                                                </td>
 
-
-                            </div>
-                            <p>${requestScope.data.description}</p>
-
-                            <c:if test="${requestScope.data.amount > 0}">
-                                <div class="add-to-cart">
-                                    <% Product p = (Product) request.getAttribute("data");%>
-                                    <a id="btn-add2cart" data-id="<%= p.getProductID()%>"  href="cart?s=add2Cart"  class="btn btn-danger"><i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                            </tr>
+                                            <%}%>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </c:if>
-                            <c:if test="${requestScope.data.amount <= 0}">
-                                <div class="add-to-cart">
-                                    <a class="btn btn-danger"><i class="fa fa-shopping-cart"></i>Out of stock</a>
-                                </div>
-                            </c:if>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> 
+                    <!-- end col -->
+                    <%
 
-
-                        </div>	
-                    </div>
-                    <!-- /Product details -->
-
+                    } else {%>
+                    <h4>List Empty</h4>
+                    <%}%>
                 </div>
                 <!-- /row -->
             </div>
             <!-- /container -->
         </div>
         <!-- /SECTION -->
-
-
 
         <!-- NEWSLETTER -->
         <div id="newsletter" class="section">
@@ -273,9 +290,9 @@
                                 <h3 class="footer-title">About Us</h3>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
                                 <ul class="footer-links">
-                                    <li><a href="#"><i class="fa fa-map-marker"></i>162 Thai Ha</a></li>
-                                    <li><a href="#"><i class="fa fa-phone"></i>+84-369-909-625</a></li>
-                                    <li><a href="#"><i class="fa fa-envelope-o"></i>electrovn@gmail.com</a></li>
+                                    <li><a href="#"><i class="fa fa-map-marker"></i>1734 Stonecoal Road</a></li>
+                                    <li><a href="#"><i class="fa fa-phone"></i>+021-95-51-84</a></li>
+                                    <li><a href="#"><i class="fa fa-envelope-o"></i>email@email.com</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -284,10 +301,11 @@
                             <div class="footer">
                                 <h3 class="footer-title">Categories</h3>
                                 <ul class="footer-links">
-                                    <li><a href="hotdeals">Hot deals</a></li>
-                                    <li><a href="laptops">Laptops</a></li>
+                                    <li><a href="#">Hot deals</a></li>
+                                    <li><a href="#">Laptops</a></li>
                                     <li><a href="#">Smartphones</a></li>
                                     <li><a href="#">Cameras</a></li>
+                                    <li><a href="#">Accessories</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -302,7 +320,7 @@
                                     <li><a href="#">Contact Us</a></li>
                                     <li><a href="#">Privacy Policy</a></li>
                                     <li><a href="#">Orders and Returns</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Terms &amp; Conditions</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -313,7 +331,7 @@
                                 <ul class="footer-links">
                                     <li><a href="#">My Account</a></li>
                                     <li><a href="#">View Cart</a></li>
-                                    <li><a href="#">Checkout</a></li>
+                                    <li><a href="#">Wishlist</a></li>
                                     <li><a href="#">Track My Order</a></li>
                                     <li><a href="#">Help</a></li>
                                 </ul>
@@ -341,10 +359,10 @@
                                 <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
                             </ul>
                             <span class="copyright">
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                <a target="_blank" href="https://www.templateshub.net">Templates Hub</a>
                             </span>
+
+
                         </div>
                     </div>
                     <!-- /row -->
@@ -362,32 +380,7 @@
         <script src="js/nouislider.min.js"></script>
         <script src="js/jquery.zoom.min.js"></script>
         <script src="js/main.js"></script>
-        <script>
-                $('#btn-add2cart').click(function(event) {
-                    event.preventDefault();
-                    let btn_add2cart = $(this);
-                    let id = btn_add2cart.data('id');
-                    $.ajax({
-                         url: '/Laptop-shop/cart?s=add2Cart',
-                         type: 'get',
-                         data: {id_product: id},
-                     })
-                     .done(function(respond) {
-    //                     let qty = $('#quantityCart').data('value');
-                         console.log("servel" + respond) ;
-                         $('#quantityCart').html(respond);
-                         $('#quantityCart').data('value',respond);
-                         
-
-                     })
-                     .fail(function(error) {
-                         console.log(error);
-                         alert(error['statusText']);
-                     })
 
 
-                });
-            
-        </script>
-    </body>
-</html>
+
+    </body></html>

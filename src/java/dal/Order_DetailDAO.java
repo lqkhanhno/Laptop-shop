@@ -6,6 +6,7 @@ package dal;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Set;
 import java.util.logging.Level;
@@ -53,6 +54,19 @@ public class Order_DetailDAO extends DBContext{
             n=0;
         }
         return m;
+    }
+
+    public int deleteOrderDetail(String order_id) {
+        String query = "delete from [Order_detail] where orderID = "+order_id;
+        int n=0;
+        try {
+            Statement st = connection.createStatement();
+            n = st.executeUpdate(query);
+           
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
     }
     
     
