@@ -44,6 +44,10 @@
         <servlet-name>Purchase_OrderController</servlet-name>
         <servlet-class>controller.Purchase_OrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NotificationController</servlet-name>
+        <servlet-class>controller.NotificationController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>Purchase_OrderController</servlet-name>
         <url-pattern>/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>NotificationController</servlet-name>
+        <url-pattern>/notification</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

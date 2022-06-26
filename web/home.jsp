@@ -107,12 +107,12 @@
                             <div class="header-ctn">
                                 <!-- Noti -->
                                 <div >
-                                    <a>
+                                    <a href="notification">
                                         <i class="fa fa-bell"></i>
                                         <span>Notification</span>
                                     </a>
-
                                 </div>
+                                
                                 
                                 <!-- Cart -->
                                 <div >
