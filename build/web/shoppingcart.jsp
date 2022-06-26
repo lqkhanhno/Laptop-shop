@@ -252,14 +252,6 @@
                                                         <td id="discount"> - <%=order_Summary.get("discount")%> VND</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Shipping Charge :</td>
-                                                        <td>$25</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Estimated Tax : </td>
-                                                        <td>$19.22</td>
-                                                    </tr>
-                                                    <tr>
                                                         <th>Total :</th>
                                                         <th id="totalCart"><%=order_Summary.get("totalCart")%> VND</th>
                                                     </tr>
@@ -436,6 +428,9 @@
                                             })
                                             .fail(function (error) {
                                                 alert(error['statusText']);
+                                                if(error['statusText']=="The number of products in stock is not enough" ){
+                                                    tagInput.val(value-1);
+                                                }
                                             });
 
                                 });
