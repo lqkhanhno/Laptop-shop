@@ -179,13 +179,14 @@
         <div class="section">
             <!-- container -->
             <div class="container">
+                <%
+                    Locale vn = new Locale("vi", "VN");
+                    // Create a formatter given the Locale
+                    NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
+                %>
                 <!-- row -->
                 <div class="row">
-                    <%
-                        Locale vn = new Locale("vi", "VN");
-                        // Create a formatter given the Locale
-                        NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
-                    %>
+                    
                     <%
                         Vector<Order> vec = (Vector<Order>) request.getAttribute("listShipped");
                         if (!vec.isEmpty()) {

@@ -162,10 +162,14 @@
                 <div id="responsive-nav">
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
-                        <li class="active"><a href="order">Wait To Accept</a></li>
-                        <li><a href="order?s=Shipping">Shipping</a></li>
-                        <li><a href="order?s=Shipped">Shipped</a></li>
-                        <li><a href="order?s=Canceled">Canceled</a></li>
+                        <li class="active"><a href="home">Home</a></li>
+
+                        <c:forEach items="${requestScope.sclist}" var="o">
+                            <li><a href="${o.categoryName.toLowerCase()}" value="${o.categoryName}">${o.categoryName}</a></li>
+                            </c:forEach>
+
+                        <li><a href="laptops">Laptops</a></li>
+
                     </ul>
                     <!-- /NAV -->
                 </div>
@@ -179,16 +183,45 @@
         <div class="section">
             <!-- container -->
             <div class="container">
-                <!-- row -->
                 <div class="row">
+                    <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+                        <li class="nav-item">
+                            <a href="#billing-information" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 tab-page" id="tab-wait">
+                                <i class="mdi mdi-account-circle font-18"></i>
+                                <span class="d-none d-lg-block">Wait To Accept</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#shipping-information" data-toggle="tab" aria-expanded="true" class="nav-link rounded-0 tab-page" id="tab-shipping">
+                                <i class="mdi mdi-truck-fast font-18"></i>
+                                <span class="d-none d-lg-block">Shipping</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#payment-information" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 tab-page" id="tab-shipped">
+                                <i class="mdi mdi-cash-multiple font-18"></i>
+                                <span class="d-none d-lg-block">Shipped</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#payment-information" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 tab-page" id="tab-canceled">
+                                <i class="mdi mdi-cash-multiple font-18"></i>
+                                <span class="d-none d-lg-block">Canceled</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <%
+                    Locale vn = new Locale("vi", "VN");
+                    // Create a formatter given the Locale
+                    NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
+                %>
+                <!-- row wait -->
+                <div class="row" id="div-wait">
+                    
                     <%
-                        Locale vn = new Locale("vi", "VN");
-                        // Create a formatter given the Locale
-                        NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
-                    %>
-                    <%
-                        Vector<Order> vec = (Vector<Order>) request.getAttribute("listWait");
-                        if (!vec.isEmpty()) {
+                        Vector<Order> listWait = (Vector<Order>) request.getAttribute("listWait");
+                        if (!listWait.isEmpty()) {
                     %>
                     <div class="col-12">
                         <div class="card">
@@ -205,7 +238,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%for (Order o : vec) {%>
+                                            <%for (Order o : listWait) {%>
                                             <tr>
                                                 <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
                                                 <td>
@@ -237,6 +270,167 @@
 
                     } else {%>
                     <h4>List Wait Accept Empty</h4>
+                    <%}%>
+                </div>
+                <!-- /row wait -->
+                
+                <!-- row shipping-->
+                <div class="row" id="div-shipping">
+                    <%
+                        Vector<Order> listShipping = (Vector<Order>) request.getAttribute("listShipping");
+                        if (!listShipping.isEmpty()) {
+                    %>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-centered mb-0">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Order Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%for (Order o : listShipping) {%>
+                                            <tr>
+                                                <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td>
+                                                    <%= o.getOrderDate()%> 
+                                                    <!--                                                    <small class="text-muted">10:29 PM</small>-->
+                                                </td>
+                                                <td>
+
+                                                    <%= vnFormat.format(o.getTotalPrice())%>
+                                                </td>
+                                                <td>
+                                                    <h5><span class="badge badge-info-lighten"><%= o.getStatus()%></span></h5>
+                                                </td>
+                                                </td>
+
+                                            </tr>
+                                            <%}%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> 
+                    <!-- end col -->
+                    <%
+
+                    } else {%>
+                    <h4>List Empty</h4>
+                    <%}%>
+                </div>
+                <!-- /row -->
+                
+                <!-- row -->
+                <div class="row" id="div-shipped">
+                    
+                    <%
+                        Vector<Order> listShipped = (Vector<Order>) request.getAttribute("listShipped");
+                        if (!listShipped.isEmpty()) {
+                    %>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-centered mb-0">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Order Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%for (Order o : listShipped) {%>
+                                            <tr>
+                                                <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td>
+                                                    <%= o.getOrderDate()%> 
+                                                    <!--                                                    <small class="text-muted">10:29 PM</small>-->
+                                                </td>
+                                                <td>
+
+                                                    <%= vnFormat.format(o.getTotalPrice())%>
+                                                </td>
+                                                <td>
+                                                    <h5><span class="badge badge-info-lighten"><%= o.getStatus()%></span></h5>
+                                                </td>
+                                                </td>
+
+                                            </tr>
+                                            <%}%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> 
+                    <!-- end col -->
+                    <%
+
+                    } else {%>
+                    <h4>List Empty</h4>
+                    <%}%>
+                </div>
+                <!-- /row -->
+                
+                <!-- row canceled -->
+                <div class="row" id="div-canceled">
+                    
+                    <%
+                        Vector<Order> listCanceled = (Vector<Order>) request.getAttribute("listCanceled");
+                        if (!listCanceled.isEmpty()) {
+                    %>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-centered mb-0">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Order Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <%for (Order o : listCanceled) {%>
+                                            <tr>
+                                                <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td>
+                                                    <%= o.getOrderDate()%> 
+                                                    <!--                                                    <small class="text-muted">10:29 PM</small>-->
+                                                </td>
+                                                <td>
+
+                                                    <%= vnFormat.format(o.getTotalPrice())%>
+                                                </td>
+                                                <td>
+                                                    <h5><span class="badge badge-info-lighten"><%= o.getStatus()%></span></h5>
+                                                </td>
+                                                </td>
+
+                                            </tr>
+                                            <%}%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- end card-body-->
+                        </div> <!-- end card-->
+                    </div> 
+                    <!-- end col -->
+                    <%
+
+                    } else {%>
+                    <h4>List Empty</h4>
                     <%}%>
                 </div>
                 <!-- /row -->
@@ -385,8 +579,8 @@
         <script src="js/jquery.zoom.min.js"></script>
         <script src="js/main.js"></script>
         <script type="text/javascript">
-            $(document).ready(function() {
-                $('.btnCancel').click(function(event) {
+            $(document).ready(function () {
+                $('.btnCancel').click(function (event) {
                     event.preventDefault();
                     let btn = $(this);
                     let order_id = btn.data('id');
@@ -396,18 +590,55 @@
                             url: '/Laptop-shop/order?s=Process Cancel',
                             type: "POST",
                             data: {
-                                order_id : order_id
+                                order_id: order_id
                             },
                         })
-                        .done(function() {
-                            btn.parents('tr').remove();
-                        })
-                        .fail(function(error) {
-                            alert(error['statusText']);
-                        })
-                        
+                                .done(function () {
+                                    btn.parents('tr').remove();
+                                })
+                                .fail(function (error) {
+                                    alert(error['statusText']);
+                                })
+
                     }
                 });
+                
+                
+                $("#tab-wait").parents('li').addClass('active');
+                $("#div-wait").show();
+                $("#div-shipping").hide();
+                $("#div-shipped").hide();
+                $("#div-canceled").hide();
+                
+
+                $(".tab-page").click(function(){
+                      let idthis= $(this).attr('id');
+                  //let idthis = this.data('id');
+                  if(idthis == 'tab-wait'){
+                      $("#div-wait").show();
+                      $("#div-shipping").hide();
+                      $("#div-shipped").hide();
+                      $("#div-canceled").hide();
+                      
+                  }else if(idthis == 'tab-shipping'){
+                      $("#div-wait").hide();
+                      $("#div-shipping").show();
+                      $("#div-shipped").hide();
+                      $("#div-canceled").hide();
+                  }else if(idthis == 'tab-shipped'){
+                      $("#div-wait").hide();
+                      $("#div-shipping").hide();
+                      $("#div-shipped").show();
+                      $("#div-canceled").hide();
+                  }
+                  else{
+                      $("#div-wait").hide();
+                      $("#div-shipping").hide();
+                      $("#div-shipped").hide();
+                      $("#div-canceled").show();
+                  }
+
+                  });
             });
         </script>
 
