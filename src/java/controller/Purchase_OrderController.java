@@ -41,25 +41,16 @@ public class Purchase_OrderController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String service = request.getParameter("s");
         if(service == null){
-            service = "Wait Accept";
+            service = "Display";
         }
         
         try ( PrintWriter out = response.getWriter()) {
             switch (service) {
-                case "Wait Accept":
-                    wait_Accept(request,response);
-                    break;
-                case "Shipping":
-                    shipping(request,response);
-                    break;
-                case "Shipped":
-                    shipped(request,response);
-                    break;
-                case "Canceled":
-                    canceled(request,response);
-                    break;
                 case "Process Cancel":
                     process_Cancel(request,response);
+                    break;
+                case "Display":
+                    display(request,response);
                     break;
             }
             
@@ -117,66 +108,6 @@ public class Purchase_OrderController extends HttpServlet {
         } catch (IOException ex) {
             Logger.getLogger(CartController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    private void wait_Accept(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        String email = (String)session.getAttribute("email");
-//        if(email == null || email.isEmpty()){
-//            dispath(request, response, "/login.jsp");
-//            return;
-//        }
-        email = "anhpn@gmail.com";
-        int userid = new UserDAO().getIdByEmail(email);
-        Vector<Order> vec = new OrderDAO().getListOrderByUserID(userid,"Wait Accept");
-        vec = sortListVector(vec,1);
-        
-        request.setAttribute("listWait", vec);
-        dispath(request, response, "/order.jsp");
-    }
-
-    private void shipping(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        String email = (String)session.getAttribute("email");
-//        if(email == null || email.isEmpty()){
-//            dispath(request, response, "/login.jsp");
-//            return;
-//        }
-        email = "anhpn@gmail.com";
-        int userid = new UserDAO().getIdByEmail(email);
-        Vector<Order> vec = new OrderDAO().getListOrderByUserID(userid,"Shipping");
-        request.setAttribute("listShipping", vec);
-        dispath(request, response, "/shipping.jsp");
-    }
-
-    private void shipped(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        String email = (String)session.getAttribute("email");
-//        if(email == null || email.isEmpty()){
-//            dispath(request, response, "/login.jsp");
-//            return;
-//        }
-        email = "anhpn@gmail.com";
-        int userid = new UserDAO().getIdByEmail(email);
-        Vector<Order> vec = new OrderDAO().getListOrderByUserID(userid,"Shipped");
-        request.setAttribute("listShipped", vec);
-        dispath(request, response, "/shipped.jsp");
-        
-    }
-
-    private void canceled(HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        String email = (String)session.getAttribute("email");
-//        if(email == null || email.isEmpty()){
-//            dispath(request, response, "/login.jsp");
-//            return;
-//        }
-        email = "anhpn@gmail.com";
-        int userid = new UserDAO().getIdByEmail(email);
-        Vector<Order> vec = new OrderDAO().getListOrderByUserID(userid,"Canceled");
-        vec = sortListVector(vec, 0);
-        request.setAttribute("listCanceled", vec);
-        dispath(request, response, "/canceled.jsp");
     }
 
     private void process_Cancel(HttpServletRequest request, HttpServletResponse response) {
@@ -245,5 +176,28 @@ public class Purchase_OrderController extends HttpServlet {
             }
         });        
         return vec;
+    }
+
+    private void display(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        String email = (String)session.getAttribute("email");
+//        if(email == null || email.isEmpty()){
+//            dispath(request, response, "/login.jsp");
+//            return;
+//        }
+        email = "anhpn@gmail.com";
+        int userid = new UserDAO().getIdByEmail(email);
+        Vector<Order> listShipping = new OrderDAO().getListOrderByUserID(userid,"Shipping");
+        Vector<Order> listWait = new OrderDAO().getListOrderByUserID(userid,"Wait Accept");
+        Vector<Order> listShipped = new OrderDAO().getListOrderByUserID(userid,"Shipped");
+        Vector<Order> listCanceled = new OrderDAO().getListOrderByUserID(userid,"Canceled");
+        
+        request.setAttribute("listShipping", listShipping);
+        request.setAttribute("listWait", listWait);
+        request.setAttribute("listShipped", listShipped);
+        request.setAttribute("listCanceled", listCanceled);
+        
+        dispath(request, response, "/order.jsp");
+        
     }
 }

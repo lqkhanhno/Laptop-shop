@@ -179,16 +179,17 @@
         <div class="section">
             <!-- container -->
             <div class="container">
-                <!-- row -->
+                <%
+                    Locale vn = new Locale("vi", "VN");
+                    // Create a formatter given the Locale
+                    NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
+                %>
+                <!-- row canceled -->
                 <div class="row">
+                    
                     <%
-                        Locale vn = new Locale("vi", "VN");
-                        // Create a formatter given the Locale
-                        NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
-                    %>
-                    <%
-                        Vector<Order> vec = (Vector<Order>) request.getAttribute("listCanceled");
-                        if (!vec.isEmpty()) {
+                        Vector<Order> listCanceled = (Vector<Order>) request.getAttribute("listCanceled");
+                        if (!listCanceled.isEmpty()) {
                     %>
                     <div class="col-12">
                         <div class="card">
@@ -204,7 +205,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%for (Order o : vec) {%>
+                                            <%for (Order o : listCanceled) {%>
                                             <tr>
                                                 <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
                                                 <td>
