@@ -180,6 +180,7 @@ public class CheckoutController extends HttpServlet {
         Date date = new Date(utilDate.getTime()); 
         String status = "Wait Accept";
         Order o = new Order(userID, toalPrice, status, date, note);
+        o.setUpdated_At();
         int n = new OrderDAO().addOrder(o);
         if(n==0){
             System.out.println("can't add order");

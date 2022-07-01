@@ -585,7 +585,7 @@
                     let btn = $(this);
                     let order_id = btn.data('id');
                     if (confirm('Are you sure you want to cancel this?')) {
-                        console.log(1);
+                        //console.log(1);
                         $.ajax({
                             url: '/Laptop-shop/order?s=Process Cancel',
                             type: "POST",
@@ -593,12 +593,35 @@
                                 order_id: order_id
                             },
                         })
-                                .done(function () {
-                                    btn.parents('tr').remove();
-                                })
-                                .fail(function (error) {
-                                    alert(error['statusText']);
-                                })
+                        .done(function (response) {
+                            console.log(response);
+                            btn.parents('tr').remove();
+                            $("#div-canceled").children('tbody').prepend("<tr>
+                                                <td>
+                                                    <a href='apps-ecommerce-orders-details.html' class='text-body font-weight-bold'>
+                                                        "+response.ID+"
+                                                    </a> 
+                                                </td>
+                                                <td>
+                                                
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <h5>
+                                                        <span class='badge badge-info-lighten'>
+
+                                                        </span>
+                                                    </h5>
+                                                </td>
+                                                </td>
+
+                                            </tr>");
+                        })
+                        .fail(function (error) {
+                            alert(error['statusText']);
+                        })
 
                     }
                 });
@@ -612,7 +635,7 @@
                 
 
                 $(".tab-page").click(function(){
-                      let idthis= $(this).attr('id');
+                      let idthis = $(this).attr('id');
                   //let idthis = this.data('id');
                   if(idthis == 'tab-wait'){
                       $("#div-wait").show();

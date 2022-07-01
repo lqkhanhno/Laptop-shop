@@ -267,16 +267,15 @@ public class CartController extends HttpServlet {
         String id_product = request.getParameter("id_product");
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         Product p = new DetailDAO().getByPid(Integer.parseInt(id_product));
-        if(quantity > p.getAmount()){
-            try {
-                response.sendError(400, "The number of products in stock is not enough");
-                return;
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+        
         
         try {
+            if(quantity > p.getAmount()){
+                //response.getWriter().write(new Gson().toJson(1));
+                response.sendError(400, "The number of products in stock is not enough");
+                
+                return;
+            }
             if (quantity < 1) {
                 response.sendError(400, "Ow quantity cannot be less than 0!!");
             } else {

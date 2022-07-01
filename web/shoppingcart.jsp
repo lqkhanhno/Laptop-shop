@@ -427,9 +427,9 @@
                                                 $('#totalCart').html(response['totalCart'] + " VND");
                                             })
                                             .fail(function (error) {
-                                                alert(error['statusText']);
+                                                alert(error);
                                                 if(error['statusText']=="The number of products in stock is not enough" ){
-                                                    tagInput.val(value-1);
+                                                    tagInput.val(1);
                                                 }
                                             });
 
