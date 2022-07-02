@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Product;
+import utils.SendEmail;
 
 /**
  *
@@ -23,6 +24,7 @@ public class listtest extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+//        SendEmail.send();
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter pr = response.getWriter();
         ProductDAO u = new ProductDAO();
