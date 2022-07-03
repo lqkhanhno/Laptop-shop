@@ -578,7 +578,7 @@
         <script src="js/nouislider.min.js"></script>
         <script src="js/jquery.zoom.min.js"></script>
         <script src="js/main.js"></script>
-        <script type="text/javascript">
+        <script type>
             $(document).ready(function () {
                 $('.btnCancel').click(function (event) {
                     event.preventDefault();
@@ -593,31 +593,29 @@
                                 order_id: order_id
                             },
                         })
-                        .done(function (response) {
-                            console.log(response);
+                        .done(function (order) {
+                            //const order = JSON.parse(response);
+                            //console.log(response.ID);
+                            console.log(order);
                             btn.parents('tr').remove();
-                            $("#div-canceled").children('tbody').prepend("<tr>
-                                                <td>
-                                                    <a href='apps-ecommerce-orders-details.html' class='text-body font-weight-bold'>
-                                                        "+response.ID+"
-                                                    </a> 
-                                                </td>
-                                                <td>
-                                                
-                                                </td>
-                                                <td>
+//                            let name = $("#div-canceled").find("tbody").prop("tagName");
+                            $("#div-canceled").find("tbody").prepend(`
+                                <tr>
+                                    <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#`+order.ID+`</a> </td>
+                                    <td>
+                                        `+order.orderDate+`
+                                    </td>
+                                    <td>
+                                        `+order.totalPrice+`
+                                    </td>
+                                    <td>
+                                        <h5><span class="badge badge-info-lighten">`+order.status+`</span></h5>
+                                    </td>
+                                    </td>
 
-                                                </td>
-                                                <td>
-                                                    <h5>
-                                                        <span class='badge badge-info-lighten'>
-
-                                                        </span>
-                                                    </h5>
-                                                </td>
-                                                </td>
-
-                                            </tr>");
+                                </tr>
+                                `);
+                            //console.log(name);
                         })
                         .fail(function (error) {
                             alert(error['statusText']);

@@ -427,7 +427,7 @@
                                                 $('#totalCart').html(response['totalCart'] + " VND");
                                             })
                                             .fail(function (error) {
-                                                alert(error);
+                                                alert(error['statusText']);
                                                 if(error['statusText']=="The number of products in stock is not enough" ){
                                                     tagInput.val(1);
                                                 }

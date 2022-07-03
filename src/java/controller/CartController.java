@@ -265,17 +265,17 @@ public class CartController extends HttpServlet {
 
         //get
         String id_product = request.getParameter("id_product");
+        
+        //check id product exist or not
+        
+        //check quantity number or not
+        
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         Product p = new DetailDAO().getByPid(Integer.parseInt(id_product));
         
         
         try {
-            if(quantity > p.getAmount()){
-                //response.getWriter().write(new Gson().toJson(1));
-                response.sendError(400, "The number of products in stock is not enough");
-                
-                return;
-            }
+            
             if (quantity < 1) {
                 response.sendError(400, "Ow quantity cannot be less than 0!!");
             } else {
@@ -286,6 +286,18 @@ public class CartController extends HttpServlet {
                         response.setCharacterEncoding("UTF-8");
                         response.sendError(400, "Product is not in Cart bru, Are u s?e !!");
                     } else {
+                        if(quantity > p.getAmount()){ //quantity update > in DB 
+                            Cart_Item cItem = new Cart_Item(cart_id, Integer.parseInt(id_product), 1);
+                            new Cart_ItemDAO().updateAmount(cItem);
+                            HashMap<String, String> infoProduct = listIdProduct.get(id_product);
+                            infoProduct.put("quantity", "1");
+                            
+                            //response.getWriter().write(new Gson().toJson(1));
+                            response.sendError(400, "The number of products in stock is not enough");
+
+                            return;
+                        }
+                        
                         //update amount in db
                         Cart_Item cItem = new Cart_Item(cart_id, Integer.parseInt(id_product), quantity);
                         int n = new Cart_ItemDAO().updateAmount(cItem);
