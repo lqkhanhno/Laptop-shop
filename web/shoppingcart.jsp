@@ -428,7 +428,8 @@
                                             })
                                             .fail(function (error) {
                                                 alert(error['statusText']);
-                                                if(error['statusText']=="The number of products in stock is not enough" ){
+                                                if(error['statusText'] == "The number of products in stock is not enough" 
+                                                    || error['statusText'] == "Quantity can not be empty"){
                                                     tagInput.val(1);
                                                 }
                                             });

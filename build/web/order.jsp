@@ -1,3 +1,5 @@
+<%@page import="java.util.Set"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.text.NumberFormat"%>
 <%@page import="java.util.Locale"%>
 <%@page import="java.util.Vector"%>
@@ -215,6 +217,11 @@
                     Locale vn = new Locale("vi", "VN");
                     // Create a formatter given the Locale
                     NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
+                    Map<String, Map<String,Map<String,String>>> listOrder = (Map<String, Map<String,Map<String,String>>>)
+                            request.getAttribute("listOrder");
+                    Vector<Order> listOrderTotal = (Vector<Order>)request.getAttribute("listOrderTotal");
+                    
+
                 %>
                 <!-- row wait -->
                 <div class="row" id="div-wait">
@@ -240,10 +247,9 @@
                                         <tbody>
                                             <%for (Order o : listWait) {%>
                                             <tr>
-                                                <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td><a href="order_detail?order_id=<%= o.getID()%>" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
                                                 <td>
                                                     <%= o.getOrderDate()%> 
-                                                    <!--                                                    <small class="text-muted">10:29 PM</small>-->
                                                 </td>
                                                 <td>
 
@@ -256,9 +262,22 @@
                                                 <td>
                                                     <a href="#" data-id="<%= o.getID()%>" class="btn btn-danger btnCancel">Cancel</a>
                                                 </td>
-
                                             </tr>
+                                            <tr><input class="btn btn-primary"  id="<%= o.getID() %>" value="Detail" ></tr>
+                                            <tr class="div_detail">
+                                                <% 
+                                                    Map<String,Map<String,String>> listProductODetail =
+                                                        listOrder.get(String.valueOf(o.getID()));
+                                                    Set<String> keySet = listProductODetail.keySet();
+                                                    for(Object objKey : keySet){
+                                                        Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+                                                %>
+                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("productName") %></a>
+                                                <%}%>
+                                            </tr>
+                                            
                                             <%}%>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -296,7 +315,7 @@
                                         <tbody>
                                             <%for (Order o : listShipping) {%>
                                             <tr>
-                                                <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td><a href="order_detail?order_id=<%= o.getID()%>" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
                                                 <td>
                                                     <%= o.getOrderDate()%> 
                                                     <!--                                                    <small class="text-muted">10:29 PM</small>-->
@@ -309,7 +328,18 @@
                                                     <h5><span class="badge badge-info-lighten"><%= o.getStatus()%></span></h5>
                                                 </td>
                                                 </td>
-
+                                            </tr>
+                                            <tr><input class="btn btn-primary"  id="<%= o.getID() %>" value="Detail" ></tr>
+                                            <tr class="div_detail">
+                                                <% 
+                                                    Map<String,Map<String,String>> listProductODetail =
+                                                        listOrder.get(String.valueOf(o.getID()));
+                                                    Set<String> keySet = listProductODetail.keySet();
+                                                    for(Object objKey : keySet){
+                                                        Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+                                                %>
+                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("productName") %></a>
+                                                <%}%>
                                             </tr>
                                             <%}%>
                                         </tbody>
@@ -350,7 +380,7 @@
                                         <tbody>
                                             <%for (Order o : listShipped) {%>
                                             <tr>
-                                                <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td><a href="order_detail?order_id=<%= o.getID()%>" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
                                                 <td>
                                                     <%= o.getOrderDate()%> 
                                                     <!--                                                    <small class="text-muted">10:29 PM</small>-->
@@ -364,6 +394,18 @@
                                                 </td>
                                                 </td>
 
+                                            </tr>
+                                            <tr><input class="btn btn-primary"  id="<%= o.getID() %>" value="Detail" ></tr>
+                                            <tr class="div_detail">
+                                                <% 
+                                                    Map<String,Map<String,String>> listProductODetail =
+                                                        listOrder.get(String.valueOf(o.getID()));
+                                                    Set<String> keySet = listProductODetail.keySet();
+                                                    for(Object objKey : keySet){
+                                                        Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+                                                %>
+                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("productName") %></a>
+                                                <%}%>
                                             </tr>
                                             <%}%>
                                         </tbody>
@@ -404,7 +446,7 @@
                                         <tbody>
                                             <%for (Order o : listCanceled) {%>
                                             <tr>
-                                                <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td><a href="order_detail?order_id=<%= o.getID()%>" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
                                                 <td>
                                                     <%= o.getOrderDate()%> 
                                                     <!--                                                    <small class="text-muted">10:29 PM</small>-->
@@ -417,9 +459,26 @@
                                                     <h5><span class="badge badge-info-lighten"><%= o.getStatus()%></span></h5>
                                                 </td>
                                                 </td>
-
                                             </tr>
+                                            <tr>
+                                                <table>
+                                                    <tr><input type="button"  id="<%= o.getID() %>" value="Detail" ></tr>
+                                                    <tr class="div_detail">
+                                                        <% 
+                                                            Map<String,Map<String,String>> listProductODetail =
+                                                                listOrder.get(String.valueOf(o.getID()));
+                                                            Set<String> keySet = listProductODetail.keySet();
+                                                            for(Object objKey : keySet){
+                                                                Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+                                                        %>
+                                                    <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("productName") %></a>
+                                                        <%}%>
+                                                    </tr>
+                                                </table>
+                                            </tr>
+                                            
                                             <%}%>
+                                            
                                         </tbody>
                                     </table>
                                 </div>

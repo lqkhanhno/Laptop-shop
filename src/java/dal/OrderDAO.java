@@ -76,7 +76,7 @@ public class OrderDAO extends DBContext{
         return o;
     }
 
-    public Vector<Order> getListOrderByUserID(int userid, String statusParam) {
+    public Vector<Order> getListOrderByUserIDAndStatus(int userid, String statusParam) {
         Vector<Order> listOrder = new Vector<>();
         String query = "select * from [Order] where userID = "+userid
                 +" and status = '"+statusParam+"'";
@@ -100,7 +100,7 @@ public class OrderDAO extends DBContext{
         return listOrder;
     }
 
-    public Vector<Order> getListOrderByUserID(int userid) {
+    public Vector<Order> getListOrderByUserIDShippedOrCanceled(int userid) {
         Vector<Order> listOrder = new Vector<>();
         String query = "select * from [Order] where userID = "+userid + " and status = 'Shipped' or status = 'Canceled'";
         ResultSet rs = getData(query);
@@ -155,6 +155,29 @@ public class OrderDAO extends DBContext{
         }
         //}
         return n;
+    }
+
+    public Vector<Order> getListOrderByUserID(int userid) {
+        Vector<Order> listOrder = new Vector<>();
+        String query = "select * from [Order] where userID = "+userid;
+        ResultSet rs = getData(query);
+        try {
+            while(rs.next()){
+                int ID = rs.getInt(1);
+                int userID = rs.getInt(2);
+                int totalPrice = rs.getInt(3);
+                String status = rs.getString(4);
+                Date orderDate = rs.getDate(5);
+                String note = rs.getString(6);
+                Timestamp updated_At = rs.getTimestamp(7);
+                Order o = new Order(ID, userID, totalPrice, status, orderDate, note, updated_At);
+                listOrder.add(o);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return listOrder;
     }
     
     
