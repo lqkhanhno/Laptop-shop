@@ -267,7 +267,7 @@
                                                     <tr>
                                                         <button id="<%= o.getID() %>"  >Detail</button>
                                                     </tr>
-                                                    <tr class="div_detail">
+                                                    <tr class="div_detail_<%= o.getID()%>">
                                                         <table>
                                                             <% 
                                                                 Map<String,Map<String,String>> listProductODetail =
