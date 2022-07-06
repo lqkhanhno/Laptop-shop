@@ -6,7 +6,9 @@
 package controller.manage;
 
 import dal.CategoryDAO;
+import dal.DetailDAO;
 import dal.ManageDAO;
+import dal.ProductDAO;
 import dal.SupplierDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -73,6 +75,10 @@ public class EditProductServlet extends HttpServlet {
         request.setAttribute("sclist", sclist);
         request.setAttribute("splist", splist);
         String id = request.getParameter("id");
+        DetailDAO pd = new DetailDAO();
+        Product p = new Product();
+        p = pd.getByPid(Integer.parseInt(id));
+        request.setAttribute("p", p);
         request.setAttribute("id", id);
         request.getRequestDispatcher("editproduct.jsp?id=" + id).forward(request, response);
     }
@@ -98,7 +104,7 @@ public class EditProductServlet extends HttpServlet {
         String sprice = request.getParameter("sellprice");
         String amount = request.getParameter("amount");
         String sale = request.getParameter("sale");
-        String supid = request.getParameter("supplieID");
+        String supid = request.getParameter("suppliID");
         String rdate = request.getParameter("releasedate");
         String issell = request.getParameter("issell");
         
