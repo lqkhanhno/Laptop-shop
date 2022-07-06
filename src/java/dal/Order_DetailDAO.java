@@ -95,8 +95,8 @@ public class Order_DetailDAO extends DBContext{
             1:{
                     #11 :{
                             "image": 
-                            "pro_name":
-                            "price".
+                            "productName":
+                            "productPrice".
                             "quantity"
                     }
                     }

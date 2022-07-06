@@ -221,7 +221,6 @@
                             request.getAttribute("listOrder");
                     Vector<Order> listOrderTotal = (Vector<Order>)request.getAttribute("listOrderTotal");
                     
-
                 %>
                 <!-- row wait -->
                 <div class="row" id="div-wait">
@@ -263,18 +262,49 @@
                                                     <a href="#" data-id="<%= o.getID()%>" class="btn btn-danger btnCancel">Cancel</a>
                                                 </td>
                                             </tr>
-                                            <tr><input class="btn btn-primary"  id="<%= o.getID() %>" value="Detail" ></tr>
-                                            <tr class="div_detail">
-                                                <% 
-                                                    Map<String,Map<String,String>> listProductODetail =
-                                                        listOrder.get(String.valueOf(o.getID()));
-                                                    Set<String> keySet = listProductODetail.keySet();
-                                                    for(Object objKey : keySet){
-                                                        Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
-                                                %>
-                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("productName") %></a>
-                                                <%}%>
+                                            <tr>
+                                                <table>
+                                                    <tr>
+                                                        <button id="<%= o.getID() %>"  >Detail</button>
+                                                    </tr>
+                                                    <tr class="div_detail">
+                                                        <table>
+                                                            <% 
+                                                                Map<String,Map<String,String>> listProductODetail =
+                                                                    listOrder.get(String.valueOf(o.getID()));
+                                                                Set<String> keySet = listProductODetail.keySet();
+                                                                for(Object objKey : keySet){
+                                                                    Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+                                                            %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="img/Laptop/<%= listAtrr.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
+                                                                        <p class="m-0 d-inline-block align-middle font-16">
+                                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("pro_name") %></a>
+                                                                            <br>
+                                                                            <small><b>x<%= listAtrr.get("quantity") %></b></small>
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="total">
+                                                                        <%= listAtrr.get("productPrice") %> VND
+                                                                    </td>
+                                                                </tr>
+                                                            <%}%>
+                                                                <tr>
+                                                                    <%
+                                                                        for(Order order : listOrderTotal){
+                                                                            if(order.getID()==o.getID()){
+                                                                        
+                                                                    %>
+                                                                                <td>Total Money: <%= order.getTotalPrice() %><td>
+                                                                    <%}}%>
+                                                                    
+                                                                <tr>
+                                                        </table>
+                                                    </tr>
+                                                </table>
                                             </tr>
+                                            
                                             
                                             <%}%>
                                             
@@ -329,17 +359,47 @@
                                                 </td>
                                                 </td>
                                             </tr>
-                                            <tr><input class="btn btn-primary"  id="<%= o.getID() %>" value="Detail" ></tr>
-                                            <tr class="div_detail">
-                                                <% 
-                                                    Map<String,Map<String,String>> listProductODetail =
-                                                        listOrder.get(String.valueOf(o.getID()));
-                                                    Set<String> keySet = listProductODetail.keySet();
-                                                    for(Object objKey : keySet){
-                                                        Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
-                                                %>
-                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("productName") %></a>
-                                                <%}%>
+                                            <tr>
+                                                <table>
+                                                    <tr>
+                                                        <button id="<%= o.getID() %>"  >Detail</button>
+                                                    </tr>
+                                                    <tr class="div_detail">
+                                                        <table>
+                                                            <% 
+                                                                Map<String,Map<String,String>> listProductODetail =
+                                                                    listOrder.get(String.valueOf(o.getID()));
+                                                                Set<String> keySet = listProductODetail.keySet();
+                                                                for(Object objKey : keySet){
+                                                                    Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+                                                            %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="img/Laptop/<%= listAtrr.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
+                                                                        <p class="m-0 d-inline-block align-middle font-16">
+                                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("pro_name") %></a>
+                                                                            <br>
+                                                                            <small><b>x<%= listAtrr.get("quantity") %></b></small>
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="total">
+                                                                        <%= listAtrr.get("productPrice") %> VND
+                                                                    </td>
+                                                                </tr>
+                                                            <%}%>
+                                                                <tr>
+                                                                    <%
+                                                                        for(Order order : listOrderTotal){
+                                                                            if(order.getID()==o.getID()){
+                                                                        
+                                                                    %>
+                                                                                <td>Total Money: <%= order.getTotalPrice() %><td>
+                                                                    <%}}%>
+                                                                    
+                                                                <tr>
+                                                        </table>
+                                                    </tr>
+                                                </table>
                                             </tr>
                                             <%}%>
                                         </tbody>
@@ -395,17 +455,47 @@
                                                 </td>
 
                                             </tr>
-                                            <tr><input class="btn btn-primary"  id="<%= o.getID() %>" value="Detail" ></tr>
-                                            <tr class="div_detail">
-                                                <% 
-                                                    Map<String,Map<String,String>> listProductODetail =
-                                                        listOrder.get(String.valueOf(o.getID()));
-                                                    Set<String> keySet = listProductODetail.keySet();
-                                                    for(Object objKey : keySet){
-                                                        Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
-                                                %>
-                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("productName") %></a>
-                                                <%}%>
+                                            <tr>
+                                                <table>
+                                                    <tr>
+                                                        <button id="<%= o.getID() %>"  >Detail</button>
+                                                    </tr>
+                                                    <tr class="div_detail">
+                                                        <table>
+                                                            <% 
+                                                                Map<String,Map<String,String>> listProductODetail =
+                                                                    listOrder.get(String.valueOf(o.getID()));
+                                                                Set<String> keySet = listProductODetail.keySet();
+                                                                for(Object objKey : keySet){
+                                                                    Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+                                                            %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="img/Laptop/<%= listAtrr.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
+                                                                        <p class="m-0 d-inline-block align-middle font-16">
+                                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("pro_name") %></a>
+                                                                            <br>
+                                                                            <small><b>x<%= listAtrr.get("quantity") %></b></small>
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="total">
+                                                                        <%= listAtrr.get("productPrice") %> VND
+                                                                    </td>
+                                                                </tr>
+                                                            <%}%>
+                                                                <tr>
+                                                                    <%
+                                                                        for(Order order : listOrderTotal){
+                                                                            if(order.getID()==o.getID()){
+                                                                        
+                                                                    %>
+                                                                                <td>Total Money: <%= order.getTotalPrice() %><td>
+                                                                    <%}}%>
+                                                                    
+                                                                <tr>
+                                                        </table>
+                                                    </tr>
+                                                </table>
                                             </tr>
                                             <%}%>
                                         </tbody>
@@ -462,17 +552,43 @@
                                             </tr>
                                             <tr>
                                                 <table>
-                                                    <tr><input type="button"  id="<%= o.getID() %>" value="Detail" ></tr>
+                                                    <tr>
+                                                        <button id="<%= o.getID() %>"  >Detail</button>
+                                                    </tr>
                                                     <tr class="div_detail">
-                                                        <% 
-                                                            Map<String,Map<String,String>> listProductODetail =
-                                                                listOrder.get(String.valueOf(o.getID()));
-                                                            Set<String> keySet = listProductODetail.keySet();
-                                                            for(Object objKey : keySet){
-                                                                Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
-                                                        %>
-                                                    <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("productName") %></a>
-                                                        <%}%>
+                                                        <table>
+                                                            <% 
+                                                                Map<String,Map<String,String>> listProductODetail =
+                                                                    listOrder.get(String.valueOf(o.getID()));
+                                                                Set<String> keySet = listProductODetail.keySet();
+                                                                for(Object objKey : keySet){
+                                                                    Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+                                                            %>
+                                                                <tr>
+                                                                    <td>
+                                                                        <img src="img/Laptop/<%= listAtrr.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
+                                                                        <p class="m-0 d-inline-block align-middle font-16">
+                                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("pro_name") %></a>
+                                                                            <br>
+                                                                            <small><b>x<%= listAtrr.get("quantity") %></b></small>
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="total">
+                                                                        <%= listAtrr.get("productPrice") %> VND
+                                                                    </td>
+                                                                </tr>
+                                                            <%}%>
+                                                                <tr>
+                                                                    <%
+                                                                        for(Order order : listOrderTotal){
+                                                                            if(order.getID()==o.getID()){
+                                                                        
+                                                                    %>
+                                                                                <td>Total Money: <%= order.getTotalPrice() %><td>
+                                                                    <%}}%>
+                                                                    
+                                                                <tr>
+                                                        </table>
                                                     </tr>
                                                 </table>
                                             </tr>

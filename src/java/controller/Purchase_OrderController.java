@@ -214,8 +214,8 @@ public class Purchase_OrderController extends HttpServlet {
             1:{
                     #11 :{
                             "image": 
-                            "title":
-                            "pro_name".
+                            "productName":
+                            "productPrice".
                             "quantity"
                     }
 
