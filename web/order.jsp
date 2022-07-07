@@ -246,7 +246,7 @@
                                         <tbody>
                                             <%for (Order o : listWait) {%>
                                             <tr>
-                                                <td><a href="order_detail?order_id=<%= o.getID()%>" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td><p><b>#<%= o.getID()%></b></p> </td>
                                                 <td>
                                                     <%= o.getOrderDate()%> 
                                                 </td>
@@ -263,12 +263,10 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <table>
-                                                    <tr>
-                                                        <button id="<%= o.getID() %>"  >Detail</button>
-                                                    </tr>
-                                                    <tr class="div_detail_<%= o.getID()%>">
-                                                        <table>
+                                                <td colspan="5">
+                                                <div >
+                                                    <button id="<%= o.getID() %>" class="btn btn-info btn_detail" >Detail</button>
+                                                    <table class="div_detail_<%= o.getID()%>" style="display: none">
                                                             <% 
                                                                 Map<String,Map<String,String>> listProductODetail =
                                                                     listOrder.get(String.valueOf(o.getID()));
@@ -277,16 +275,16 @@
                                                                     Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
                                                             %>
                                                                 <tr>
-                                                                    <td>
+                                                                    <td WIDTH="75vw" colspan="3" >
                                                                         <img src="img/Laptop/<%= listAtrr.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
-                                                                        <p class="m-0 d-inline-block align-middle font-16">
-                                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("pro_name") %></a>
+                                                                        <span class="m-0 d-inline-block align-middle font-16">
+                                                                            <a href="product?productid=<%= objKey.toString() %>" class="text-body"><%= listAtrr.get("productName") %></a>
                                                                             <br>
                                                                             <small><b>x<%= listAtrr.get("quantity") %></b></small>
-                                                                        </p>
+                                                                        </span>
                                                                     </td>
-                                                                    <td class="total">
-                                                                        <%= listAtrr.get("productPrice") %> VND
+                                                                    <td WIDTH="25%" class="total">
+                                                                        <%= vnFormat.format(Integer.parseInt(listAtrr.get("productPrice"))) %>
                                                                     </td>
                                                                 </tr>
                                                             <%}%>
@@ -296,16 +294,14 @@
                                                                             if(order.getID()==o.getID()){
                                                                         
                                                                     %>
-                                                                                <td>Total Money: <%= order.getTotalPrice() %><td>
+                                                                                <td><b>Total Money: <%= vnFormat.format(order.getTotalPrice()) %></b><td>
                                                                     <%}}%>
                                                                     
                                                                 <tr>
-                                                        </table>
-                                                    </tr>
                                                 </table>
+                                                </div>
+                                                </td>
                                             </tr>
-                                            
-                                            
                                             <%}%>
                                             
                                         </tbody>
@@ -345,7 +341,7 @@
                                         <tbody>
                                             <%for (Order o : listShipping) {%>
                                             <tr>
-                                                <td><a href="order_detail?order_id=<%= o.getID()%>" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td><p><b>#<%= o.getID()%></b></p> </td>
                                                 <td>
                                                     <%= o.getOrderDate()%> 
                                                     <!--                                                    <small class="text-muted">10:29 PM</small>-->
@@ -360,12 +356,10 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <table>
-                                                    <tr>
-                                                        <button id="<%= o.getID() %>"  >Detail</button>
-                                                    </tr>
-                                                    <tr class="div_detail">
-                                                        <table>
+                                                <td colspan="5">
+                                                <div >
+                                                    <button id="<%= o.getID() %>" class="btn btn-info btn_detail" >Detail</button>
+                                                    <table class="div_detail_<%= o.getID()%>" style="display: none">
                                                             <% 
                                                                 Map<String,Map<String,String>> listProductODetail =
                                                                     listOrder.get(String.valueOf(o.getID()));
@@ -374,16 +368,16 @@
                                                                     Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
                                                             %>
                                                                 <tr>
-                                                                    <td>
+                                                                    <td colspan="3" WIDTH="75%">
                                                                         <img src="img/Laptop/<%= listAtrr.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
-                                                                        <p class="m-0 d-inline-block align-middle font-16">
-                                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("pro_name") %></a>
+                                                                        <span class="m-0 d-inline-block align-middle font-16">
+                                                                            <a href="product?productid=<%= objKey.toString() %>" class="text-body"><%= listAtrr.get("productName") %></a>
                                                                             <br>
                                                                             <small><b>x<%= listAtrr.get("quantity") %></b></small>
-                                                                        </p>
+                                                                        </span>
                                                                     </td>
                                                                     <td class="total">
-                                                                        <%= listAtrr.get("productPrice") %> VND
+                                                                        <%= vnFormat.format(Integer.parseInt(listAtrr.get("productPrice"))) %>
                                                                     </td>
                                                                 </tr>
                                                             <%}%>
@@ -393,13 +387,13 @@
                                                                             if(order.getID()==o.getID()){
                                                                         
                                                                     %>
-                                                                                <td>Total Money: <%= order.getTotalPrice() %><td>
+                                                                                <td><b>Total Money: <%= vnFormat.format(order.getTotalPrice()) %></b><td>
                                                                     <%}}%>
                                                                     
                                                                 <tr>
-                                                        </table>
-                                                    </tr>
                                                 </table>
+                                                </div>
+                                                </td>
                                             </tr>
                                             <%}%>
                                         </tbody>
@@ -440,7 +434,7 @@
                                         <tbody>
                                             <%for (Order o : listShipped) {%>
                                             <tr>
-                                                <td><a href="order_detail?order_id=<%= o.getID()%>" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td><p><b>#<%= o.getID()%></b></p> </td>
                                                 <td>
                                                     <%= o.getOrderDate()%> 
                                                     <!--                                                    <small class="text-muted">10:29 PM</small>-->
@@ -456,12 +450,10 @@
 
                                             </tr>
                                             <tr>
-                                                <table>
-                                                    <tr>
-                                                        <button id="<%= o.getID() %>"  >Detail</button>
-                                                    </tr>
-                                                    <tr class="div_detail">
-                                                        <table>
+                                                <td colspan="5">
+                                                <div >
+                                                    <button id="<%= o.getID() %>" class="btn btn-info btn_detail" >Detail</button>
+                                                    <table class="div_detail_<%= o.getID()%>" style="display: none">
                                                             <% 
                                                                 Map<String,Map<String,String>> listProductODetail =
                                                                     listOrder.get(String.valueOf(o.getID()));
@@ -470,16 +462,16 @@
                                                                     Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
                                                             %>
                                                                 <tr>
-                                                                    <td>
+                                                                    <td colspan="3" WIDTH="75%">
                                                                         <img src="img/Laptop/<%= listAtrr.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
-                                                                        <p class="m-0 d-inline-block align-middle font-16">
-                                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("pro_name") %></a>
+                                                                        <span class="m-0 d-inline-block align-middle font-16">
+                                                                            <a href="product?productid=<%= objKey.toString() %>" class="text-body"><%= listAtrr.get("productName") %></a>
                                                                             <br>
                                                                             <small><b>x<%= listAtrr.get("quantity") %></b></small>
-                                                                        </p>
+                                                                        </span>
                                                                     </td>
                                                                     <td class="total">
-                                                                        <%= listAtrr.get("productPrice") %> VND
+                                                                        <%= vnFormat.format(Integer.parseInt(listAtrr.get("productPrice")))%> 
                                                                     </td>
                                                                 </tr>
                                                             <%}%>
@@ -489,13 +481,13 @@
                                                                             if(order.getID()==o.getID()){
                                                                         
                                                                     %>
-                                                                                <td>Total Money: <%= order.getTotalPrice() %><td>
+                                                                                <td><b>Total Money: <%= vnFormat.format(order.getTotalPrice()) %></b><td>
                                                                     <%}}%>
                                                                     
                                                                 <tr>
-                                                        </table>
-                                                    </tr>
                                                 </table>
+                                                </div>
+                                                </td>
                                             </tr>
                                             <%}%>
                                         </tbody>
@@ -536,7 +528,7 @@
                                         <tbody>
                                             <%for (Order o : listCanceled) {%>
                                             <tr>
-                                                <td><a href="order_detail?order_id=<%= o.getID()%>" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
+                                                <td><p><b>#<%= o.getID()%></b></p> </td>
                                                 <td>
                                                     <%= o.getOrderDate()%> 
                                                     <!--                                                    <small class="text-muted">10:29 PM</small>-->
@@ -551,12 +543,10 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <table>
-                                                    <tr>
-                                                        <button id="<%= o.getID() %>"  >Detail</button>
-                                                    </tr>
-                                                    <tr class="div_detail">
-                                                        <table>
+                                                <td colspan="5">
+                                                <div >
+                                                    <button id="<%= o.getID() %>" class="btn btn-info btn_detail" >Detail</button>
+                                                    <table class="div_detail_<%= o.getID()%>" style="display: none">
                                                             <% 
                                                                 Map<String,Map<String,String>> listProductODetail =
                                                                     listOrder.get(String.valueOf(o.getID()));
@@ -565,16 +555,16 @@
                                                                     Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
                                                             %>
                                                                 <tr>
-                                                                    <td>
+                                                                    <td colspan="3" WIDTH="75%">
                                                                         <img src="img/Laptop/<%= listAtrr.get("image") %>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
-                                                                        <p class="m-0 d-inline-block align-middle font-16">
-                                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= listAtrr.get("pro_name") %></a>
+                                                                        <span class="m-0 d-inline-block align-middle font-16">
+                                                                            <a href="product?productid=<%= objKey.toString() %>" class="text-body"><%= listAtrr.get("productName") %></a>
                                                                             <br>
                                                                             <small><b>x<%= listAtrr.get("quantity") %></b></small>
-                                                                        </p>
+                                                                        </span>
                                                                     </td>
                                                                     <td class="total">
-                                                                        <%= listAtrr.get("productPrice") %> VND
+                                                                        <%= vnFormat.format(Integer.parseInt(listAtrr.get("productPrice"))) %>
                                                                     </td>
                                                                 </tr>
                                                             <%}%>
@@ -584,13 +574,13 @@
                                                                             if(order.getID()==o.getID()){
                                                                         
                                                                     %>
-                                                                                <td>Total Money: <%= order.getTotalPrice() %><td>
+                                                                                <td><b>Total Money: <%= vnFormat.format(order.getTotalPrice()) %></b><td>
                                                                     <%}}%>
                                                                     
                                                                 <tr>
-                                                        </table>
-                                                    </tr>
                                                 </table>
+                                                </div>
+                                                </td>
                                             </tr>
                                             
                                             <%}%>
@@ -835,6 +825,10 @@
                   }
 
                   });
+                $(".btn_detail").click(function(){
+                    let id = $(this).attr('id');
+                    $(".div_detail_"+id).toggle();
+                });
             });
         </script>
 
