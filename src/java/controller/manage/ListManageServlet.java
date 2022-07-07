@@ -97,7 +97,7 @@ public class ListManageServlet extends HttpServlet {
         request.setAttribute("data", list);
         request.setAttribute("sclist", sclist);
         request.setAttribute("splist", splist);
-        request.getRequestDispatcher("manageproduct.jsp").forward(request, response);
+        request.getRequestDispatcher("manager/manageproduct.jsp").forward(request, response);
     }
 
     /**
