@@ -5,7 +5,10 @@
  */
 package controller;
 
+import dal.Cart_ItemDAO;
 import dal.CategoryDAO;
+import dal.ProductDAO;
+import dal.ShoppingCartDAO;
 import dal.SupplierDAO;
 import dal.TypeProductDAO;
 import java.io.IOException;
@@ -15,8 +18,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Category;
 import model.Product;
+import model.ShoppingCart;
 import model.Supplier;
 
 /**
@@ -70,18 +75,32 @@ public class HomeServlet extends HttpServlet {
         List<Product> list2 = db.getTopSell();
         List<Product> list3 = db.getTopSale();
         
+        ProductDAO db1 = new ProductDAO();
+        List<Product> list = db1.getAll();
+        
+        request.setAttribute("date", list);
         request.setAttribute("data1", list1);
         request.setAttribute("data2", list2);
         request.setAttribute("data3", list3);
-
-         CategoryDAO c = new CategoryDAO();
-        List<Category> sclist = c.getAll();
         
 
+        CategoryDAO c = new CategoryDAO();
+        List<Category> sclist = c.getAll();
+        
+        int productsInCart=0;
+        HttpSession session = request.getSession();
+//        Object email = session.getAttribute("email");
+            Object email = "anhpn@gmail.com";
+        if(email!=null){
+            ShoppingCart cart = new ShoppingCartDAO().getCartByEmail(email.toString());
+            int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+            request.setAttribute("quantityCart", quantityCart);
+        }else{
+            request.setAttribute("quantityCart", 0);
+        }
 
         request.setAttribute("sclist", sclist);
 
-        
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }
 

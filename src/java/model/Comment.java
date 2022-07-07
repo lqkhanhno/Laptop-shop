@@ -5,41 +5,47 @@
 package model;
 
 public class Comment {
-    int cmtID;
-    int productID;
-    int comment;
+    private int userID;
+    private int produtID;
+    private String comment;
 
     public Comment() {
     }
 
-    public Comment(int cmtID, int productID, int comment) {
-        this.cmtID = cmtID;
-        this.productID = productID;
-        this.comment = comment;
+    public int getUserID() {
+        return userID;
     }
 
-    public int getCmtID() {
-        return cmtID;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public void setCmtID(int cmtID) {
-        this.cmtID = cmtID;
+    public int getProdutID() {
+        return produtID;
     }
 
-    public int getProductID() {
-        return productID;
+    public void setProdutID(int produtID) {
+        this.produtID = produtID;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public int getComment() {
+    public String getComment() {
         return comment;
     }
 
-    public void setComment(int comment) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
+
+    public Comment(int userID, int produtID, String comment) {
+        this.userID = userID;
+        this.produtID = produtID;
+        this.comment = comment;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" + "userID=" + userID + ", produtID=" + produtID + ", comment=" + comment + '}';
+    }
+
     
 }

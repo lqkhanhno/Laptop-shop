@@ -62,7 +62,7 @@ public class Cart_ItemDAO extends DBContext{
         HashMap<String, HashMap<String,String>>listIdPro
                 = new HashMap<>();
         ProductDAO dao= new ProductDAO();
-        DetailDAO m = new DetailDAO();
+        DetailDAO detail = new DetailDAO();
         String query ="select *from Cart_Item where cart_ID="+id;
         ResultSet rs = getData(query);
         try {
@@ -71,7 +71,7 @@ public class Cart_ItemDAO extends DBContext{
                 int product_ID = rs.getInt(2);
                 int amount = rs.getInt(3);
                 
-                Product product = m.getByPid(product_ID);
+                Product product = detail.getByPid(product_ID);
                 Cart_Item c = new Cart_Item(cart_ID, product_ID, amount);
                 
                 HashMap<String, String> infoProduct = new HashMap<>();
@@ -135,6 +135,20 @@ public class Cart_ItemDAO extends DBContext{
             }
         }
         return m;
+    }
+
+    public int getQuantityItemOfCartId(int id) {
+        String query = "select count(*) from Cart_Item where  cart_ID=" + id;
+        ResultSet rs = getData(query);
+        int result=0;
+        try {
+            if(rs.next()){
+                result=rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
     }
 
     

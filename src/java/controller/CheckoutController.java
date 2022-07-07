@@ -7,6 +7,7 @@ package controller;
 import dal.Cart_ItemDAO;
 import dal.OrderDAO;
 import dal.Order_DetailDAO;
+import dal.ProductDAO;
 import dal.ShoppingCartDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -16,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -117,6 +120,9 @@ public class CheckoutController extends HttpServlet {
         HashMap<String, String> order_Summary = new ShoppingCartDAO().getIn4Cart(listPro);
         listPro.put("order_summary", order_Summary);
         
+        int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart_id);
+        request.setAttribute("quantityCart", quantityCart);
+        
         request.setAttribute("in4User", u);
         request.setAttribute("listProduct", listPro);
         
@@ -153,6 +159,9 @@ public class CheckoutController extends HttpServlet {
             = new HashMap<>();
         int cart_id =  Integer.parseInt(session.getAttribute("cart_id").toString());
         listIdPro = new Cart_ItemDAO().getCartItemByCartId(cart_id);
+        if(listIdPro.isEmpty() || listIdPro == null){
+            return;
+        }
 //        listIdPro {
 //              id_product => hashmap<String, String>{
 //                        'id'=> id_product,
@@ -169,7 +178,7 @@ public class CheckoutController extends HttpServlet {
         //add order for userID
         java.util.Date utilDate = new java.util.Date();
         Date date = new Date(utilDate.getTime()); 
-        String status = "Chờ xác nhận";
+        String status = "Wait Accept";
         Order o = new Order(userID, toalPrice, status, date, note);
         int n = new OrderDAO().addOrder(o);
         if(n==0){
@@ -183,13 +192,21 @@ public class CheckoutController extends HttpServlet {
             System.out.println("Can't add to Orderdetail");
             return;
         }
-        
+                
         //remove list cart in cart_item by cartId
         m = new Cart_ItemDAO().removeListCartItemByCartId(listIdPro,cart_id);
         if(m==1){
             System.out.println("Can't remove Cart Item");
         }
+        
+        //decrease quantity product after checkout
+//        m = new ProductDAO().decreaseQuantityProductAfterCheckout(listIdPro);
         System.out.println("Checkout success");
+        try {
+            response.sendRedirect("order");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
         
     }
     
