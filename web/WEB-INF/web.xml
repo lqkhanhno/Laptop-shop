@@ -48,6 +48,10 @@
         <servlet-name>NotificationController</servlet-name>
         <servlet-class>controller.NotificationController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Order_DetailController</servlet-name>
+        <servlet-class>controller.Order_DetailController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>NotificationController</servlet-name>
         <url-pattern>/notification</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Order_DetailController</servlet-name>
+        <url-pattern>/order_detail</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
