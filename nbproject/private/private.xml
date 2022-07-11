@@ -3,10 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP/Laptop-shop/src/java/dal/OrderDAO.java</file>
-            <file>file:/D:/SWP/Laptop-shop/src/java/controller/manage/ListManageServlet.java</file>
-            <file>file:/D:/SWP/Laptop-shop/src/java/dal/SupplierDAO.java</file>
-            <file>file:/D:/SWP/Laptop-shop/src/java/controller/manage/EditProductServlet.java</file>
+            <file>file:/D:/ki_5_2022,may/SWP391/c/Laptop-shop-main/src/java/model/User.java</file>
+            <file>file:/D:/ki_5_2022,may/SWP391/c/Laptop-shop-main/src/java/controller/manage/DeleteUser.java</file>
+            <file>file:/D:/ki_5_2022,may/SWP391/c/Laptop-shop-main/web/manager/usermanage.jsp</file>
+            <file>file:/D:/ki_5_2022,may/SWP391/c/Laptop-shop-main/src/java/controller/manage/UserManageView.java</file>
+            <file>file:/D:/ki_5_2022,may/SWP391/c/Laptop-shop-main/src/java/controller/manage/DeleteProductServlet.java</file>
+            <file>file:/D:/ki_5_2022,may/SWP391/c/Laptop-shop-main/src/java/dal/UserDAO.java</file>
+            <file>file:/D:/ki_5_2022,may/SWP391/c/Laptop-shop-main/src/java/controller/manage/EditProductServlet.java</file>
         </group>
     </open-files>
 </project-private>

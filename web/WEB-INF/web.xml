@@ -49,8 +49,20 @@
         <servlet-class>controller.NotificationController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>Order_DetailController</servlet-name>
-        <servlet-class>controller.Order_DetailController</servlet-class>
+        <servlet-name>UserManageView</servlet-name>
+        <servlet-class>controller.manage.UserManageView</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddUser</servlet-name>
+        <servlet-class>controller.manage.AddUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditUser</servlet-name>
+        <servlet-class>controller.manage.EditUser</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteUser</servlet-name>
+        <servlet-class>controller.manage.DeleteUser</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -101,8 +113,20 @@
         <url-pattern>/notification</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>Order_DetailController</servlet-name>
-        <url-pattern>/order_detail</url-pattern>
+        <servlet-name>UserManageView</servlet-name>
+        <url-pattern>/usermanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddUser</servlet-name>
+        <url-pattern>/adduser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditUser</servlet-name>
+        <url-pattern>/edituser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteUser</servlet-name>
+        <url-pattern>/deleteuser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
