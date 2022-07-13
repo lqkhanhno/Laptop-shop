@@ -230,7 +230,7 @@ public class Purchase_OrderController extends HttpServlet {
                 new Order_DetailDAO().getOrderDetailForListOrder(listOrder);
         request.setAttribute("listOrder", listOrderMap);
         request.setAttribute("listOrderTotal", listOrder);
-        pirnt(listOrderMap);
+        //print(listOrderMap);
         
         //return list and sort
         request.setAttribute("listShipping", sortListVector(listShipping, -1));
@@ -242,14 +242,14 @@ public class Purchase_OrderController extends HttpServlet {
         
     }
     
-    private void pirnt( Map<String, Map<String,Map<String,String>>> listOrder ){
-        Map<String,Map<String,String>> listProductODetail =
-            listOrder.get("11");
-        Set<String> keySet = listProductODetail.keySet();
-        for(Object objKey : keySet){
-            Map<String,String> listAtrr = listProductODetail.get(objKey);
-            System.out.println(listAtrr.get("productName"));
-            
-        }
-    }
+//    private void print( Map<String, Map<String,Map<String,String>>> listOrder ){
+//        Map<String,Map<String,String>> listProductODetail =
+//            listOrder.get("11");
+//        Set<String> keySet = listProductODetail.keySet();
+//        for(Object objKey : keySet){
+//            Map<String,String> listAtrr = listProductODetail.get(objKey);
+//            System.out.println(listAtrr.get("productName"));
+//            
+//        }
+//    }
 }
