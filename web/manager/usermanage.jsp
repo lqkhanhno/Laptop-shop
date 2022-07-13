@@ -148,7 +148,12 @@
                 <div id="responsive-nav">
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
+<<<<<<< HEAD:web/manager/usermanage.jsp
                         <li class="active"><a href="usermanage">Manage User </a></li>
+=======
+                        <li class="active"><a href="listmanage">Manage Product</a></li>
+                        <li class="active"><a href="ordermanage">Manage Order</a></li>
+>>>>>>> kAHAnh:build/web/manager/manageproduct.jsp
                         <!--                                            <li><a href="listuser">Manage User</a></li>-->
                     </ul>
                     <!-- /NAV -->
