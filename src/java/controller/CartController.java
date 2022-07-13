@@ -194,7 +194,6 @@ public class CartController extends HttpServlet {
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-            System.out.println("Product is not exist");
             return;
         }
         //yes:
@@ -265,46 +264,72 @@ public class CartController extends HttpServlet {
 
         //get
         String id_product = request.getParameter("id_product");
-        int quantity = Integer.parseInt(request.getParameter("quantity"));
+        String quantity = request.getParameter("quantity");
+        
         Product p = new DetailDAO().getByPid(Integer.parseInt(id_product));
-        if(quantity > p.getAmount()){
-            try {
-                response.sendError(400, "The number of products in stock is not enough");
-                return;
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+        
         
         try {
-            if (quantity < 1) {
-                response.sendError(400, "Ow quantity cannot be less than 0!!");
-            } else {
-                if (listIdProduct == null) {
-                    response.sendError(400, "Cart is empty bru!!");
-                } else {
-                    if (!checkIdInListIdProduct(listIdProduct, id_product)) {
-                        response.setCharacterEncoding("UTF-8");
-                        response.sendError(400, "Product is not in Cart bru, Are u s?e !!");
-                    } else {
-                        //update amount in db
-                        Cart_Item cItem = new Cart_Item(cart_id, Integer.parseInt(id_product), quantity);
-                        int n = new Cart_ItemDAO().updateAmount(cItem);
-                        if (n == 0) {
-                            System.out.println("Can't not update amount");
-                        }
-                        //update amount in list to display for user
-                        HashMap<String, String> infoProduct = listIdProduct.get(id_product);
-                        infoProduct.put("quantity", String.valueOf(quantity));
-                        HashMap<String, String> order_summary = new ShoppingCartDAO().getIn4Cart(listIdProduct);
-
-                        response.setContentType("application/json");
-                        response.setCharacterEncoding("UTF-8");
-
-                        response.getWriter().write(new Gson().toJson(order_summary));
-                    }
-                }
+            //check quantity empty or not
+            if(quantity.isEmpty()){
+                response.sendError(400,"Quantity can not be empty");
+                return;
             }
+            
+            int quantityInt = 0;
+            //check quantity number or not
+            try {
+                quantityInt = Integer.parseInt(quantity);
+            } catch (Exception e) {
+                response.sendError(400,"Quantity must be a number type");
+                e.printStackTrace();
+            }
+            //check id product exist or not
+            if(p==null){
+                response.sendError(400, "Product is not exist");
+                return;
+            }
+            if (quantityInt < 1) {
+                response.sendError(400, "Ow quantity cannot be less than 0!!");
+                return;
+            } 
+            if (listIdProduct == null) {
+                response.sendError(400, "Cart is empty bru!!");
+                return;
+            } 
+            if (!checkIdInListIdProduct(listIdProduct, id_product)) {
+                response.setCharacterEncoding("UTF-8");
+                response.sendError(400, "Product is not in Cart bru, Are u s?e !!");
+                return;
+            }
+            if(quantityInt > p.getAmount()){ //quantity update > in DB 
+                Cart_Item cItem = new Cart_Item(cart_id, Integer.parseInt(id_product), 1);
+                new Cart_ItemDAO().updateAmount(cItem);
+                HashMap<String, String> infoProduct = listIdProduct.get(id_product);
+                infoProduct.put("quantity", "1");
+
+                //response.getWriter().write(new Gson().toJson(1));
+                response.sendError(400, "The number of products in stock is not enough");
+
+                return;
+            }
+
+            //update amount in db
+            Cart_Item cItem = new Cart_Item(cart_id, Integer.parseInt(id_product), quantityInt);
+            int n = new Cart_ItemDAO().updateAmount(cItem);
+            if (n == 0) {
+                System.out.println("Can't not update amount");
+            }
+            //update amount in list to display for user
+            HashMap<String, String> infoProduct = listIdProduct.get(id_product);
+            infoProduct.put("quantity", String.valueOf(quantity));
+            HashMap<String, String> order_summary = new ShoppingCartDAO().getIn4Cart(listIdProduct);
+
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+
+            response.getWriter().write(new Gson().toJson(order_summary));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -320,7 +345,7 @@ public class CartController extends HttpServlet {
 
         String idDelete = request.getParameter("id_product");
         try {
-            if (checkExistProduct1(listIdProduct, idDelete)) {
+            if (checkExistProductInList(listIdProduct, idDelete)) {
                 //remove product in cart_item
                 int n = new Cart_ItemDAO().removeProductById(cart_id, idDelete);
 
@@ -362,7 +387,7 @@ public class CartController extends HttpServlet {
         return false;
     }
 
-    private boolean checkExistProduct1(HashMap<String, HashMap<String, String>> listIdProduct, String idDelete) {
+    private boolean checkExistProductInList(HashMap<String, HashMap<String, String>> listIdProduct, String idDelete) {
         Set<String> keySet = listIdProduct.keySet();
         for (Object key : keySet) {
             if (key.toString().equalsIgnoreCase(idDelete)) {

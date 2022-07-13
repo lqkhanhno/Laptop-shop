@@ -99,7 +99,7 @@ public class NotificationController extends HttpServlet {
         //get user id
         int user_id = new UserDAO().getIdByEmail(email.toString());
         //get list order by user id
-        Vector<Order> vec = new OrderDAO().getListOrderByUserID(user_id);
+        Vector<Order> vec = new OrderDAO().getListOrderByUserIDShippedOrCanceled(user_id);
         request.setAttribute("listNoti", vec);
         dispath(request, response, "/notification.jsp");
         
