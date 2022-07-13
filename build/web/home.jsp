@@ -166,11 +166,8 @@
                         <li class="active"><a href="home">Home</a></li>
 
                         <c:forEach items="${requestScope.sclist}" var="o">
-                            <li><a href="${o.categoryName.toLowerCase()}" value="${o.categoryName}">${o.categoryName}</a></li>
-                            </c:forEach>
-
-                        <li><a href="laptops">Laptops</a></li>
-
+                            <li><a href="catelist?id=${o.ID}" value="${o.ID}">${o.categoryName}</a></li>                       
+                        </c:forEach>                      
                     </ul>
                     <!-- /NAV -->
                 </div>
@@ -200,7 +197,7 @@
                         <div class="row">
                             <div class="products-tabs">
                                 <!-- tab -->
-                                <div id="tab" class="tab-pane active">>
+                                <div id="tab" class="tab-pane active">
                                     <div class="products-slick" data-nav="#slick-nav">
 
                                         <c:forEach items="${requestScope.data}" var="i">
@@ -233,10 +230,9 @@
                                                 </div>
                                             </div>
                                             <!-- /product -->
-                                        </c:forEach> 
-
-                                    </div>
-                                    <div id="slick-nav" class="products-slick-nav"></div>
+                                        </c:forEach>                                                
+                                        </div>       
+                                    <div id="slick-nav" class="products-slick-nav"></div>                                   
                                 </div>
                                 <!-- /tab -->
                             </div>
@@ -248,6 +244,8 @@
             <!-- /container -->
         </div>
         <!-- /SECTION -->
+
+
 
         <!-- SECTION -->
         <div class="section">

@@ -1,5 +1,4 @@
 
-<%@page import="model.Product"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,7 +14,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <title>Product Detail</title>
+        <title>Electro.vn</title>
 
         <!-- Google font -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
@@ -70,6 +69,7 @@
                                 </c:if>
                             <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
                             </c:if>
+
                     </ul>
                 </div>
             </div>
@@ -105,17 +105,35 @@
                         <!-- ACCOUNT -->
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
+                                <!-- Noti -->
+                                <div >
+                                    <a href="notification">
+                                        <i class="fa fa-bell"></i>
+                                        <span>Notification</span>
+                                    </a>
+                                </div>
+                                
+                                
                                 <!-- Cart -->
                                 <div >
                                     <a href="cart">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Your Cart</span>
                                         <% int qty = Integer.parseInt(request.getAttribute("quantityCart").toString());%>
-                                        <div id="quantityCart" data-value="<%= qty%>" class="qty"><%= qty%></div>
+                                        <div class="qty"><%= qty%></div>
                                     </a>
 
                                 </div>
                                 <!-- /Cart -->
+                                
+                                <!-- order list -->
+                                <div >
+                                    <a href="order">
+                                        <i class="fa fa-bank"></i>
+                                        <span>Order List</span>
+                                    </a>
+
+                                </div>
 
                                 <!-- Menu Toogle -->
                                 <div class="menu-toggle">
@@ -135,7 +153,7 @@
             </div>
             <!-- /MAIN HEADER -->
         </header>
-        <!-- /HEADER -->
+        <!-- /HEADER -->             
 
         <!-- NAVIGATION -->
         <nav id="navigation">
@@ -148,10 +166,9 @@
                         <li class="active"><a href="home">Home</a></li>
 
                         <c:forEach items="${requestScope.sclist}" var="o">
-                            <li><a href="${o.categoryName.toLowerCase()}" value="${o.categoryName}">${o.categoryName}</a></li>
-                            </c:forEach>
+                            <li><a href="catelist?id=${o.ID}" value="${o.ID}">${o.categoryName}</a></li>                       
+                        </c:forEach>
 
-                        <li><a href="laptops">Laptops</a></li>
                     </ul>
                     <!-- /NAV -->
                 </div>
@@ -159,91 +176,76 @@
             </div>
             <!-- /container -->
         </nav>
-        <!-- /NAVIGATION -->
-
-
-
+        <!-- /NAVIGATION -->              
+        
         <!-- SECTION -->
-        <div class="section">   
+        <div class="section">
             <!-- container -->
-            <div class="container">
-                <!-- row -->
+            <div class="container">               
+                <!-- /row -->
                 <div class="row">
-                    <!-- Product main img -->
-                    <div class="col-md-5 col-md-push-2">
-                        <div id="product-main-img">
-                            <div class="product-preview">
-                                <img src="./img/Laptop/${requestScope.data.image}" alt="">
+
+                    <!-- section title -->
+                    <div class="col-md-12">
+                        <div class="section-title">
+                            <h3 class="title">All Product</h3>
+                        </div>
+                    </div>
+                    <!-- /section title -->
+
+                    <!-- Products tab & slick -->
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="products-tabs">
+                                <!-- tab -->
+                                <div id="tab" class="tab-pane active">
+                                    <div class="products-slick" data-nav="#slick-nav">
+
+                                        <c:forEach items="${requestScope.data}" var="i">
+
+                                            <!-- product -->
+                                            <div class="product">
+                                                <div class="product-img">
+                                                    <img src="./img/Laptop/${i.image}" alt="">
+                                                    <div class="product-label">
+                                                        <c:if test="${i.salePercent != 0}">
+                                                            <span class="sale">-${i.salePercent}%</span>
+                                                        </c:if>
+                                                        <c:if test="${i.releaseDate > ourDate}">
+                                                            <span class="new">NEW</span>
+                                                        </c:if>
+
+                                                    </div>
+                                                </div>
+                                                <div class="product-body">
+                                                    <p class="product-category">${i.category.categoryName}</p>
+                                                    <h3 class="product-name"><a href="product?productid=${i.productID}">${i.productName}</a></h3>
+                                                        <c:if test="${i.salePercent != 0}">
+                                                        <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
+                                                            <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>
+                                                        </h4>
+                                                    </c:if>
+                                                    <c:if test="${i.salePercent == 0}">
+                                                        <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></h4>
+                                                    </c:if>
+                                                </div>
+                                            </div>
+                                            <!-- /product -->
+                                        </c:forEach>                                                
+                                        </div>       
+                                    <div id="slick-nav" class="products-slick-nav"></div>                                   
+                                </div>
+                                <!-- /tab -->
                             </div>
                         </div>
                     </div>
-                    <!-- /Product main img -->
-                    <div class="col-md-3"></div>
-
-                    <!-- Product details -->
-                    <div  class="col-md-4">
-                        <div class="product-details">
-                            <h2 class="product-name">${requestScope.data.productName}</h2>
-                            <div class="product-body">
-                                <c:if test="${requestScope.data.salePercent != 0}">
-                                    <h3 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice * (100 - requestScope.data.salePercent) / 100}" type = "currency"/>
-                                        <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice}" type = "currency"/></del>
-                                    </h3>
-                                </c:if>
-                                <c:if test="${requestScope.data.salePercent == 0}">
-                                    <h3 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice}" type = "currency"/></h3>
-                                </c:if>
-
-
-                            </div>
-                            <p>${requestScope.data.description}</p>
-
-                            <c:if test="${requestScope.data.amount > 0}">
-                                <div class="add-to-cart">
-                                    <% Product p = (Product) request.getAttribute("data");%>
-                                    <a id="btn-add2cart" data-id="<%= p.getProductID()%>"  href="cart?s=add2Cart"  class="btn btn-danger"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </c:if>
-                            <c:if test="${requestScope.data.amount <= 0}">
-                                <div class="add-to-cart">
-                                    <a class="btn btn-danger"><i class="fa fa-shopping-cart"></i>Out of stock</a>
-                                </div>
-                            </c:if>
-
-
-                        </div>	
-                    </div>
-                    <!-- /Product details -->
-
+                    <!-- Products tab & slick -->
                 </div>
-                <!-- /row -->
             </div>
             <!-- /container -->
         </div>
         <!-- /SECTION -->
-
-        <div class="section">   
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <h3>Comment</h3>
-                    <!-- Product main img -->
-                    <form action="detail" method="post">           
-                        <input type="hidden" name="userID" value=${sessionScope.UserID}>
-                        <nput typie="hidden" name="productID" value=${sessionScope.productID}>
-                        <input type="text" name="comment"  placeholder="Enter comment..."><br>
-                        <input type="hidden" name="date" value=""    
-                        <input type="submit" value="Submit">
-                    </form>
-                    <!-- /Product main img -->
-
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-       
+        
 
         <!-- NEWSLETTER -->
         <div id="newsletter" class="section">
@@ -280,8 +282,6 @@
             <!-- /container -->
         </div>
         <!-- /NEWSLETTER -->
-        
-        
 
         <!-- FOOTER -->
         <footer id="footer">
@@ -334,7 +334,7 @@
                             <div class="footer">
                                 <h3 class="footer-title">Service</h3>
                                 <ul class="footer-links">
-                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="profile">My Account</a></li>
                                     <li><a href="#">View Cart</a></li>
                                     <li><a href="#">Checkout</a></li>
                                     <li><a href="#">Track My Order</a></li>
@@ -348,9 +348,6 @@
                 <!-- /container -->
             </div>
             <!-- /top footer -->
-            
-            
-            
 
             <!-- bottom footer -->
             <div id="bottom-footer" class="section">
@@ -368,7 +365,7 @@
                             </ul>
                             <span class="copyright">
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </span>
                         </div>
@@ -380,10 +377,6 @@
             <!-- /bottom footer -->
         </footer>
         <!-- /FOOTER -->
-        
-                    
-        
-
 
         <!-- jQuery Plugins -->
         <script src="js/jquery.min.js"></script>
@@ -393,31 +386,39 @@
         <script src="js/jquery.zoom.min.js"></script>
         <script src="js/main.js"></script>
         <script>
-                $('#btn-add2cart').click(function(event) {
-                    event.preventDefault();
-                    let btn_add2cart = $(this);
-                    let id = btn_add2cart.data('id');
-                    $.ajax({
-                         url: '/Laptop-shop/cart?s=add2Cart',
-                         type: 'get',
-                         data: {id_product: id},
-                     })
-                     .done(function(respond) {
-    //                     let qty = $('#quantityCart').data('value');
-                         console.log("servel" + respond) ;
-                         $('#quantityCart').html(respond);
-                         $('#quantityCart').data('value',respond);
-                         
+// Set the date we're counting down to
+                                    var countDownDate = new Date("Nov 14, 2021 23:59:59").getTime();
 
-                     })
-                     .fail(function(error) {
-                         console.log(error);
-                         alert(error['statusText']);
-                     })
+// Update the count down every 1 second
+                                    var x = setInterval(function () {
 
+// Get today's date and time
+                                        var now = new Date().getTime();
 
-                });
-            
+// Find the distance between now and the count down date
+                                        var distance = countDownDate - now;
+
+// Time calculations for days, hours, minutes and seconds
+                                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+// Output the result in an element with id="demo"
+                                        document.getElementById("days").innerHTML = days + "";
+                                        document.getElementById("hours").innerHTML = hours + "";
+                                        document.getElementById("mins").innerHTML = minutes + "";
+                                        document.getElementById("secs").innerHTML = seconds + "";
+
+// If the count down is over, write some text 
+                                        if (distance < 0) {
+                                            clearInterval(x);
+                                            document.getElementById("days").innerHTML = "EXPIRED";
+                                            document.getElementById("hours").innerHTML = "EXPIRED";
+                                            document.getElementById("mins").innerHTML = "EXPIRED";
+                                            document.getElementById("secs").innerHTML = "EXPIRED";
+                                        }
+                                    }, 1000);
         </script>
     </body>
 </html>

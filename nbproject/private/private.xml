@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/web/newhtml.html</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/src/java/controller/HomeServlet.java</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/nbproject/build-impl.xml</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/src/java/controller/NotificationController.java</file>
             <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/web/home.jsp</file>
-            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/web/css/style.css</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/web/categorylist.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/src/java/controller/CategoryController.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/src/java/dal/CategoryDAO.java</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Admin/Documents/NetBeansProjects/LaptopShop/src/java/dal/ProductDAO.java</file>
         </group>
     </open-files>
 </project-private>

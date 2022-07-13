@@ -222,7 +222,28 @@
         </div>
         <!-- /SECTION -->
 
+        <div class="section">   
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <h3>Comment</h3>
+                    <!-- Product main img -->
+                    <form action="detail" method="post">           
+                        <input type="hidden" name="userID" value=${sessionScope.UserID}>
+                        <nput typie="hidden" name="productID" value=${sessionScope.productID}>
+                        <input type="text" name="comment"  placeholder="Enter comment..."><br>
+                        <input type="hidden" name="date" value=""    
+                        <input type="submit" value="Submit">
+                    </form>
+                    <!-- /Product main img -->
 
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+       
 
         <!-- NEWSLETTER -->
         <div id="newsletter" class="section">
@@ -259,6 +280,8 @@
             <!-- /container -->
         </div>
         <!-- /NEWSLETTER -->
+        
+        
 
         <!-- FOOTER -->
         <footer id="footer">
@@ -325,6 +348,9 @@
                 <!-- /container -->
             </div>
             <!-- /top footer -->
+            
+            
+            
 
             <!-- bottom footer -->
             <div id="bottom-footer" class="section">
@@ -354,6 +380,10 @@
             <!-- /bottom footer -->
         </footer>
         <!-- /FOOTER -->
+        
+                    
+        
+
 
         <!-- jQuery Plugins -->
         <script src="js/jquery.min.js"></script>
