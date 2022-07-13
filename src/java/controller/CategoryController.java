@@ -70,7 +70,7 @@ public class CategoryController extends HttpServlet {
         CategoryDAO c = new CategoryDAO();
         List<Category> sclist = c.getAll();
         
-        int id = Integer.valueOf(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter("id"));
         ProductDAO db = new ProductDAO();
         List<Product> list = db.getByCate(id);
         

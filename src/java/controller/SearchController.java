@@ -4,12 +4,22 @@
  */
 package controller;
 
+import dal.Cart_ItemDAO;
+import dal.CategoryDAO;
+import dal.ProductDAO;
+import dal.ShoppingCartDAO;
+import dal.TypeProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Category;
+import model.Product;
+import model.ShoppingCart;
 
 /**
  *
@@ -55,7 +65,31 @@ public class SearchController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        CategoryDAO c = new CategoryDAO();
+        List<Category> sclist = c.getAll();
+        
+        String name = request.getParameter("searchname");
+        ProductDAO db = new ProductDAO();
+        List<Product> list = db.getByName(name);
+        
+        request.setAttribute("data", list);
+        
+        int productsInCart=0;
+        HttpSession session = request.getSession();
+//        Object email = session.getAttribute("email");
+            Object email = "anhpn@gmail.com";
+        if(email!=null){
+            ShoppingCart cart = new ShoppingCartDAO().getCartByEmail(email.toString());
+            int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+            request.setAttribute("quantityCart", quantityCart);
+        }else{
+            request.setAttribute("quantityCart", 0);
+        }
+
+        request.setAttribute("sclist", sclist);
+
+        
+        request.getRequestDispatcher("search.jsp").forward(request, response);
     }
 
     /**
@@ -69,7 +103,7 @@ public class SearchController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     /**
