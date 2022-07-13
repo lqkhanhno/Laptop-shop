@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 
 import javax.mail.*;
 import javax.mail.internet.*;
-import static jdk.internal.util.StaticProperty.userName;
 
 
 /**
