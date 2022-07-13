@@ -5,13 +5,18 @@
 package dal;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Order;
 import model.OrderDetail;
+import model.Product;
 
 public class Order_DetailDAO extends DBContext{
     public int addOrder_Detail(OrderDetail od){
@@ -67,6 +72,59 @@ public class Order_DetailDAO extends DBContext{
             ex.printStackTrace();
         }
         return n;
+    }
+
+    public Map<String, Map<String, Map<String, String>>> getOrderDetailForListOrder(Vector<Order> listOrder) {
+        /*
+        order detail
+        map<order_id, map<product_id,map<String,String>>>
+        {
+            1:{
+                    #11 :{
+                            "image": 
+                            "productName":
+                            "productPrice".
+                            "quantity"
+                    }
+                    }
+                    -1 :{
+                            "total"
+                    }
+            }
+        }
+        */
+        Map<String, Map<String, Map<String, String>>> listO = new HashMap<>();
+        for(Order o : listOrder){
+            String query = "  select * from Order_detail where orderID = " + o.getID();
+            ResultSet rs = getData(query);
+            Map<String, Map<String,String>> listProductOrderDetail = new HashMap<>();
+            try {
+                
+                while(rs.next()){
+                    int productID = rs.getInt("productID");
+                    String productName = rs.getString("productName");
+                    String price = rs.getString("productPrice");
+                    String quantity = rs.getString("quantity");
+                    
+                    Product p = new ProductDAO().getProductByID(productID);
+                    String image = p.getImage();
+                    
+                    Map<String,String> listAttributeOfProductOrder = new HashMap<>();
+                    listAttributeOfProductOrder.put("image", image);
+                    listAttributeOfProductOrder.put("productName", productName);
+                    listAttributeOfProductOrder.put("productPrice", price);
+                    listAttributeOfProductOrder.put("quantity", quantity);
+                    
+                    listProductOrderDetail.put(""+productID, listAttributeOfProductOrder);
+                }
+                
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            listO.put(""+o.getID(), listProductOrderDetail);
+        }
+        return listO;
+        
     }
     
     

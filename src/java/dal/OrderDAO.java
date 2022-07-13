@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,28 +74,6 @@ public class OrderDAO extends DBContext{
         return listOrder;
     }
 
-    public Vector<Order> getListOrderByUserID(int userid) {
-        Vector<Order> listOrder = new Vector<>();
-        String query = "select * from [Order] where userID = "+userid + " and status = 'Shipped' or status = 'Canceled'";
-        ResultSet rs = getData(query);
-        try {
-            while(rs.next()){
-                int ID = rs.getInt(1);
-                int userID = rs.getInt(2);
-                int totalPrice = rs.getInt(3);
-                String status = rs.getString(4);
-                Date orderDate = rs.getDate(5);
-                String note = rs.getString(6);
-                Order o = new Order(ID, userID, totalPrice, status, orderDate, note);
-                listOrder.add(o);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-        return listOrder;
-    }
-
     public String getStatus(String order_id) {
         String query = "  select status from [Order] where ID= "+order_id;
         ResultSet rs = getData(query);
@@ -126,6 +105,77 @@ public class OrderDAO extends DBContext{
         }
         //}
         return n;
+    }
+
+     public Vector<Order> getListOrderByUserIDAndStatus(int userid, String statusParam) {
+        Vector<Order> listOrder = new Vector<>();
+        String query = "select * from [Order] where userID = "+userid
+                +" and status = '"+statusParam+"'";
+        ResultSet rs = getData(query);
+        try {
+            while(rs.next()){
+                int ID = rs.getInt(1);
+                int userID = rs.getInt(2);
+                int totalPrice = rs.getInt(3);
+                String status = rs.getString(4);
+                Date orderDate = rs.getDate(5);
+                String note = rs.getString(6);
+                Timestamp updated_At = rs.getTimestamp(7);
+                Order o = new Order(ID, userID, totalPrice, status, orderDate, note, updated_At);
+                listOrder.add(o);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return listOrder;
+    }
+
+    public Order getOrderByOrderId (int orderId){
+        Order o = null;
+//        String query = "select id from [Order] where userID = "+userId+" and"
+//                + " id = (select MAX(id) from [Order] where userID="+userId+")";
+        String query = "select * from [Order] where ID="+orderId;
+        ResultSet rs = getData(query);
+        try {
+            if(rs.next()){
+                int ID = rs.getInt(1);
+                int userID = rs.getInt(2);
+                int totalPrice = rs.getInt(3);
+                String status = rs.getString(4);
+                Date orderDate = rs.getDate(5);
+                String note = rs.getString(6);
+                Timestamp updated_At = rs.getTimestamp(7);
+                o = new Order(ID, userID, totalPrice, status, orderDate, note, updated_At);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return o;
+    }
+
+    public Vector<Order> getListOrderByUserID(int userid) {
+        Vector<Order> listOrder = new Vector<>();
+        String query = "select * from [Order] where userID = "+userid;
+        ResultSet rs = getData(query);
+        try {
+            while(rs.next()){
+                int ID = rs.getInt(1);
+                int userID = rs.getInt(2);
+                int totalPrice = rs.getInt(3);
+                String status = rs.getString(4);
+                Date orderDate = rs.getDate(5);
+                String note = rs.getString(6);
+                Timestamp updated_At = rs.getTimestamp(7);
+                Order o = new Order(ID, userID, totalPrice, status, orderDate, note, updated_At);
+                listOrder.add(o);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return listOrder;
     }
     
     

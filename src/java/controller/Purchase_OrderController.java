@@ -225,12 +225,12 @@ public class Purchase_OrderController extends HttpServlet {
             }
         }
         */
-        Vector<Order> listOrder = new OrderDAO().getListOrderByUserID(userid);
-        Map<String, Map<String,Map<String,String>>> listOrderMap = 
-                new Order_DetailDAO().getOrderDetailForListOrder(listOrder);
-        request.setAttribute("listOrder", listOrderMap);
-        request.setAttribute("listOrderTotal", listOrder);
-        //print(listOrderMap);
+        Vector<Order> listOrderTotal = new OrderDAO().getListOrderByUserID(userid);
+        Map<String, Map<String,Map<String,String>>> listOrder = 
+                new Order_DetailDAO().getOrderDetailForListOrder(listOrderTotal);
+        request.setAttribute("listOrder", listOrder);
+        request.setAttribute("listOrderTotal", listOrderTotal);
+        print(listOrder);
         
         //return list and sort
         request.setAttribute("listShipping", sortListVector(listShipping, -1));
@@ -242,14 +242,14 @@ public class Purchase_OrderController extends HttpServlet {
         
     }
     
-//    private void print( Map<String, Map<String,Map<String,String>>> listOrder ){
-//        Map<String,Map<String,String>> listProductODetail =
-//            listOrder.get("11");
-//        Set<String> keySet = listProductODetail.keySet();
-//        for(Object objKey : keySet){
-//            Map<String,String> listAtrr = listProductODetail.get(objKey);
-//            System.out.println(listAtrr.get("productName"));
-//            
-//        }
-//    }
+    private void print( Map<String, Map<String,Map<String,String>>> listOrder ){
+        Map<String,Map<String,String>> listProductODetail =
+            listOrder.get("11");
+        Set<String> keySet = listProductODetail.keySet();
+        for(Object objKey : keySet){
+            Map<String,String> listAtrr = listProductODetail.get(objKey.toString());
+            System.out.println(listAtrr.get("productName"));
+            
+        }
+    }
 }
