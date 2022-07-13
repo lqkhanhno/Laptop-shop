@@ -177,72 +177,72 @@
                 </div>
                 <form action="editproduct?id=${requestScope.id}" method="post">
                     <c:set var="id" value="${requestScope.id}"/>
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Edit Product</h4>
+                    <div class="modal-header">						
+                        <h4 class="modal-title">Edit Product</h4>
+                    </div>
+                    <div class="modal-body">					
+                        <!--                            <div class="form-group">
+                                                        <label>Product ID</label>
+                                                        <input name="id" type="text" class="form-control" required>
+                                                    </div>-->
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input name="name" type="text" class="form-control" value="${requestScope.p.productName}" required>
                         </div>
-                        <div class="modal-body">					
-<!--                            <div class="form-group">
-                                <label>Product ID</label>
-                                <input name="id" type="text" class="form-control" required>
-                            </div>-->
-                            <div class="form-group">
-                                <label>Product Name</label>
-                                <input name="name" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Description</label>
-                                <textarea name="description" class="form-control" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Original Price</label>
-                                <input name="oprice" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select name="category" class="form-select" aria-label="Default select example">
-                                    <c:forEach items="${requestScope.sclist}" var="o">
-                                        <option value="${o.categoryName}">${o.categoryName}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Sell Price</label>
-                                <input name="sellprice" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Sale</label>
-                                <input name="sale" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Amount</label>
-                                <input name="amount" type="text" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Supplier</label>
-                                <select name="suppliID" class="form-select" aria-label="Default select example">
-                                    <c:forEach items="${requestScope.splist}" var="o">
-                                        <option value="${o.ID}">${o.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Release date</label>
-                                <input name="releasedate" type="Date" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>is Sell</label>
-                                <input name="issell" type="text" class="form-control" required>
-                            </div>
-                                <div class="form-group">
-                                <label>Image</label>
-                                <input name="image" type="text" class="form-control" required>
-                            </div>			
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="description" class="form-control" required>${requestScope.p.description}</textarea>
                         </div>
-                        <div class="modal-footer">
-                            <a href="listmanage"><input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"></a>
-                            <input type="submit" class="btn btn-info" value="Save">
+                        <div class="form-group">
+                            <label>Original Price</label>
+                            <input name="oprice" type="text" class="form-control" value="${requestScope.p.originalPrice}" required>
                         </div>
-                    </form>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" class="form-select" aria-label="Default select example" >
+                                <c:forEach items="${requestScope.sclist}" var="o">
+                                    <option value="${o.categoryName}" ${o.ID == requestScope.p.category.ID ? 'selected="selected"' : ''}>${o.categoryName}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sell Price</label>
+                            <input name="sellprice" type="text" class="form-control" value="${requestScope.p.sellPrice}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Sale Percent</label>
+                            <input name="sale" type="text" class="form-control" value="${requestScope.p.salePercent}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input name="amount" type="text" class="form-control" value="${requestScope.p.amount}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Supplier</label>
+                            <select name="suppliID" class="form-select" aria-label="Default select example">
+                                <c:forEach items="${requestScope.splist}" var="o">
+                                    <option value="${o.ID}" ${o.ID == requestScope.p.supplier.ID ? 'selected="selected"' : ''}>${o.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Release date</label>
+                            <input name="releasedate" type="Date" class="form-control" value="${requestScope.p.releaseDate}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>is Sell</label>
+                            <input name="issell" type="text" class="form-control" value="${requestScope.p.isSell}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input name="image" type="text" class="form-control" value="${requestScope.p.image}" required>
+                        </div>			
+                    </div>
+                    <div class="modal-footer">
+                        <a href="listmanage"><input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"></a>
+                        <input type="submit" class="btn btn-info" value="Save">
+                    </div>
+                </form>
             </div>
             <a href="home"><button type="button" class="btn btn-primary">Back to home</button></a>
 

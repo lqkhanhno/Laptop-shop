@@ -80,7 +80,7 @@ public class EditProductServlet extends HttpServlet {
         p = pd.getByPid(Integer.parseInt(id));
         request.setAttribute("p", p);
         request.setAttribute("id", id);
-        request.getRequestDispatcher("editproduct.jsp?id=" + id).forward(request, response);
+        request.getRequestDispatcher("manager/editproduct.jsp?id=" + id).forward(request, response);
     }
 
     /**
