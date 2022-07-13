@@ -250,7 +250,7 @@
                                                                             <td>
                                                                                 <img src="img/Laptop/<%= infoProduct.get("image")%>" alt="contact-img" title="contact-img" class="rounded mr-2" height="48">
                                                                                 <p class="m-0 d-inline-block align-middle">
-                                                                                    <p><b><%= infoProduct.get("name")%></b></p>
+                                                                                    <a href="apps-ecommerce-products-details.html" class="text-body font-weight-semibold"><%= infoProduct.get("name")%></a>
                                                                                     <br>
                                                                                     <small><%= infoProduct.get("quantity")%> x <%= infoProduct.get("price")%> VND</small>
                                                                                 </p>

@@ -182,7 +182,7 @@
                                                     <td>
                                                         <img src="img/Laptop/<%= infoProduct.get("image")%>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
                                                         <p class="m-0 d-inline-block align-middle font-16">
-                                                            <a href="product?productid=<%= key.toString() %>" class="text-body"><%= infoProduct.get("name")%></a>
+                                                            <a href="apps-ecommerce-products-details.html" class="text-body"><%= infoProduct.get("name")%></a>
                                                             <br>
                                                             <small class="mr-2"><b>Size:</b> Large </small>
                                                             <small><b>Color:</b> Light Green
@@ -428,9 +428,8 @@
                                             })
                                             .fail(function (error) {
                                                 alert(error['statusText']);
-                                                if(error['statusText'] == "The number of products in stock is not enough" 
-                                                    || error['statusText'] == "Quantity can not be empty"){
-                                                    tagInput.val(1);
+                                                if(error['statusText']=="The number of products in stock is not enough" ){
+                                                    tagInput.val(value-1);
                                                 }
                                             });
 
