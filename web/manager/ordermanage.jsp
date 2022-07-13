@@ -82,59 +82,6 @@
                         <!-- ACCOUNT -->
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
-                                <!-- Wishlist -->
-                                <div>
-                                    <a href="#">
-                                        <i class="fa fa-heart-o"></i>
-                                        <span>Your Wishlist</span>
-                                        <div class="qty">2</div>
-                                    </a>
-                                </div>
-                                <!-- /Wishlist -->
-
-                                <!-- Cart -->
-                                <div class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                                        <i class="fa fa-shopping-cart"></i>
-                                        <span>Your Cart</span>
-                                        <div class="qty">3</div>
-                                    </a>
-                                    <div class="cart-dropdown">
-                                        <div class="cart-list">
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product01.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">1x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-
-                                            <div class="product-widget">
-                                                <div class="product-img">
-                                                    <img src="./img/product02.png" alt="">
-                                                </div>
-                                                <div class="product-body">
-                                                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                                                    <h4 class="product-price"><span class="qty">3x</span>$980.00</h4>
-                                                </div>
-                                                <button class="delete"><i class="fa fa-close"></i></button>
-                                            </div>
-                                        </div>
-                                        <div class="cart-summary">
-                                            <small>3 Item(s) selected</small>
-                                            <h5>SUBTOTAL: $2940.00</h5>
-                                        </div>
-                                        <div class="cart-btns">
-                                            <a href="#">View Cart</a>
-                                            <a href="#">Checkout  <i class="fa fa-arrow-circle-right"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /Cart -->
-
                                 <!-- Menu Toogle -->
                                 <div class="menu-toggle">
                                     <a href="#">
@@ -167,7 +114,7 @@
 
                         <c:forEach items="${requestScope.sclist}" var="o">
                             <li><a href="${o.categoryName.toLowerCase()}" value="${o.categoryName}">${o.categoryName}</a></li>
-                            </c:forEach>
+                        </c:forEach>
 
                         <li><a href="laptops">Laptops</a></li>
 
@@ -189,7 +136,7 @@
                         <li class="nav-item">
                             <a href="#billing-information" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 tab-page" id="tab-wait">
                                 <i class="mdi mdi-account-circle font-18"></i>
-                                <span class="d-none d-lg-block">Wait To Accept</span>
+                                <span class="d-none d-lg-block">Wait to Confirm</span>
                             </a>
                         </li>
                         <li class="nav-item">
@@ -219,10 +166,10 @@
                 %>
                 <!-- row wait -->
                 <div class="row" id="div-wait">
-                    
+
                     <%
-                        Vector<Order> listWait = (Vector<Order>) request.getAttribute("listWait");
-                        if (!listWait.isEmpty()) {
+                        Vector<Order> listwaitforcf = (Vector<Order>) request.getAttribute("listwaitforcf");
+                        if (!listwaitforcf.isEmpty()) {
                     %>
                     <div class="col-12">
                         <div class="card">
@@ -235,11 +182,12 @@
                                                 <th>Date</th>
                                                 <th>Total</th>
                                                 <th>Order Status</th>
-                                                <th>X</th>
+                                                <th>Accept</th>
+                                                <th>Cancel</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <%for (Order o : listWait) {%>
+                                            <%for (Order o : listwaitforcf) {%>
                                             <tr>
                                                 <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#<%= o.getID()%></a> </td>
                                                 <td>
@@ -247,12 +195,14 @@
                                                     <!--                                                    <small class="text-muted">10:29 PM</small>-->
                                                 </td>
                                                 <td>
-
                                                     <%= vnFormat.format(o.getTotalPrice())%>
                                                 </td>
                                                 <td>
                                                     <h5><span class="badge badge-info-lighten"><%= o.getStatus()%></span></h5>
                                                 </td>
+                                                </td>
+                                                <td>
+                                                    <a href="#" data-id="<%= o.getID()%>" class="btn btn-success">Accept</a>
                                                 </td>
                                                 <td>
                                                     <a href="#" data-id="<%= o.getID()%>" class="btn btn-danger btnCancel">Cancel</a>
@@ -270,11 +220,11 @@
                     <%
 
                     } else {%>
-                    <h4>List Wait Accept Empty</h4>
+                    <h4>There are currently no orders for you to process</h4>
                     <%}%>
                 </div>
                 <!-- /row wait -->
-                
+
                 <!-- row shipping-->
                 <div class="row" id="div-shipping">
                     <%
@@ -327,10 +277,10 @@
                     <%}%>
                 </div>
                 <!-- /row -->
-                
+
                 <!-- row -->
                 <div class="row" id="div-shipped">
-                    
+
                     <%
                         Vector<Order> listShipped = (Vector<Order>) request.getAttribute("listShipped");
                         if (!listShipped.isEmpty()) {
@@ -381,10 +331,10 @@
                     <%}%>
                 </div>
                 <!-- /row -->
-                
+
                 <!-- row canceled -->
                 <div class="row" id="div-canceled">
-                    
+
                     <%
                         Vector<Order> listCanceled = (Vector<Order>) request.getAttribute("listCanceled");
                         if (!listCanceled.isEmpty()) {
@@ -603,43 +553,42 @@
 
                     }
                 });
-                
-                
+
+
                 $("#tab-wait").parents('li').addClass('active');
                 $("#div-wait").show();
                 $("#div-shipping").hide();
                 $("#div-shipped").hide();
                 $("#div-canceled").hide();
-                
 
-                $(".tab-page").click(function(){
-                      let idthis= $(this).attr('id');
-                  //let idthis = this.data('id');
-                  if(idthis == 'tab-wait'){
-                      $("#div-wait").show();
-                      $("#div-shipping").hide();
-                      $("#div-shipped").hide();
-                      $("#div-canceled").hide();
-                      
-                  }else if(idthis == 'tab-shipping'){
-                      $("#div-wait").hide();
-                      $("#div-shipping").show();
-                      $("#div-shipped").hide();
-                      $("#div-canceled").hide();
-                  }else if(idthis == 'tab-shipped'){
-                      $("#div-wait").hide();
-                      $("#div-shipping").hide();
-                      $("#div-shipped").show();
-                      $("#div-canceled").hide();
-                  }
-                  else{
-                      $("#div-wait").hide();
-                      $("#div-shipping").hide();
-                      $("#div-shipped").hide();
-                      $("#div-canceled").show();
-                  }
 
-                  });
+                $(".tab-page").click(function () {
+                    let idthis = $(this).attr('id');
+                    //let idthis = this.data('id');
+                    if (idthis == 'tab-wait') {
+                        $("#div-wait").show();
+                        $("#div-shipping").hide();
+                        $("#div-shipped").hide();
+                        $("#div-canceled").hide();
+
+                    } else if (idthis == 'tab-shipping') {
+                        $("#div-wait").hide();
+                        $("#div-shipping").show();
+                        $("#div-shipped").hide();
+                        $("#div-canceled").hide();
+                    } else if (idthis == 'tab-shipped') {
+                        $("#div-wait").hide();
+                        $("#div-shipping").hide();
+                        $("#div-shipped").show();
+                        $("#div-canceled").hide();
+                    } else {
+                        $("#div-wait").hide();
+                        $("#div-shipping").hide();
+                        $("#div-shipped").hide();
+                        $("#div-canceled").show();
+                    }
+
+                });
             });
         </script>
 

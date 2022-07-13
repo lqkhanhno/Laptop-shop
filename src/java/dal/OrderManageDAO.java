@@ -137,6 +137,24 @@ public class OrderManageDAO extends DBContext {
         //}
         return n;
     }
+    public int AcceptOrder(String order_id) {
+        //delete in order detail
+        //int n = new Order_DetailDAO().deleteOrderDetail(order_id);
+        //if(n!=0){
+        //delete order
+        //n = 0; //reset result
+        int n = 0;
+        String query = "update [Order] set status = 'Shipping' where ID = " + order_id;
+        Statement st;
+        try {
+            st = connection.createStatement();
+            n = st.executeUpdate(query);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        //}
+        return n;
+    }
 
     public int acceptOrder(String order_id) {
         //delete in order detail

@@ -150,7 +150,6 @@
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
                         <li class="active"><a href="listmanage">Manage Product</a></li>
-                        <li class="active"><a href="ordermanage">Manage Order</a></li>
                         <!--                                            <li><a href="listuser">Manage User</a></li>-->
                     </ul>
                     <!-- /NAV -->

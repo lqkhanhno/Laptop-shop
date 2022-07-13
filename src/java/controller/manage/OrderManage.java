@@ -5,7 +5,6 @@
 package controller.manage;
 
 import dal.OrderManageDAO;
-import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
@@ -140,6 +139,43 @@ public class OrderManage extends HttpServlet {
         //delete success 
 
     }
+    private void process_Accept(HttpServletRequest request, HttpServletResponse response) {
+        String order_id = request.getParameter("order_id");
+        try {
+            Integer.parseInt(order_id);
+        } catch (Exception e) {
+            try {
+                response.sendError(400, "order id is not exist");
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return;
+        }
+        //get status of order id 
+        String status = new OrderManageDAO().getStatus(order_id);
+        //check status is wait accept or not
+        if (!status.equalsIgnoreCase("Wait Accept")) {
+            try {
+                //error
+                response.sendError(400, "This purchase order is not in the status of wait to accept thanks");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            return;
+        }
+        int n = new OrderManageDAO().cancelOrder(order_id);
+        if (n == 0) {
+            try {
+                //delete error
+                response.sendError(400, "Can't delete this order");
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        //delete success 
+
+    }
 
     private Vector<Order> sortListVector(Vector<Order> vec, int type) {
 
@@ -179,8 +215,8 @@ public class OrderManage extends HttpServlet {
         Vector<Order> listShipped = new OrderManageDAO().getOrderbyStatus("Shipped");
         Vector<Order> listCanceled = new OrderManageDAO().getOrderbyStatus("Canceled");
 
-        request.setAttribute("listShipping", listwaitforcf);
-        request.setAttribute("listWait", listcf);
+        request.setAttribute("listwaitforcf", listwaitforcf);
+        request.setAttribute("listcf", listcf);
         request.setAttribute("listShipped", listShipped);
         request.setAttribute("listCanceled", listCanceled);
 
