@@ -5,6 +5,7 @@
  */
 package dal;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -272,5 +273,33 @@ public class ProductDAO extends DBContext {
             arr.add(list.get(i));
         }
         return arr;
+    }
+
+    public Product getProductByID(int productIDParam){
+        Product p = new Product();
+        String query = "select * from Product where productID="+productIDParam;
+        ResultSet rs = getData(query);
+        try {
+            if(rs.next()){
+                int productID = rs.getInt(1);
+                String productName = rs.getString(2);
+                String desciption = rs.getString(3);
+                int originalPrice = rs.getInt(4);
+                int categoryID = rs.getInt(5);
+                Category c = new CategoryDAO().getByID(categoryID);
+                int sellPrice = rs.getInt(6);
+                int salePercent = rs.getInt(7);
+                int amount = rs.getInt(8);
+                int suppliID = rs.getInt(9);
+                Supplier s = new SupplierDAO().getByID(suppliID);
+                Date releaseDate = rs.getDate(10);
+                int isSell = rs.getInt(11);
+                String image = rs.getString(12);
+                p = new Product(productID, productName, image, desciption, originalPrice, c, sellPrice, salePercent, amount, s, releaseDate, isSell);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return p;
     }
 }

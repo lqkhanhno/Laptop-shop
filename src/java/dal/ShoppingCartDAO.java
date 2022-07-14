@@ -59,10 +59,10 @@ public class ShoppingCartDAO extends DBContext {
             int price =Integer.parseInt(infoProduct.get("price"));
             int total = price * quantity;
             totalGrand+=total;
-            discount+=quantity*price*sale_percent;
-            totalCart+= total-(quantity*price*sale_percent);
+            discount+=(total*sale_percent/100);
             listIdPro.put(infoProduct.get("id"), String.valueOf(total));
         }
+        totalCart= totalGrand - discount;
         listIdPro.put("totalGrand",String.valueOf(totalGrand));
         listIdPro.put("totalCart",String.valueOf(totalCart));
         listIdPro.put("discount",String.valueOf(discount));
