@@ -3,15 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/web/cart.jsp</file>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/src/java/utils/SendEmail.java</file>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/web/assets/css/app-creative.min.css</file>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/src/java/dal/DBContext.java</file>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/src/java/controller/ProductServlet.java</file>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/src/java/controller/manage/ListManageServlet.java</file>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/web/manager/editproduct.jsp</file>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/src/java/controller/manage/EditProductServlet.java</file>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/Laptop-shop1/Laptop-shop/web/assets/css/app-creative-dark.min.css</file>
+            <file>file:/D:/SWP/Laptop-shop/src/java/dal/OrderDAO.java</file>
+            <file>file:/D:/SWP/Laptop-shop/src/java/controller/manage/ListManageServlet.java</file>
+            <file>file:/D:/SWP/Laptop-shop/src/java/dal/SupplierDAO.java</file>
+            <file>file:/D:/SWP/Laptop-shop/src/java/controller/manage/EditProductServlet.java</file>
         </group>
     </open-files>
 </project-private>

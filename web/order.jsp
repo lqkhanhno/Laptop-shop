@@ -763,7 +763,6 @@
                             //console.log(response.ID);
                             console.log(order);
                             btn.parents('tr').remove();
-                            $("#"+order_id).parents('tr').remove();
 //                            let name = $("#div-canceled").find("tbody").prop("tagName");
                             $("#div-canceled").find("tbody").prepend(`
                                 <tr>

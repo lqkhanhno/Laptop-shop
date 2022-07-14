@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Product;
 import model.Category;
 import model.Supplier;
@@ -195,7 +197,7 @@ public class ProductDAO extends DBContext {
         }
         return arr;
     }
-
+    
     public Product getProductByID(int productIDParam){
         Product p = new Product();
         String query = "select * from Product where productID="+productIDParam;

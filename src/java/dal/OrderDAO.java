@@ -18,8 +18,8 @@ import model.Order;
 public class OrderDAO extends DBContext{
     public int addOrder(Order o){
         int n=0;
-        String query = "INSERT INTO [Order] ([userID],[totalprice], [status], [date], [note])" +
-            " VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO [Order] ([userID],[totalprice], [status], [date], [note],[updated_At])" +
+            " VALUES(?,?,?,?,?,?)";
         try {
             PreparedStatement pre = connection.prepareStatement(query);
             pre.setInt(1, o.getUserID());
@@ -27,6 +27,7 @@ public class OrderDAO extends DBContext{
             pre.setString(3, o.getStatus());
             pre.setDate(4, o.getOrderDate());
             pre.setString(5, o.getNote());
+            pre.setTimestamp(6, o.getUpdated_At());
             n=pre.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -50,8 +51,32 @@ public class OrderDAO extends DBContext{
         
         return id;
     }
+    
+    public Order getOrderByOrderId (int orderId){
+        Order o = null;
+//        String query = "select id from [Order] where userID = "+userId+" and"
+//                + " id = (select MAX(id) from [Order] where userID="+userId+")";
+        String query = "select * from [Order] where ID="+orderId;
+        ResultSet rs = getData(query);
+        try {
+            if(rs.next()){
+                int ID = rs.getInt(1);
+                int userID = rs.getInt(2);
+                int totalPrice = rs.getInt(3);
+                String status = rs.getString(4);
+                Date orderDate = rs.getDate(5);
+                String note = rs.getString(6);
+                Timestamp updated_At = rs.getTimestamp(7);
+                o = new Order(ID, userID, totalPrice, status, orderDate, note, updated_At);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return o;
+    }
 
-    public Vector<Order> getListOrderByUserID(int userid, String statusParam) {
+    public Vector<Order> getListOrderByUserIDAndStatus(int userid, String statusParam) {
         Vector<Order> listOrder = new Vector<>();
         String query = "select * from [Order] where userID = "+userid
                 +" and status = '"+statusParam+"'";
@@ -64,7 +89,8 @@ public class OrderDAO extends DBContext{
                 String status = rs.getString(4);
                 Date orderDate = rs.getDate(5);
                 String note = rs.getString(6);
-                Order o = new Order(ID, userID, totalPrice, status, orderDate, note);
+                Timestamp updated_At = rs.getTimestamp(7);
+                Order o = new Order(ID, userID, totalPrice, status, orderDate, note, updated_At);
                 listOrder.add(o);
             }
         } catch (SQLException ex) {
@@ -74,9 +100,9 @@ public class OrderDAO extends DBContext{
         return listOrder;
     }
 
-    public Vector<Order> getListOrderByUserID(int userid) {
+    public Vector<Order> getListOrderByUserIDShippedOrCanceled(int userid) {
         Vector<Order> listOrder = new Vector<>();
-        String query = "select * from [Order] where userID = "+userid;
+        String query = "select * from [Order] where userID = "+userid + " and status = 'Shipped' or status = 'Canceled'";
         ResultSet rs = getData(query);
         try {
             while(rs.next()){
@@ -118,8 +144,8 @@ public class OrderDAO extends DBContext{
             //delete order
             //n = 0; //reset result
         int n=0;
-        Timestamp updated_at = new Order().getTimeNow();
-        String query = "update [Order] set status = 'Canceled', updated_At= '"+updated_at+"' where ID = " + order_id;
+        Timestamp update_at = new Order().getTimeNow();
+        String query = "update [Order] set status = 'Canceled', updated_at ='" + update_at + "' where ID = " + order_id;
         Statement st;
         try {
             st = connection.createStatement();
@@ -131,10 +157,9 @@ public class OrderDAO extends DBContext{
         return n;
     }
 
-    public Vector<Order> getListOrderByUserIDAndStatus(int userid, String statusParam) {
+    public Vector<Order> getListOrderByUserID(int userid) {
         Vector<Order> listOrder = new Vector<>();
-        String query = "select * from [Order] where userID = "+userid
-                +" and status = '"+statusParam+"'";
+        String query = "select * from [Order] where userID = "+userid;
         ResultSet rs = getData(query);
         try {
             while(rs.next()){
@@ -153,30 +178,6 @@ public class OrderDAO extends DBContext{
         }
         
         return listOrder;
-    }
-
-    public Order getOrderByOrderId (int orderId){
-        Order o = null;
-//        String query = "select id from [Order] where userID = "+userId+" and"
-//                + " id = (select MAX(id) from [Order] where userID="+userId+")";
-        String query = "select * from [Order] where ID="+orderId;
-        ResultSet rs = getData(query);
-        try {
-            if(rs.next()){
-                int ID = rs.getInt(1);
-                int userID = rs.getInt(2);
-                int totalPrice = rs.getInt(3);
-                String status = rs.getString(4);
-                Date orderDate = rs.getDate(5);
-                String note = rs.getString(6);
-                Timestamp updated_At = rs.getTimestamp(7);
-                o = new Order(ID, userID, totalPrice, status, orderDate, note, updated_At);
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
-        return o;
     }
     
     

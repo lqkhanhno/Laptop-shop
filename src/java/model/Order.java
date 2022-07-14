@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -19,23 +18,6 @@ public class Order {
     public Order() {
     }
 
-    public Order(int ID, int userID, int totalPrice, String status, Date orderDate, String note) {
-        this.ID = ID;
-        this.userID = userID;
-        this.totalPrice = totalPrice;
-        this.status = status;
-        this.orderDate = orderDate;
-        this.note = note;
-    }
-
-    public Order(int userID, int totalPrice, String status, Date orderDate, String note) {
-        this.userID = userID;
-        this.totalPrice = totalPrice;
-        this.status = status;
-        this.orderDate = orderDate;
-        this.note = note;
-    }
-
     public Order(int ID, int userID, int totalPrice, String status, Date orderDate, String note, Timestamp updated_At) {
         this.ID = ID;
         this.userID = userID;
@@ -44,6 +26,14 @@ public class Order {
         this.orderDate = orderDate;
         this.note = note;
         this.updated_At = updated_At;
+    }
+
+    public Order(int userID, int totalPrice, String status, Date orderDate, String note) {
+        this.userID = userID;
+        this.totalPrice = totalPrice;
+        this.status = status;
+        this.orderDate = orderDate;
+        this.note = note;
     }
 
     
@@ -99,10 +89,6 @@ public class Order {
         return updated_At;
     }
 
-    public void setUpdated_At(Timestamp updated_At) {
-        this.updated_At = updated_At;
-    }
-    
     public void setUpdated_At() {
         this.updated_At = new Timestamp(System.currentTimeMillis());
         System.out.println(this.updated_At);
@@ -111,5 +97,13 @@ public class Order {
     public Timestamp getTimeNow(){
         return new Timestamp(System.currentTimeMillis());
     }
+   
     
+    public static void main(String[] args) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());
+        Order o = new Order();
+        o.setUpdated_At();
+        System.out.println(o.getUpdated_At());
+    }
 }

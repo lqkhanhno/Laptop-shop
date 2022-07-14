@@ -74,7 +74,20 @@ public class Order_DetailDAO extends DBContext{
         return n;
     }
 
-   public Map<String, Map<String, Map<String, String>>> getOrderDetailForListOrder(Vector<Order> listOrder) {
+    public boolean checkExistOrder(String order_Id, int userId) {
+        String query = "select * from [Order] where [ID] = " + order_Id + " and userID = " + userId;
+        ResultSet rs = getData(query);
+        try {
+            if(rs.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public Map<String, Map<String, Map<String, String>>> getOrderDetailForListOrder(Vector<Order> listOrder) {
         /*
         order detail
         map<order_id, map<product_id,map<String,String>>>

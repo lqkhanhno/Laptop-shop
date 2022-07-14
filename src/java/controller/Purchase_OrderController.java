@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -132,7 +133,7 @@ public class Purchase_OrderController extends HttpServlet {
         if(!status.equalsIgnoreCase("Wait Accept") ){
             try {
                 //error
-                response.sendError(400,"This purchase order is not in the status of wait to accept thanks");
+                response.sendError(400,"This purchase order is not in the status of Wait To Accept thanks");
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -148,7 +149,9 @@ public class Purchase_OrderController extends HttpServlet {
             }
         }
         //delete success 
-         Order o = new OrderDAO().getOrderByOrderId(Integer.parseInt(order_id));
+        
+        //get order by order_id
+        Order o = new OrderDAO().getOrderByOrderId(Integer.parseInt(order_id));
         try {
             //return to ajax to append
             response.setContentType("application/json");
@@ -157,6 +160,7 @@ public class Purchase_OrderController extends HttpServlet {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        
     }
 
     private Vector<Order> sortListVector(Vector<Order> vec, int type) {
@@ -175,9 +179,9 @@ public class Purchase_OrderController extends HttpServlet {
                         return 0;
                     }
                 }else{ //sap xep theo ngay
-                    if(o1.getOrderDate().before(o2.getOrderDate()) ){
+                    if(o1.getUpdated_At().before(o2.getUpdated_At()) ){
                         return 1;
-                    }else if(o1.getOrderDate().after(o2.getOrderDate())){
+                    }else if(o1.getUpdated_At().after(o2.getUpdated_At())){
                         return -1;
                     }else{
                         return 0;
@@ -221,12 +225,12 @@ public class Purchase_OrderController extends HttpServlet {
             }
         }
         */
-        Vector<Order> listOrderTotal = new OrderDAO().getListOrderByUserID(userid);
-        Map<String, Map<String,Map<String,String>>> listOrder = 
-                new Order_DetailDAO().getOrderDetailForListOrder(listOrderTotal);
-        request.setAttribute("listOrder", listOrder);
-        request.setAttribute("listOrderTotal", listOrderTotal);
-        
+        Vector<Order> listOrder = new OrderDAO().getListOrderByUserID(userid);
+        Map<String, Map<String,Map<String,String>>> listOrderMap = 
+                new Order_DetailDAO().getOrderDetailForListOrder(listOrder);
+        request.setAttribute("listOrder", listOrderMap);
+        request.setAttribute("listOrderTotal", listOrder);
+        pirnt(listOrderMap);
         
         //return list and sort
         request.setAttribute("listShipping", sortListVector(listShipping, -1));
@@ -236,5 +240,16 @@ public class Purchase_OrderController extends HttpServlet {
         
         dispath(request, response, "/order.jsp");
         
+    }
+    
+    private void pirnt( Map<String, Map<String,Map<String,String>>> listOrder ){
+        Map<String,Map<String,String>> listProductODetail =
+            listOrder.get("11");
+        Set<String> keySet = listProductODetail.keySet();
+        for(Object objKey : keySet){
+            Map<String,String> listAtrr = listProductODetail.get(objKey);
+            System.out.println(listAtrr.get("productName"));
+            
+        }
     }
 }
