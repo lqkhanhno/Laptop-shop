@@ -163,7 +163,7 @@ button{
         <label style="color:red;margin-top: 0px" >${msgAddress}</label>
 
         <label for="phone">Phone number</label>
-        <input name="phone" value="${phone}" type="phone" placeholder="Phone" id="phone">
+        <input name="phone" value="${phone}" type="text" placeholder="Phone" id="phone">
         <label style="color:red;margin-top: 0px" >${msgPhone}</label>
         
         <label for="password">Password</label>
@@ -175,7 +175,7 @@ button{
         <label style="color:red;margin-top: 0px" >${msgRePassword}</label>
         
         
-        <button type="submit">Log In</button>
+        <button type="submit">Create</button>
        
     </form>
 </body>

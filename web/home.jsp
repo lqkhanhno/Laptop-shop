@@ -56,19 +56,14 @@
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                            <c:if test="${sessionScope.account == null}">
+                            <c:if test="${sessionScope.email == null}">
                             <li><a href="login.jsp"><i class="fa fa-user-o"></i> Login</a></li>
                             </c:if>
 
-                        <c:if test="${sessionScope.account != null}">
-                            <c:if test="${sessionScope.account.role == 0}">
-                                <li><a href="listmanage"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
-                                </c:if>
-                                <c:if test="${sessionScope.account.role == 1}">
-                                <li><a href="profile"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
-                                </c:if>
-                            <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
-                            </c:if>
+                        <c:if test="${sessionScope.email != null}">
+                            <li><a href="listmanage"><i class="fa fa-user-o"></i> Hello ${sessionScope.username}</a></li>
+                            <li><a href="home"><i class="fa fa-user-o"></i> Logout</a></li>
+                        </c:if>
 
                     </ul>
                 </div>
@@ -92,7 +87,7 @@
                         <!-- /LOGO -->
 
                         <!-- SEARCH BAR -->
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="header-search">
                                 <form action="search">
                                     <input name="searchname" class="input" placeholder="Search here">
@@ -103,7 +98,7 @@
                         <!-- /SEARCH BAR -->
 
                         <!-- ACCOUNT -->
-                        <div class="col-md-3 clearfix">
+                        <div class="col-md-4 clearfix">
                             <div class="header-ctn">
                                 <!-- Noti -->
                                 <div >

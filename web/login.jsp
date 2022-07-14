@@ -155,7 +155,8 @@ button{
         <label for="password">Password</label>
         <input name="password" value="${password}" type="password" placeholder="Password" id="password">
         <label style="color:red;margin-top: 0px" >${msgPassword}</label>
-
+        <a href="reset-password">Forgot password?</a><br>
+        <a href="register">Create New Account</a>
         <button type="submit">Log In</button>
        
     </form>

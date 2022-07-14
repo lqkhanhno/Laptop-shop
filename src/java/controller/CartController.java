@@ -115,11 +115,11 @@ public class CartController extends HttpServlet {
         HttpSession session = request.getSession();
         HashMap<String, HashMap<String, String>> listIdPro
                 = new HashMap<>();
-//            Object email = session.getAttribute("email");
-//            if(email==null){
-//                //yes
-//                dispath(request, response, "/login.html");
-//            }else{
+        Object email = session.getAttribute("email");
+        if(email==null){
+            //yes
+            dispath(request, response, "/login");
+        }else{
         //get cart by email
         Object cart_id = session.getAttribute("cart_id");
         if (cart_id != null) {
@@ -150,8 +150,7 @@ public class CartController extends HttpServlet {
         request.setAttribute("Cart", listIdPro);
         dispath(request, response, "/shoppingcart.jsp");
         //get cart item import to hashmap listidpro
-
-//            }
+            }
     }
 
     private void add2Cart(HttpServletRequest request, HttpServletResponse response) {
