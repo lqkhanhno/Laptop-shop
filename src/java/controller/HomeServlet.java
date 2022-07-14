@@ -7,6 +7,7 @@ package controller;
 
 import dal.Cart_ItemDAO;
 import dal.CategoryDAO;
+import dal.ProductDAO;
 import dal.ShoppingCartDAO;
 import dal.SupplierDAO;
 import dal.TypeProductDAO;
@@ -73,10 +74,15 @@ public class HomeServlet extends HttpServlet {
         List<Product> list1 = db.getTopNewest();
         List<Product> list2 = db.getTopSell();
         List<Product> list3 = db.getTopSale();
-            
+        
+        ProductDAO db1 = new ProductDAO();
+        List<Product> list = db1.getAll();
+        
+        request.setAttribute("data", list);
         request.setAttribute("data1", list1);
         request.setAttribute("data2", list2);
         request.setAttribute("data3", list3);
+        
 
         CategoryDAO c = new CategoryDAO();
         List<Category> sclist = c.getAll();

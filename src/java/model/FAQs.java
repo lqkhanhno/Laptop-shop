@@ -6,16 +6,11 @@ package model;
 
 public class FAQs {
     int ID;
-    int authorID;
+    User authorID;
     String title;
+    String content;
 
     public FAQs() {
-    }
-
-    public FAQs(int ID, int authorID, String title) {
-        this.ID = ID;
-        this.authorID = authorID;
-        this.title = title;
     }
 
     public int getID() {
@@ -26,11 +21,11 @@ public class FAQs {
         this.ID = ID;
     }
 
-    public int getAuthorID() {
+    public User getAuthorID() {
         return authorID;
     }
 
-    public void setAuthorID(int authorID) {
+    public void setAuthorID(User authorID) {
         this.authorID = authorID;
     }
 
@@ -41,5 +36,21 @@ public class FAQs {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public FAQs(int ID, User authorID, String title, String content) {
+        this.ID = ID;
+        this.authorID = authorID;
+        this.title = title;
+        this.content = content;
+    }
+
     
 }

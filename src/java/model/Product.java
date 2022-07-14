@@ -21,7 +21,7 @@ public class Product {
     int isSell;
 
     public Product() {
-    }
+    }  
 
     public Product(int productID, String productName, String image, String description, int originalPrice, Category category, int sellPrice, int salePercent, int amount, Supplier supplier, Date releaseDate, int isSell) {
         this.productID = productID;
@@ -138,7 +138,7 @@ public class Product {
     public String toString() {
         return "Product{" + "productID=" + productID + ", productName=" + productName + ", image=" + image + ", description=" + description + ", originalPrice=" + originalPrice + ", category=" + category + ", sellPrice=" + sellPrice + ", salePercent=" + salePercent + ", amount=" + amount + ", supplier=" + supplier + ", releaseDate=" + releaseDate + ", isSell=" + isSell + '}';
     }
-
+    
     
 
 }

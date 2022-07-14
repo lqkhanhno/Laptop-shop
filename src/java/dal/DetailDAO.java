@@ -69,33 +69,31 @@ public class DetailDAO extends DBContext {
 
         return null;
     }
+    public Category getCat(int pid) {
+        String sql = "select c.ID, c.categoryName\n"
+                + "from product p inner join category sc on p.categoryID = sc.ID "
+                + "where p.productID = ?";
 
-//    public Category getCat(int pid) {
-//        String sql = "select c.ID, c.categoryName\n"
-//                + "from product p inner join category sc on p.categoryID = sc.ID "
-//                + "where p.productID = ?";
-//
-//        try {
-//            PreparedStatement st = connection.prepareStatement(sql);
-//            st.setInt(1, pid);
-//            ResultSet rs = st.executeQuery();
-//
-//            while (rs.next()) {
-//                Category c = new Category();
-//
-//                c.setID(rs.getInt(1));
-//                c.setCategoryName(rs.getString(2));
-//
-//                return c;
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        }
-//
-//        return null;
-//    }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, pid);
+            ResultSet rs = st.executeQuery();
 
-//    public SubCategories getSubCat(int pid) {
+            while (rs.next()) {
+                Category c = new Category();
+
+                c.setID(rs.getInt(1));
+                c.setCategoryName(rs.getString(2));
+
+                return c;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return null;
+    }
+//     public SubCategories getSubCat(int pid) {
 //        String sql = "select sc.scid, sc.scname, sc.cid\n"
 //                    + "from products p inner join subcategories sc on p.scid = sc.scid "
 //                    + "where p.pid = ?";
@@ -120,47 +118,49 @@ public class DetailDAO extends DBContext {
 //        
 //        return null;
 //    }
-//    public List<Product> getRelated(int pid) {
-//        List<Product> list = new ArrayList<Product>();
-//        String sql = "select p.productID, p.productName, p.decription,p.originalPrice,p.categoryID,sc.ID,sc.categoryName ,p.sellPrice,p.salePercent, p.amount,p.suppliID, "
-//                + " p.salePercent,p.isSell,p.releaseDate,p.image \n"
-//                + "from Product p inner join category sc on p.categoryID = sc.ID"
-//                + "where sc.ID = ? and p.productID != ?";
-//        try {
-//            PreparedStatement st = connection.prepareStatement(sql);
-//            int cid = new DetailDAO().getCat(pid).getID();
-//            st.setInt(1, cid);
-//            st.setInt(2, pid);
-//            ResultSet rs = st.executeQuery();
-//
-//            while (rs.next()) {
-//                Product p = new Product();
-//
-//                p.setProductID(rs.getInt("productID"));
-//                p.setProductName(rs.getString("productName"));
-//                p.setDescription(rs.getString("decription"));
-//                p.setOriginalPrice(rs.getInt("originalPrice"));
-//                p.setCategoryID(rs.getInt("ID"));
-//
-//                Category sc = new Category();
-//                sc.setID(rs.getInt("ID"));
-//                sc.setCategoryName(rs.getString("categoryName"));
-//                p.setImage(rs.getString("image"));
-//                p.setIsSell(rs.getInt("isSell"));
-//                p.setReleaseDate(rs.getDate("releaseDate"));
-//                p.setSellPrice(rs.getInt("sellPrice"));
-//                p.setSalePercent(rs.getInt("salePercent"));
-//                p.setAmount(rs.getInt("amount"));
-//                p.setSuppliID(rs.getInt("suppliID"));
-//
-//                list.add(p);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//        }
-//
-//        return list;
-//    }
+    public List<Product> getRelated(int pid) {
+        List<Product> list = new ArrayList<Product>();
+        String sql = "select p.productID, p.productName, p.decription,p.originalPrice,p.categoryID,sc.ID,sc.categoryName ,p.sellPrice,p.salePercent, p.amount,p.suppliID, "
+                + " p.salePercent,p.isSell,p.releaseDate,p.image \n"
+                + "from Product p inner join category sc on p.categoryID = sc.ID"
+                + "where sc.ID = ? and p.productID != ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            int cid = new DetailDAO().getCat(pid).getID();
+            st.setInt(1, cid);
+            st.setInt(2, pid);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                Product p = new Product();
+
+                p.setProductID(rs.getInt("productID"));
+                p.setProductName(rs.getString("productName"));
+                p.setDescription(rs.getString("decription"));
+                p.setOriginalPrice(rs.getInt("originalPrice"));
+
+                Category sc = new Category();
+                sc.setID(rs.getInt("ID"));
+                sc.setCategoryName(rs.getString("categoryName"));
+                
+                p.setImage(rs.getString("image"));
+                p.setIsSell(rs.getInt("isSell"));
+                p.setReleaseDate(rs.getDate("releaseDate"));
+                p.setSellPrice(rs.getInt("sellPrice"));
+                p.setSalePercent(rs.getInt("salePercent"));
+                p.setAmount(rs.getInt("amount"));
+                
+                Supplier su = new Supplier();
+                su.setID(rs.getInt("suppliID"));
+
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+
+        return list;
+    }
 
     public static void main(String[] args) {
         DetailDAO db = new DetailDAO();

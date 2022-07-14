@@ -78,6 +78,7 @@ public class TypeProductDAO extends DBContext {
 
         return list;
     }
+    
 
     public List<Product> getTopSell() {
         List<Product> list = new ArrayList<Product>();
