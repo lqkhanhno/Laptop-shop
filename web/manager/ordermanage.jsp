@@ -707,7 +707,7 @@
                     if (confirm('Are you sure you want to cancel this order?')) {
                         //console.log(1);
                         $.ajax({
-                            url: '/Laptop-shop/ordermangage?s=Process Cancel',
+                            url: '/Laptop-shop/ordermanage?s=ProcessCancel',
                             type: "POST",
                             data: {
                                 order_id: order_id
@@ -744,13 +744,14 @@
                     }
                 });
                 $('.btnAccept').click(function (event) {
-                    event.preventDefault();
+                    
+        event.preventDefault();
                     let btn = $(this);
                     let order_id = btn.data('id');
                     if (confirm('Are you sure you want to accept this order?')) {
                         //console.log(1);
                         $.ajax({
-                            url: '/Laptop-shop/ordermangage?s=Process Accept',
+                            url: '/Laptop-shop/ordermanage?s=ProcessAccept',
                             type: "POST",
                             data: {
                                 order_id: order_id
@@ -793,7 +794,7 @@
                     if (confirm('Are you sure you have completed ship this order?')) {
                         //console.log(1);
                         $.ajax({
-                            url: '/Laptop-shop/ordermangage?s=Process Shipping',
+                            url: '/Laptop-shop/ordermanage?s=ProcessShipping',
                             type: "POST",
                             data: {
                                 order_id: order_id

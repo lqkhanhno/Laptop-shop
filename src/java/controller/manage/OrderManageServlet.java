@@ -49,13 +49,13 @@ public class OrderManageServlet extends HttpServlet {
 
         try ( PrintWriter out = response.getWriter()) {
             switch (service) {
-                case "Process Cancel":
+                case "ProcessCancel":
                     process_Cancel(request, response);
                     break;
-                case "Process Accept":
+                case "ProcessAccept":
                     process_Accept(request, response);
                     break;
-                case "Process Shipping":
+                case "ProcessShipping":
                     process_Shipping(request, response);
                     break;
                 case "Display":
