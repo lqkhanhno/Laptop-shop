@@ -52,6 +52,10 @@
         <servlet-name>Order_DetailController</servlet-name>
         <servlet-class>controller.Order_DetailController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>OrderManageServlet</servlet-name>
+        <servlet-class>controller.manage.OrderManageServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>Order_DetailController</servlet-name>
         <url-pattern>/order_detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderManageServlet</servlet-name>
+        <url-pattern>/ordermanage</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
