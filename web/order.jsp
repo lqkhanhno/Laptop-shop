@@ -766,7 +766,7 @@
 //                            let name = $("#div-canceled").find("tbody").prop("tagName");
                             $("#div-canceled").find("tbody").prepend(`
                                 <tr>
-                                    <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#`+order.ID+`</a> </td>
+                                    <td><p><b>#`+order.ID+`</b></p> </td>
                                     <td>
                                         `+order.orderDate+`
                                     </td>
