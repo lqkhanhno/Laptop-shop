@@ -116,41 +116,41 @@ public class CartController extends HttpServlet {
         HashMap<String, HashMap<String, String>> listIdPro
                 = new HashMap<>();
         Object email = session.getAttribute("email");
-        if(email==null){
+        if (email == null) {
             //yes
             dispath(request, response, "/login");
-        }else{
-        //get cart by email
-        Object cart_id = session.getAttribute("cart_id");
-        if (cart_id != null) {
-            listIdPro = new Cart_ItemDAO().getCartItemByCartId(Integer.parseInt(cart_id.toString()));
+        } else {
+            //get cart by email
+            Object cart_id = session.getAttribute("cart_id");
+            if (cart_id != null) {
+                listIdPro = new Cart_ItemDAO().getCartItemByCartId(Integer.parseInt(cart_id.toString()));
 
-            int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(Integer.parseInt(cart_id.toString()));
-            request.setAttribute("quantityCart", quantityCart);
+                int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(Integer.parseInt(cart_id.toString()));
+                request.setAttribute("quantityCart", quantityCart);
 
-            moveToCartView(request, response, listIdPro);
+                moveToCartView(request, response, listIdPro);
 
-            return;
-        }
-        ShoppingCart cart = new ShoppingCartDAO().getCartByEmail("anhpn@gmail.com");
-        if (cart != null) {
-            //add session ("cart", cart_id);
-            session.setAttribute("cart_id", cart.getID());
-            listIdPro = new Cart_ItemDAO().getCartItemByCartId(cart.getID());
-
-            int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
-            request.setAttribute("quantityCart", quantityCart);
-
-            moveToCartView(request, response, listIdPro);
-
-            return;
-        }
-        request.setAttribute("quantityCart", 0);
-
-        request.setAttribute("Cart", listIdPro);
-        dispath(request, response, "/shoppingcart.jsp");
-        //get cart item import to hashmap listidpro
+                return;
             }
+            ShoppingCart cart = new ShoppingCartDAO().getCartByEmail("anhpn@gmail.com");
+            if (cart != null) {
+                //add session ("cart", cart_id);
+                session.setAttribute("cart_id", cart.getID());
+                listIdPro = new Cart_ItemDAO().getCartItemByCartId(cart.getID());
+
+                int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+                request.setAttribute("quantityCart", quantityCart);
+
+                moveToCartView(request, response, listIdPro);
+
+                return;
+            }
+            request.setAttribute("quantityCart", 0);
+
+            request.setAttribute("Cart", listIdPro);
+            dispath(request, response, "/shoppingcart.jsp");
+            //get cart item import to hashmap listidpro
+        }
     }
 
     private void add2Cart(HttpServletRequest request, HttpServletResponse response) {
@@ -168,85 +168,77 @@ public class CartController extends HttpServlet {
         ProductDAO dao = new ProductDAO();
         HttpSession session = request.getSession();
         //check session have email or not
-//        Object email = session.getAttribute("email");
-        Object email = "anhpn@gmail.com";
-//        if(email==null){
-//            //yes:
-//                System.out.println("You need login to shopping");
-//                //return: "You need login to shopping"
-//        }else{
-        //yes
-        //get product_id
-        int product_id = -1 ;
+        Object email = session.getAttribute("email");
         try {
-            product_id = Integer.parseInt(request.getParameter("id_product"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
+            //Object email = "anhpn@gmail.com";
+            if (email == null) {
+                //yes:
+                //System.out.println("You need login to shopping");
+                response.sendError(400, "You need login to shopping");
+                //return: "You need login to shopping"
+            } else {
+                //yes
+                //get product_id
+                int product_id = -1;
+                product_id = Integer.parseInt(request.getParameter("id_product"));
 
-        if (!checkExistProduct(product_id)) {
-            try {
-                //check product exist or not
-                //no: return : ""Product is not exist";
-                response.sendError(400, "Product is not exist");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            return;
-        }
-        //yes:
-        //check in session have cartid or not
-        Object cartID = session.getAttribute("cart_id");
-        if (cartID == null) {
-            //getcart by email
-            ShoppingCart cart = new ShoppingCartDAO().getCartByEmail(email.toString());
-            //check exist or not
-            if (cart == null) {
-                int userID = new UserDAO().getIdByEmail(email.toString());
-                //create new shopping cart
-                int a = new ShoppingCartDAO().createShoppingCart(userID);
-                if (a == 0) {
-                    System.out.println("Can't add shoppingcart");
-                } else {
-                    cart = new ShoppingCartDAO().getCartByEmail(email.toString());
-                    cartID = cart.getID();
+                if (!checkExistProduct(product_id)) {
+
+                    //check product exist or not
+                    //no: return : ""Product is not exist";
+                    response.sendError(400, "Product is not exist");
+
+                    return;
                 }
-            }
-            //add session ("cart", cart_id);
-            session.setAttribute("cart_id", cart.getID());
-        }
+                //yes:
+                //check in session have cartid or not
+                Object cartID = session.getAttribute("cart_id");
+                if (cartID == null) {
+                    //getcart by email
+                    ShoppingCart cart = new ShoppingCartDAO().getCartByEmail(email.toString());
+                    //check exist or not
+                    if (cart == null) {
+                        int userID = new UserDAO().getIdByEmail(email.toString());
+                        //create new shopping cart
+                        int a = new ShoppingCartDAO().createShoppingCart(userID);
+                        if (a == 0) {
+                            System.out.println("Can't add shoppingcart");
+                        } else {
+                            cart = new ShoppingCartDAO().getCartByEmail(email.toString());
+                            cartID = cart.getID();
+                        }
+                    }
+                    //add session ("cart", cart_id);
+                    session.setAttribute("cart_id", cart.getID());
+                }
 
-        //check in cart_item by cart_id vs product_id
-        if (!new Cart_ItemDAO().checkExist_Cart_Item_W_ID_And_PId(cartID.toString(), product_id)) {
-            //no
-            //add new to cart_item
-            Cart_Item cart_item = new Cart_Item(Integer.parseInt(cartID.toString()), product_id, 1);
-            int n = new Cart_ItemDAO().addCart_Item(cart_item);
-            if (n == 0) {
-                System.out.println("Can't add cart item");
-                return;
+                //check in cart_item by cart_id vs product_id
+                if (!new Cart_ItemDAO().checkExist_Cart_Item_W_ID_And_PId(cartID.toString(), product_id)) {
+                    //no
+                    //add new to cart_item
+                    Cart_Item cart_item = new Cart_Item(Integer.parseInt(cartID.toString()), product_id, 1);
+                    int n = new Cart_ItemDAO().addCart_Item(cart_item);
+                    if (n == 0) {
+                        System.out.println("Can't add cart item");
+                        return;
+                    }
+                } else {
+                    //yes:
+                    //update amount to cart_item
+                    int n = new Cart_ItemDAO().increase_1_Amount(Integer.parseInt(cartID.toString()), product_id);
+                    if (n == 0) {
+                        System.out.println("Can't increace ");
+                        return;
+                    }
+                }
+                int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(Integer.parseInt(cartID.toString()));
+                response.setContentType("application/json");
+                response.setCharacterEncoding("UTF-8");
+                response.getWriter().write(new Gson().toJson(quantityCart));
             }
-        } 
-        else{
-            //yes:
-            //update amount to cart_item
-            int n = new Cart_ItemDAO().increase_1_Amount(Integer.parseInt(cartID.toString()), product_id);
-            if (n == 0) {
-                System.out.println("Can't increace ");
-                return;
-            }
-        }
-        int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(Integer.parseInt(cartID.toString()));
-        try {
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(new Gson().toJson(quantityCart));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
-//        }
     }
 
     private void updateQuantity(HttpServletRequest request, HttpServletResponse response) {
@@ -264,44 +256,43 @@ public class CartController extends HttpServlet {
         //get
         String id_product = request.getParameter("id_product");
         String quantity = request.getParameter("quantity");
-        
+
         Product p = new DetailDAO().getByPid(Integer.parseInt(id_product));
-        
-        
+
         try {
             //check quantity empty or not
-            if(quantity.isEmpty()){
-                response.sendError(400,"Quantity can not be empty");
+            if (quantity.isEmpty()) {
+                response.sendError(400, "Quantity can not be empty");
                 return;
             }
-            
+
             int quantityInt = 0;
             //check quantity number or not
             try {
                 quantityInt = Integer.parseInt(quantity);
             } catch (Exception e) {
-                response.sendError(400,"Quantity must be a number type");
+                response.sendError(400, "Quantity must be a number type");
                 e.printStackTrace();
             }
             //check id product exist or not
-            if(p==null){
+            if (p == null) {
                 response.sendError(400, "Product is not exist");
                 return;
             }
             if (quantityInt < 1) {
                 response.sendError(400, "Ow quantity cannot be less than 0!!");
                 return;
-            } 
+            }
             if (listIdProduct == null) {
                 response.sendError(400, "Cart is empty bru!!");
                 return;
-            } 
+            }
             if (!checkIdInListIdProduct(listIdProduct, id_product)) {
                 response.setCharacterEncoding("UTF-8");
                 response.sendError(400, "Product is not in Cart bru, Are u s?e !!");
                 return;
             }
-            if(quantityInt > p.getAmount()){ //quantity update > in DB 
+            if (quantityInt > p.getAmount()) { //quantity update > in DB 
                 Cart_Item cItem = new Cart_Item(cart_id, Integer.parseInt(id_product), 1);
                 new Cart_ItemDAO().updateAmount(cItem);
                 HashMap<String, String> infoProduct = listIdProduct.get(id_product);
