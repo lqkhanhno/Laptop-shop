@@ -193,6 +193,7 @@
                                                     <a href="#" data-id="<%= o.getID()%>" class="btn btn-danger btnCancel">Cancel</a>
                                                 </td>
                                             </tr>
+                                            
                                             <tr>
                                                 <td colspan="5">
                                                     <div >
@@ -231,44 +232,7 @@
 
                                                             <tr>
                                                         </table>
-<!--                                                        <button id="<%= o.getUserID()%>" class="btn btn-info btn_detail" >User Detail</button>
-                                                        <table class="div_detail_<%= o.getUserID()%>" style="display: none">
-                                                        <%
-                                                            Map<String, Map<String, String>> listUserODetail
-                                                                    = listOrder.get(String.valueOf(o.getUserID()));
-                                                            Set<String> keySets = listUserODetail.keySet();
-                                                            for (Object objKey : keySets) {
-                                                                Map<String, String> listU = listUserODetail.get(objKey.toString());
-                                                        %>
-                                                        <tr>
-                                                            <td WIDTH="75vw" colspan="3" >
-                                                                <img src="img/Laptop/<%= listU.get("image")%>" alt="contact-img" title="contact-img" class="rounded mr-3" height="64">
-                                                                <span class="m-0 d-inline-block align-middle font-16">
-                                                                    <a href="product?productid=<%= objKey.toString()%>" class="text-body"><%= listU.get("productName")%></a>
-                                                                    <br>
-                                                                    <small><b>x<%= listU.get("quantity")%></b></small>
-                                                                </span>
-                                                            </td>
-                                                            <td WIDTH="25%" class="total">
-                                                            <td>
-                                                        <%= o.getOrderDate()%> 
-                                                    </td>
-                                                    </td>
-                                                </tr>
-                                                        <%}%>
-                                                        <tr>
-                                                        <%
-                                                            for (Order order : listOrderTotal) {
-                                                                if (order.getID() == o.getID()) {
-
-                                                        %>
-                                                        <td><b>Total Money: <%= vnFormat.format(order.getTotalPrice())%></b><td>
-                                                        <%}
-                                                            }%>
-
-                                                <tr>
-                                            </table>
-                                                        -->
+                                                    
                                                     </div>
                                                 </td>
                                             </tr>
