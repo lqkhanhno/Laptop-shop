@@ -45,6 +45,30 @@
         <servlet-class>controller.Purchase_OrderController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>FaqController</servlet-name>
+        <servlet-class>controller.FaqController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchController</servlet-name>
+        <servlet-class>controller.SearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryController</servlet-name>
+        <servlet-class>controller.CategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditFAQController</servlet-name>
+        <servlet-class>controller.EditFAQController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddComment</servlet-name>
+        <servlet-class>controller.AddComment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateFAQ</servlet-name>
+        <servlet-class>controller.UpdateFAQ</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>NotificationController</servlet-name>
         <servlet-class>controller.NotificationController</servlet-class>
     </servlet>
@@ -111,6 +135,30 @@
     <servlet-mapping>
         <servlet-name>OrderManageServlet</servlet-name>
         <url-pattern>/ordermanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FaqController</servlet-name>
+        <url-pattern>/faq</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchController</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryController</servlet-name>
+        <url-pattern>/catelist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditFAQController</servlet-name>
+        <url-pattern>/editfaq</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddComment</servlet-name>
+        <url-pattern>/addcomment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateFAQ</servlet-name>
+        <url-pattern>/updatefaq</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

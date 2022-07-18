@@ -163,11 +163,17 @@
                 <div id="responsive-nav">
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
-                        <li class="active"><a href="home">Home</a></li>
+                        <li><a href="home">Home</a></li>
 
                         <c:forEach items="${requestScope.sclist}" var="o">
-                            <li><a href="catelist?id=${o.ID}" value="${o.ID}">${o.categoryName}</a></li>                       
-                        </c:forEach>                      
+                            <c:if test="${o.ID == requestScope.c}">
+                                <li class="active"><a href="catelist?id=${o.ID}" value="${o.ID}">${o.categoryName}</a></li>                       
+                            </c:if>
+                            <c:if test="${o.ID != requestScope.c}">
+                                <li><a href="catelist?id=${o.ID}" value="${o.ID}">${o.categoryName}</a></li>                       
+                            </c:if>                  
+                        </c:forEach>
+
                     </ul>
                     <!-- /NAV -->
                 </div>
@@ -175,8 +181,8 @@
             </div>
             <!-- /container -->
         </nav>
-        <!-- /NAVIGATION -->
-
+        <!-- /NAVIGATION -->              
+        
         <!-- SECTION -->
         <div class="section">
             <!-- container -->
@@ -185,9 +191,9 @@
                 <div class="row">
 
                     <!-- section title -->
-                    <div class="col-md-10">
+                    <div class="col-md-12">
                         <div class="section-title">
-                            <h3 class="title">All Product</h3>
+                            <h3 class="title">${requestScope.data[1].category.categoryName}</h3>
                         </div>
                     </div>
                     <!-- /section title -->
@@ -214,7 +220,7 @@
                                     <div class="product-body">
                                         <p class="product-category">${i.category.categoryName}</p>
                                         <h3 class="product-name"><a href="product?productid=${i.productID}">${i.productName}</a></h3>
-                                        <c:if test="${i.salePercent != 0}">="product
+                                        <c:if test="${i.salePercent != 0}">
                                             <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
                                                 <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>
                                             </h4>
@@ -235,238 +241,7 @@
             <!-- /container -->
         </div>
         <!-- /SECTION -->
-
-
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-
-                    <!-- section title -->
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">New Products</h3>
-                            <div class="section-nav">
-                                <!--								<ul class="section-tab-nav tab-nav">
-                                                                                                        <li class="active"><a data-toggle="tab" href="#tab1">Laptops</a></li>
-                                                                                                        <li><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-                                                                                                        <li><a data-toggle="tab" href="#tab1">Cameras</a></li>
-                                                                                                </ul>-->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /section title -->
-
-                    <!-- Products tab & slick -->
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                <div id="tab1" class="tab-pane active">
-                                    <%--<fmt:formatDate value="${ourDate}" pattern="dd/MM/yyyy"/>--%>
-                                    <div class="products-slick" data-nav="#slick-nav-1">
-
-                                        <c:forEach items="${requestScope.data1}" var="i">
-
-                                            <!-- product -->
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img src="./img/Laptop/${i.image}" alt="">
-                                                    <div class="product-label">
-                                                        <c:if test="${i.salePercent != 0}">
-                                                            <span class="sale">-${i.salePercent}%</span>
-                                                        </c:if>
-                                                        <c:if test="${i.releaseDate > ourDate}">
-                                                            <span class="new">NEW</span>
-                                                        </c:if>
-
-                                                    </div>
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">${i.category.categoryName}</p>
-                                                    <h3 class="product-name"><a href="product?productid=${i.productID}">${i.productName}</a></h3>
-                                                        <c:if test="${i.salePercent != 0}">
-                                                        <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
-                                                            <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>
-                                                        </h4>
-                                                    </c:if>
-                                                    <c:if test="${i.salePercent == 0}">
-                                                        <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></h4>
-                                                    </c:if>
-
-                                                </div>
-
-                                            </div>
-                                            <!-- /product -->
-                                        </c:forEach>
-
-                                    </div>
-                                    <div id="slick-nav-1" class="products-slick-nav"></div>
-                                </div>
-                                <!-- /tab -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Products tab & slick -->
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
         
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-
-                    <!-- section title -->
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">Top selling</h3>
-                            <div class="section-nav">
-                                <!--								<ul class="section-tab-nav tab-nav">
-                                                                                                        <li class="active"><a data-toggle="tab" href="#tab2">Laptops</a></li>
-                                                                                                        <li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
-                                                                                                        <li><a data-toggle="tab" href="#tab2">Cameras</a></li>
-                                                                                                </ul>-->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /section title -->
-
-                    <!-- Products tab & slick -->
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                <div id="tab2" class="tab-pane fade in active">
-                                    <div class="products-slick" data-nav="#slick-nav-2">
-                                        <!-- product -->
-                                        <c:forEach items="${requestScope.data2}" var="i">
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img src="./img/Laptop/${i.image}" alt="">
-                                                    <div class="product-label">
-                                                        <c:if test="${i.salePercent != 0}">
-                                                            <span class="sale">-${i.salePercent}%</span>
-                                                        </c:if>
-                                                        <c:if test="${i.releaseDate > ourDate}">
-                                                            <span class="new">NEW</span>
-                                                        </c:if>
-                                                    </div>
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">${i.category.categoryName}</p>
-                                                    <h3 class="product-name"><a href="product?productid=${i.productID}">${i.productName}</a></h3>
-                                                        <c:if test="${i.salePercent != 0}">
-                                                        <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
-                                                            <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>
-                                                        </h4>
-                                                    </c:if>
-                                                    <c:if test="${i.salePercent == 0}">
-                                                        <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></h4>
-                                                    </c:if>
-                                                </div>
-
-                                            </div>
-                                            <!-- /product -->
-                                        </c:forEach>
-                                    </div>
-                                    <div id="slick-nav-2" class="products-slick-nav"></div>
-                                </div>
-                                <!-- /tab -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Products tab & slick -->
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-        <!-- SECTION -->
-        <div class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-
-                    <!-- section title -->
-                    <div class="col-md-12">
-                        <div class="section-title">
-                            <h3 class="title">Top sale</h3>
-                            <div class="section-nav">
-                                <!--								<ul class="section-tab-nav tab-nav">
-                                                                                                        <li class="active"><a data-toggle="tab" href="#tab2">Laptops</a></li>
-                                                                                                        <li><a data-toggle="tab" href="#tab2">Smartphones</a></li>
-                                                                                                        <li><a data-toggle="tab" href="#tab2">Cameras</a></li>
-                                                                                                </ul>-->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /section title -->
-
-                    <!-- Products tab & slick -->
-                    <div class="col-md-12">
-                        <div class="row">
-                            <div class="products-tabs">
-                                <!-- tab -->
-                                <div id="tab2" class="tab-pane fade in active">
-                                    <div class="products-slick" data-nav="#slick-nav-3">
-                                        <!-- product -->
-                                        <c:forEach items="${requestScope.data3}" var="i">
-                                            <div class="product">
-                                                <div class="product-img">
-                                                    <img src="./img/Laptop/${i.image}" alt="">
-                                                    <div class="product-label">
-                                                        <c:if test="${i.salePercent != 0}">
-                                                            <span class="sale">-${i.salePercent}%</span>
-                                                        </c:if>
-                                                        <c:if test="${i.releaseDate > ourDate}">
-                                                            <span class="new">NEW</span>
-                                                        </c:if>
-                                                    </div>
-                                                </div>
-                                                <div class="product-body">
-                                                    <p class="product-category">${i.category.categoryName}</p>
-                                                    <h3 class="product-name"><a href="product?productid=${i.productID}">${i.productName}</a></h3>
-                                                        <c:if test="${i.salePercent != 0}">
-                                                        <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
-                                                            <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>
-                                                        </h4>
-                                                    </c:if>
-                                                    <c:if test="${i.salePercent == 0}">
-                                                        <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></h4>
-                                                    </c:if>
-                                                </div>
-
-                                            </div>
-                                            <!-- /product -->
-                                        </c:forEach>
-                                    </div>
-                                    <div id="slick-nav-3" class="products-slick-nav"></div>
-                                </div>
-                                <!-- /tab -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Products tab & slick -->
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
 
         <!-- NEWSLETTER -->
         <div id="newsletter" class="section">
@@ -481,7 +256,20 @@
                                 <input class="input" type="email" placeholder="Enter Your Email">
                                 <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
                             </form>
-                            
+                            <ul class="newsletter-follow">
+                                <li>
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -545,7 +333,7 @@
                                     <li><a href="#">View Cart</a></li>
                                     <li><a href="#">Checkout</a></li>
                                     <li><a href="#">Track My Order</a></li>
-                                    <li><a href="editfaq">Help</a></li>
+                                    <li><a href="faq">Help</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -561,7 +349,7 @@
                 <div class="container">
                     <!-- row -->
                     <div class="row">
-                        <div class="col-md-12 text-center">
+                        <div class="col-md-12 text-center">                           
                             <span class="copyright">
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                 Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>

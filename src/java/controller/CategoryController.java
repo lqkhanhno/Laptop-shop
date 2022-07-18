@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
 
@@ -9,11 +8,11 @@ import dal.Cart_ItemDAO;
 import dal.CategoryDAO;
 import dal.ProductDAO;
 import dal.ShoppingCartDAO;
-import dal.SupplierDAO;
 import dal.TypeProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.function.Function;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,13 +21,12 @@ import javax.servlet.http.HttpSession;
 import model.Category;
 import model.Product;
 import model.ShoppingCart;
-import model.Supplier;
 
 /**
  *
- * @author LAM
+ * @author Admin
  */
-public class HomeServlet extends HttpServlet {
+public class CategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,15 +40,15 @@ public class HomeServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet HomeServlet</title>");            
+            out.println("<title>Servlet CategoryController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet HomeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CategoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,25 +65,17 @@ public class HomeServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        TypeProductDAO db = new TypeProductDAO();
-        
-        List<Product> list1 = db.getTopNewest();
-        List<Product> list2 = db.getTopSell();
-        List<Product> list3 = db.getTopSale();
-        
-        ProductDAO db1 = new ProductDAO();
-        List<Product> list = db1.getAll();
-        
-        request.setAttribute("data", list);
-        request.setAttribute("data1", list1);
-        request.setAttribute("data2", list2);
-        request.setAttribute("data3", list3);
-        
-
+            throws ServletException, IOException {      
+       
         CategoryDAO c = new CategoryDAO();
         List<Category> sclist = c.getAll();
+        
+        int id = Integer.parseInt(request.getParameter("id"));
+        ProductDAO db = new ProductDAO();
+        List<Product> list = db.getByCate(id);
+        
+        request.setAttribute("c", id);
+        request.setAttribute("data", list);
         
         int productsInCart=0;
         HttpSession session = request.getSession();
@@ -101,7 +91,7 @@ public class HomeServlet extends HttpServlet {
 
         request.setAttribute("sclist", sclist);
 
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("categorylist.jsp").forward(request, response);
     }
 
     /**
@@ -115,8 +105,6 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
     }
 
     /**
@@ -127,6 +115,5 @@ public class HomeServlet extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
-
+    }// </editor-fold>       
 }
