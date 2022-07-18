@@ -3,7 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/tuand/OneDrive/Máy%20tính/laptop-shop-2/Laptop-shop/web/manager/manageproduct.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/HomeServlet.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/Purchase_OrderController.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/Register.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/CartController.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/manager/manageproduct.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/signup.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/dal/DBContext.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/order.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/dal/OrderDAO.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/ResetPassword.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/dal/OrderManageDAO.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/Signup.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/manage/OrderManageServlet.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/ProductServlet.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/home.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/dal/Order_DetailDAO.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/Login.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/login.jsp</file>
         </group>
     </open-files>
 </project-private>

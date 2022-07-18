@@ -25,7 +25,7 @@ import model.Product;
 import model.Supplier;
 
 @MultipartConfig(
-        location = "C:\\Users\\tuand\\OneDrive\\Máy tính\\laptop-shop-2\\Laptop-shop\\web\\img\\Laptop",
+        location = "D:\\SWP\\kAHAnh\\Laptop-shop\\web\\img\\Laptop",
         fileSizeThreshold = 1024 * 1024 * 1,
         maxFileSize = 1024 * 1024 * 10,
         maxRequestSize = 1024 * 1024 * 100

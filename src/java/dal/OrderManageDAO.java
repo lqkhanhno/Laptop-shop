@@ -23,7 +23,7 @@ public class OrderManageDAO extends DBContext {
 
     public Vector<Order> getListOrderByStatus(String statusParam) {
         Vector<Order> listOrder = new Vector<>();
-        String query = "select * from [Order] where and status = '"+statusParam+"'";
+        String query = "select * from [Order] where status = '"+statusParam+"'";
         ResultSet rs = getData(query);
         try {
             while(rs.next()){
