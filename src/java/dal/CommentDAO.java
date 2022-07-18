@@ -26,7 +26,7 @@ public class CommentDAO extends DBContext {
                             "           ,[comment]\n" +
                             "           ,[date])\n" +    
                             "     VALUES (?\n" +
-                            "           ,N'?'\n" +
+                            "           ,?\n" +
                             "           ,?\n" +
                             "           ,CURRENT_TIMESTAMP)";
             PreparedStatement st = connection.prepareStatement(sql);
@@ -52,7 +52,8 @@ public class CommentDAO extends DBContext {
                             "       ,c.date\n" +
                             "	   ,u.username\n" +
                             "FROM Comment c inner join [User] u on c.userID=u.userID \n" +
-                            "where c.productID=" + ID;
+                            "where c.productID=" + ID +
+                            "order by [date] desc";    
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             
@@ -65,7 +66,7 @@ public class CommentDAO extends DBContext {
                 cmt.setUser(u);
                 cmt.setProdutID(rs.getInt("productID"));
                 cmt.setComment(rs.getString("comment"));
-                cmt.setDate(DateFormat.getDateTimeInstance().format(rs.getDate("date"))); 
+                cmt.setDate(rs.getString("date")); 
                 
                 list.add(cmt);
             }

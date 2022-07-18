@@ -51,24 +51,18 @@
                 <div class="container">
                     <ul class="header-links pull-left">
                         <li><a href="#"><i class="fa fa-phone"></i> +84-369-909-625</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> electrovn@gmail.com</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> ${sessionScope.email}</a></li>
                         <li><a href="#"><i class="fa fa-map-marker"></i> 162 Thai Ha</a></li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                            <c:if test="${sessionScope.account == null}">
+                            <c:if test="${sessionScope.email == null}">
                             <li><a href="login.jsp"><i class="fa fa-user-o"></i> Login</a></li>
                             </c:if>
 
-                        <c:if test="${sessionScope.account != null}">
-                            <c:if test="${sessionScope.account.role == 0}">
-                                <li><a href="listmanage"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
-                                </c:if>
-                                <c:if test="${sessionScope.account.role == 1}">
-                                <li><a href="profile"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
-                                </c:if>
+                        <c:if test="${sessionScope.email != null}">                           
                             <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
-                            </c:if>
+                        </c:if>
 
                     </ul>
                 </div>
@@ -92,7 +86,7 @@
                         <!-- /LOGO -->
 
                         <!-- SEARCH BAR -->
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <div class="header-search">
                                 <form action="search">
                                     <input name="searchname" class="input" placeholder="Search here">
@@ -103,7 +97,7 @@
                         <!-- /SEARCH BAR -->
 
                         <!-- ACCOUNT -->
-                        <div class="col-md-3 clearfix">
+                        <div class="col-md-4 clearfix">
                             <div class="header-ctn">
                                 <!-- Noti -->
                                 <div >
@@ -176,6 +170,60 @@
             <!-- /container -->
         </nav>
         <!-- /NAVIGATION -->
+        
+        <!-- SECTION -->
+	<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- shop -->
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="./img/shop01.png" alt="">
+							</div>
+							<div class="shop-body">
+								<h3>NEW PRODUCTS</h3>
+								<a href="sort?type=1" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+					</div>
+					<!-- /shop -->
+
+					<!-- shop -->
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="./img/shop03.png" alt="">
+							</div>
+							<div class="shop-body">
+								<h3>TOP SELLING</h3>
+								<a href="sort?type=2" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+					</div> 
+					<!-- /shop -->
+
+					<!-- shop -->
+					<div class="col-md-4 col-xs-6">
+						<div class="shop">
+							<div class="shop-img">
+								<img src="./img/shop02.png" alt="">
+							</div>
+							<div class="shop-body">
+								<h3>TOP SALE</h3>
+								<a href="sort?type=3" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+							</div>
+						</div>
+					</div>
+					<!-- /shop -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>	
+        <!-- /SECTION -->
 
         <!-- SECTION -->
         <div class="section">
@@ -499,19 +547,18 @@
                 <div class="container">
                     <!-- row -->
                     <div class="row">
-                        <div class="col-md-3 col-xs-6">
+                        <div class="col-md-4 col-xs-6">
                             <div class="footer">
                                 <h3 class="footer-title">About Us</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
                                 <ul class="footer-links">
                                     <li><a href="#"><i class="fa fa-map-marker"></i>162 Thai Ha</a></li>
                                     <li><a href="#"><i class="fa fa-phone"></i>+84-369-909-625</a></li>
-                                    <li><a href="#"><i class="fa fa-envelope-o"></i>electrovn@gmail.com</a></li>
+                                    <li><a href="#"><i class="fa fa-envelope-o"></i>${sessionScope.email}</a></li>
                                 </ul>
                             </div>
                         </div>
 
-                        <div class="col-md-3 col-xs-6">
+                        <div class="col-md-4 col-xs-6">
                             <div class="footer">
                                 <h3 class="footer-title">Categories</h3>
                                 <ul class="footer-links">
@@ -523,29 +570,17 @@
                         </div>
 
                         <div class="clearfix visible-xs"></div>
+                     
 
-                        <div class="col-md-3 col-xs-6">
-                            <div class="footer">
-                                <h3 class="footer-title">Information</h3>
-                                <ul class="footer-links">
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Contact Us</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Orders and Returns</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-xs-6">
+                        <div class="col-md-4 col-xs-6">
                             <div class="footer">
                                 <h3 class="footer-title">Service</h3>
                                 <ul class="footer-links">
-                                    <li><a href="profile">My Account</a></li>
+                                    <li><a href="userprofile">My Account</a></li>
                                     <li><a href="#">View Cart</a></li>
                                     <li><a href="#">Checkout</a></li>
                                     <li><a href="#">Track My Order</a></li>
-                                    <li><a href="editfaq">Help</a></li>
+                                    <li><a href="faq">Help</a></li>
                                 </ul>
                             </div>
                         </div>

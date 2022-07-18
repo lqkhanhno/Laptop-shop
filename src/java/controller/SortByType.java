@@ -4,25 +4,18 @@
  */
 package controller;
 
-import dal.CommentDAO;
-import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.sql.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Comment;
-import model.User;
 
 /**
  *
  * @author Admin
  */
-public class AddComment extends HttpServlet {
+public class SortByType extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +34,10 @@ public class AddComment extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddComment</title>");            
+            out.println("<title>Servlet SortByType</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddComment at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SortByType at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +54,9 @@ public class AddComment extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
+            throws ServletException, IOException {
+        int type = Integer.parseInt(request.getParameter("type"));
+        int value = Integer.parseInt(request.getParameter("value"));
         
     }
 
@@ -76,25 +71,7 @@ public class AddComment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("pid"));
-        
-        HttpSession session = request.getSession();
-        String e = session.getAttribute("email").toString();
-        
-        
-        UserDAO db = new UserDAO();
-        User user = db.getIn4UserByEmail(e);
-        
-        Comment c = new Comment();
-        c.setComment(request.getParameter("comment"));
-        c.setProdutID(id);
-        c.setUser(user);
-        
-        CommentDAO cm = new CommentDAO();      
-        cm.addComment(c);
-        
-        request.setAttribute("id", id);
-        response.sendRedirect("product?productid="+id);
+        processRequest(request, response);
     }
 
     /**

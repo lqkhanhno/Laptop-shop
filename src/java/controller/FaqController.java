@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Category;
 import model.FAQs;
-import org.apache.jasper.tagplugins.jstl.ForEach;
 
 /**
  *

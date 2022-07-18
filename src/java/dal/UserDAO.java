@@ -67,13 +67,14 @@ public class UserDAO extends DBContext {
         try {
             if (rs.next()) {
                 int userID = rs.getInt("userID");
+                String fullname = rs.getString("fullname");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 String email = rs.getString("email");
                 int roleID = rs.getInt("roleID");
                 String userAddress = rs.getString("userAddress");
                 String phoneNumber = rs.getString("phonenumber");
-                u = new User(userID, "", username, password, email, roleID, userAddress, phoneNumber);
+                u = new User(userID, fullname, username, password, email, roleID, userAddress, phoneNumber);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

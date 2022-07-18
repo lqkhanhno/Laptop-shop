@@ -6,6 +6,7 @@ package controller;
 
 import dal.CategoryDAO;
 import dal.FaqDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.Category;
 import model.FAQs;
 import model.User;
@@ -84,15 +86,19 @@ public class EditFAQController extends HttpServlet {
         //add
         String ques = request.getParameter("question");
         String ans = request.getParameter("answer");
-        User u = new User();
-        u.setUserID(1); 
+        
+        HttpSession session = request.getSession();
+        String e = session.getAttribute("email").toString();
+                
+        UserDAO dbx = new UserDAO();
+        User user = dbx.getIn4UserByEmail(e);
         
         if (!ques.isEmpty() && !ans.isEmpty() && db.checkExist(ques,ans) ) {           
             FAQs faq = new FAQs();
             
             faq.setTitle(ques);
             faq.setContent(ans);
-            faq.setAuthorID(u);
+            faq.setAuthorID(user);
 
             db.AddFaq(faq);
             response.sendRedirect("editfaq");

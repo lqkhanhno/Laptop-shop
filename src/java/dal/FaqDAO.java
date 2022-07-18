@@ -28,8 +28,7 @@ public class FaqDAO extends DBContext {
                             "           ,?)";
             PreparedStatement st = connection.prepareStatement(sql);
            
-            int uid = f.getAuthorID().getUserID();
-            st.setInt(1, uid);
+            st.setInt(1, f.getAuthorID().getUserID());
             st.setString(2, f.getTitle());
             st.setString(3, f.getContent());
            

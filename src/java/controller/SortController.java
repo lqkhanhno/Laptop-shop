@@ -4,25 +4,29 @@
  */
 package controller;
 
-import dal.CommentDAO;
-import dal.UserDAO;
+import dal.Cart_ItemDAO;
+import dal.CategoryDAO;
+import dal.ProductDAO;
+import dal.ShoppingCartDAO;
+import dal.TypeProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.Comment;
-import model.User;
+import model.Category;
+import model.Product;
+import model.ShoppingCart;
 
 /**
  *
  * @author Admin
  */
-public class AddComment extends HttpServlet {
+public class SortController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +45,10 @@ public class AddComment extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddComment</title>");            
+            out.println("<title>Servlet SortController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddComment at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SortController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,8 +65,62 @@ public class AddComment extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {        
+            throws ServletException, IOException {  
+        TypeProductDAO db = new TypeProductDAO();
+        String type = request.getParameter("type");
+        String value = request.getParameter("value");
+        int id;
         
+        if(type==null) {
+            id = 1;
+        }       
+        else if (value!= null) {
+            id=Integer.parseInt(value);
+        }
+        else {
+            id =Integer.parseInt(type);
+        }     
+        
+        request.setAttribute("type", type);
+        
+        List<Product> list1 = db.getTopNewest();
+        List<Product> list2 = db.getTopSell();
+        List<Product> list3 = db.getTopSale();
+ 
+        request.setAttribute("data1", list1);
+        request.setAttribute("data2", list2);
+        request.setAttribute("data3", list3);
+        
+        List<Product> list = new ArrayList<Product>();
+        if(id==1) {
+            list=list1;
+        }
+        else if(id==2) {
+            list=list2;
+        }
+        else if(id==3)  {
+            list=list3;
+        }
+        request.setAttribute("data", list);
+
+        CategoryDAO c = new CategoryDAO();
+        List<Category> sclist = c.getAll();
+        
+        int productsInCart=0;
+        HttpSession session = request.getSession();
+//        Object email = session.getAttribute("email");
+            Object email = "anhpn@gmail.com";
+        if(email!=null){
+            ShoppingCart cart = new ShoppingCartDAO().getCartByEmail(email.toString());
+            int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+            request.setAttribute("quantityCart", quantityCart);
+        }else{
+            request.setAttribute("quantityCart", 0);
+        }
+
+        request.setAttribute("sclist", sclist);
+
+        request.getRequestDispatcher("sort.jsp").forward(request, response);
     }
 
     /**
@@ -76,25 +134,7 @@ public class AddComment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("pid"));
         
-        HttpSession session = request.getSession();
-        String e = session.getAttribute("email").toString();
-        
-        
-        UserDAO db = new UserDAO();
-        User user = db.getIn4UserByEmail(e);
-        
-        Comment c = new Comment();
-        c.setComment(request.getParameter("comment"));
-        c.setProdutID(id);
-        c.setUser(user);
-        
-        CommentDAO cm = new CommentDAO();      
-        cm.addComment(c);
-        
-        request.setAttribute("id", id);
-        response.sendRedirect("product?productid="+id);
     }
 
     /**

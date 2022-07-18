@@ -1,50 +1,81 @@
-
-<%@page import="model.Product"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="ourDate" class="java.util.Date"/>
 <jsp:setProperty name="ourDate" property="time" value="${ourDate.time - 86400000*270}"/>
-<%@ page contentType="text/html"  pageEncoding="UTF-8"%>
-
 
 <!DOCTYPE html>
+
 <html lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-        <title>Product Detail</title>
+		<title>Electro - HTML Ecommerce Template</title>
 
-        <!-- Google font -->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+ 		<!-- Google font -->
+ 		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
 
-        <!-- Bootstrap -->
-        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
+ 		<!-- Bootstrap -->
+ 		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"/>
 
-        <!-- Slick -->
-        <link type="text/css" rel="stylesheet" href="css/slick.css"/>
-        <link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
+ 		<!-- Slick -->
+ 		<link type="text/css" rel="stylesheet" href="css/slick.css"/>
+ 		<link type="text/css" rel="stylesheet" href="css/slick-theme.css"/>
 
-        <!-- nouislider -->
-        <link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
+ 		<!-- nouislider -->
+ 		<link type="text/css" rel="stylesheet" href="css/nouislider.min.css"/>
 
-        <!-- Font Awesome Icon -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+ 		<!-- Font Awesome Icon -->
+ 		<link rel="stylesheet" href="css/font-awesome.min.css">
 
-        <!-- Custom stlylesheet -->
-        <link type="text/css" rel="stylesheet" href="css/style.css"/>
+ 		<!-- Custom stlylesheet -->
+ 		<link type="text/css" rel="stylesheet" href="css/style.css"/>
 
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-          <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		<![endif]-->
+                
+                <script>
+                    function change() {
+                        let results = Array.from(document.querySelectorAll('.result > div')),
+                            modelsChecked = document.querySelectorAll('.filter input.models:checked'),
+                            processorsChecked = document.querySelectorAll('.filter input.processors:checked');
+                        // Hide all results
+                        results.forEach(function(result) {
+                            result.style.display = 'none';
+                        });
+                        // Filter results to only those that meet ALL requirements:        
+
+                        filterModelsOrProcessors(modelsChecked);
+
+                        if (processorsChecked.length != 0) {
+                            filterModelsOrProcessors(processorsChecked);
+                        }
+
+                        function filterModelsOrProcessors(modelsOrProcessorsChecked) {
+                            results = Array.from(modelsOrProcessorsChecked).reduce(function(sum, input) {
+                                const attrib = input.getAttribute('rel');
+                                return sum.concat(results.filter(function(result) {
+                                    return result.classList.contains(attrib);
+                                }));
+                            }, []);
+                        }
+                        // Show those filtered results:
+                        results.forEach(function(result) {
+                            result.style.display = 'block';
+                        });
+                    }
+                    change();
+                </script>
     </head>
-    <body>
-        <!-- HEADER -->
+	<body>
+<!-- HEADER -->
         <header>
             <!-- TOP HEADER -->
             <div id="top-header">
@@ -153,8 +184,8 @@
             </div>
             <!-- /MAIN HEADER -->
         </header>
-        <!-- /HEADER -->
 
+         <!-- NAVIGATION -->
         <nav id="navigation">
             <!-- container -->
             <div class="container">
@@ -162,7 +193,7 @@
                 <div id="responsive-nav">
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
-                        <li><a href="home">Home</a></li>
+                        <li class="active"><a href="home">Home</a></li>
 
                         <c:forEach items="${requestScope.sclist}" var="o">
                             <li><a href="catelist?id=${o.ID}" value="${o.ID}">${o.categoryName}</a></li>                       
@@ -174,138 +205,170 @@
             </div>
             <!-- /container -->
         </nav>
+        <!-- /NAVIGATION -->
 
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<!-- ASIDE -->
+					<div id="aside" class="col-md-3">
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Categories</h3>
+							<div class="checkbox-filter">
+                                                            <div class="input-checkbox">
+									<input type="checkbox" id="category-1">
+									<label for="category-1">
+										<span></span>
+										NEW PRODUCTS
+									</label>
+								</div>                                                           							
+							</div>
+						</div>
+						<!-- /aside Widget -->
 
+						<!-- aside Widget -->
+						<div class="aside">
+							<h3 class="aside-title">Price</h3>
+							<div class="price-filter">
+								<div id="price-slider"></div>
+								<div class="input-number price-min">
+									<input id="price-min" type="number">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+								<span>-</span>
+								<div class="input-number price-max">
+									<input id="price-max" type="number">
+									<span class="qty-up">+</span>
+									<span class="qty-down">-</span>
+								</div>
+							</div>
+						</div>
+						<!-- /aside Widget -->						
+					</div>
+					<!-- /ASIDE -->
 
-        <!-- SECTION -->
-        <div class="section">   
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <!-- Product main img -->
-                    <div class="col-md-5 col-md-push-2">
-                        <div id="product-main-img">
-                            <div class="product-preview">
-                                <img src="./img/Laptop/${requestScope.data.image}" alt="">
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Product main img -->
-                    <div class="col-md-3"></div>
+					<!-- STORE -->
+					<div id="store" class="col-md-9">
+						<!-- store top filter -->
+						<div class="store-filter clearfix">
+                                                    <div class="store-sort">
+                                                            <form action="sort" method="post">
+<!--                                                                <input id="type" name="type" value="${requestScope.type}">-->
+                                                                <input id="type" name="type" value="${document.E}">
+                                                                <label>                                                                  
+                                                                    Sort By:
+                                                                    <select class="input-select" name="value" >
+									<option value="1">NEW PRODUCTS</option>
+									<option value="2">TOP SELLING</option>
+                                                                        <option value="3">TOP SALE</option>	
+                                                                    </select>                                                                    
+								</label>
+                                                                <input type="submit" hidden>
+                                                            </form>								
+							</div>	
+						</div>
+						<!-- /store top filter -->
 
-                    <!-- Product details -->
-                    <div  class="col-md-4">
-                        <div class="product-details">
-                            <h2 class="product-name">${requestScope.data.productName}</h2>
-                            <div class="product-body">
-                                <c:if test="${requestScope.data.salePercent != 0}">
-                                    <h3 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice * (100 - requestScope.data.salePercent) / 100}" type = "currency"/>
-                                        <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice}" type = "currency"/></del>
-                                    </h3>
-                                </c:if>
-                                <c:if test="${requestScope.data.salePercent == 0}">
-                                    <h3 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${requestScope.data.sellPrice}" type = "currency"/></h3>
-                                </c:if>
-
-
-                            </div>
-                            <p>${requestScope.data.description}</p>
-
-                            <c:if test="${requestScope.data.amount > 0}">
-                                <div class="add-to-cart">
-                                    <% Product p = (Product) request.getAttribute("data");%>
-                                    <a id="btn-add2cart" data-id="<%= p.getProductID()%>"  href="cart?s=add2Cart"  class="btn btn-danger"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                </div>
-                            </c:if>
-                            <c:if test="${requestScope.data.amount <= 0}">
-                                <div class="add-to-cart">
-                                    <a class="btn btn-danger"><i class="fa fa-shopping-cart"></i>Out of stock</a>
-                                </div>
-                            </c:if>
-
-
-                        </div>	
-                    </div>
-                    <!-- /Product details -->
-
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /SECTION -->
-
-        
-        
-        <section class="content-item" id="comments">
-            <div class="container">   
-                <div class="row">
-                    <div class="col-sm-8" id="comments-body">   
-                            <h3 class="pull-left">New Comment : </h3>
-                            <form action="addcomment" method="post">
-                                <fieldset>
-                                    <div class="row">
-                                        <div class="col-sm-3 col-lg-2 hidden-xs">
+						
+						<!-- Products tab & slick -->
+                    <div id="store" class="col-md-12">
+                        <div class="row result">
+                            <c:forEach items="${requestScope.data}" var="i">
+                                <div class="col-md-3 col-xs-6">
+                                <!-- product -->
+                                <div class="product">
+                                    <div class="product-img">
+                                        <img src="./img/Laptop/${i.image}" alt="">
+                                        <div class="product-label">
+                                            <c:if test="${i.salePercent != 0}">
+                                                <span class="sale">-${i.salePercent}%</span>
+                                            </c:if>
+                                            <c:if test="${i.releaseDate > ourDate}">
+                                                <span class="new">NEW</span>
+                                            </c:if>
                                         </div>
-                                        <div class="form-group col-xs-12 col-sm-9 col-lg-10">
-                                            <textarea class="form-control" id="comment" name="comment"  placeholder="Your message" maxlength="1000" title="Not over 1000 word"  required  ></textarea>
-                                            <input type="hidden" name="pid" value="${requestScope.id}" >
-                                            <input type="submit" value="Comment" class="btn btn-normal  btn-outline-success pull-right">                                         
-                                        </div>
-                                    </div>  	                                  
-                                </fieldset>
-                            </form>
-                            <a id="pid" value="${requestScope.id}" hidden=""></a>
-                        <br/><h3> Comments</h3>
-                        <div id="mediaes">
-                            <!-- COMMENT 1 - START -->
-                        <c:forEach items="${requestScope.cmtlist}" var="c" >
-                        <div class="media">
-                            <div class="media-body">
-                                <h5 class="media-heading">${c.user.username}</h5>
-                                <p>${c.comment}</p>
-                                <ul class="list-unstyled list-inline media-detail pull-left">
-                                    <li><sup>${c.date}</sup></li>
-                                </ul>
-                                <ul class="list-unstyled list-inline media-detail pull-right">
-                                </ul>
-                            </div>
-                        </div>    
-                        </c:forEach>
-                        
-                        <!-- COMMENT 1 - END -->
+                                    </div>
+                                                 
+                                    <div class="product-body">
+                                        <p class="product-category">${i.category.categoryName}</p>
+                                        <h3 class="product-name"><a href="product?productid=${i.productID}">${i.productName}</a></h3>
+                                        <c:if test="${i.salePercent != 0}">="product
+                                            <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice * (100 - i.salePercent) / 100}" type = "currency"/>
+                                                <del class="product-old-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></del>
+                                            </h4>
+                                        </c:if>
+                                        <c:if test="${i.salePercent == 0}">
+                                            <h4 class="product-price"><fmt:setLocale value = "en_US"/><fmt:formatNumber value = "${i.sellPrice}" type = "currency"/></h4>
+                                        </c:if>
+                                    </div>
+                                </div>  
+                                </div>  
+                                <!-- /product -->
+                            </c:forEach>  
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-       
+                    <!-- Products tab & slick -->
 
-        <!-- NEWSLETTER -->
-        <div id="newsletter" class="section">
-            <!-- container -->
-            <div class="container">
-                <!-- row -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="newsletter">
-                            <p>Sign Up for the <strong>NEWSLETTER</strong></p>
-                            <form action="home">
-                                <input class="input" type="email" placeholder="Enter Your Email">
-                                <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
-                            </form>
-                            
-                        </div>
-                    </div>
-                </div>
-                <!-- /row -->
-            </div>
-            <!-- /container -->
-        </div>
-        <!-- /NEWSLETTER -->
-        
-        
+						<!-- store bottom filter -->
+						<div class="store-filter clearfix">
+							<ul class="store-pagination">
+								<li class="active">1</li>
+								<li><a href="#">2</a></li>
+								<li><a href="#">3</a></li>
+								<li><a href="#">4</a></li>
+								<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+							</ul>
+						</div>
+						<!-- /store bottom filter -->
+					</div>
+					<!-- /STORE -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+
+		<!-- NEWSLETTER -->
+		<div id="newsletter" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<p>Sign Up for the <strong>NEWSLETTER</strong></p>
+							<form>
+								<input class="input" type="email" placeholder="Enter Your Email">
+								<button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
+							</form>
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /NEWSLETTER -->
 
         <!-- FOOTER -->
         <footer id="footer">
@@ -361,7 +424,7 @@
                                     <li><a href="#">View Cart</a></li>
                                     <li><a href="#">Checkout</a></li>
                                     <li><a href="#">Track My Order</a></li>
-                                    <li><a href="editfaq">Help</a></li>
+                                    <li><a href="faq">Help</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -392,46 +455,15 @@
             <!-- /bottom footer -->
         </footer>
         <!-- /FOOTER -->
-        
-                    
-        
 
+		<!-- jQuery Plugins -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/slick.min.js"></script>
+		<script src="js/nouislider.min.js"></script>
+		<script src="js/jquery.zoom.min.js"></script>
+		<script src="js/main.js"></script>
 
-        <!-- jQuery Plugins -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/slick.min.js"></script>
-        <script src="js/nouislider.min.js"></script>
-        <script src="js/jquery.zoom.min.js"></script>
-        <script src="js/main.js"></script>
-        <script>
-                $('#btn-add2cart').click(function(event) {
-                    event.preventDefault();
-                    let btn_add2cart = $(this);
-                    let id = btn_add2cart.data('id');
-                    $.ajax({
-                         url: '/Laptop-shop/cart?s=add2Cart',
-                         type: 'get',
-                         data: {id_product: id},
-                     })
-                     .done(function(respond) {
-    //                     let qty = $('#quantityCart').data('value');
-                         console.log("servel" + respond) ;
-                         $('#quantityCart').html(respond);
-                         $('#quantityCart').data('value',respond);
-                         
-
-                     })
-                     .fail(function(error) {
-                         console.log(error);
-                         alert(error['statusText']);
-                     })
-
-
-                });
-            
-        </script>
-        <script src="js/productDetail.js"></script>
-
-    </body>
+      
+    </body>        
 </html>

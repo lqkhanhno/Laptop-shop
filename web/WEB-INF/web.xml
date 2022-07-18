@@ -80,6 +80,18 @@
         <servlet-name>OrderManageServlet</servlet-name>
         <servlet-class>controller.manage.OrderManageServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SortController</servlet-name>
+        <servlet-class>controller.SortController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>controller.manage.UserProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SortByType</servlet-name>
+        <servlet-class>controller.SortByType</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -159,6 +171,18 @@
     <servlet-mapping>
         <servlet-name>UpdateFAQ</servlet-name>
         <url-pattern>/updatefaq</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SortController</servlet-name>
+        <url-pattern>/sort</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserProfile</servlet-name>
+        <url-pattern>/userprofile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SortByType</servlet-name>
+        <url-pattern>/sorttype</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
