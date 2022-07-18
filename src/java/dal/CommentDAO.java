@@ -26,14 +26,14 @@ public class CommentDAO extends DBContext {
                             "           ,[comment]\n" +
                             "           ,[date])\n" +    
                             "     VALUES (?\n" +
-                            "           ,?\n" +
+                            "           ,N'?'\n" +
                             "           ,?\n" +
                             "           ,CURRENT_TIMESTAMP)";
             PreparedStatement st = connection.prepareStatement(sql);
 
             st.setInt(1, c.getUser().getUserID());
             st.setInt(2, c.getProdutID());
-            st.setString(3, "%"+c.getComment()+"%");
+            st.setString(3,c.getComment());
             
             st.executeUpdate();
 
