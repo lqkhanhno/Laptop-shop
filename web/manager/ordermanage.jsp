@@ -150,7 +150,7 @@
                 <!-- row wait -->
                 <div class="row" id="div-wait">
 
-                    <%                        Vector<Order> listWaitforCf = (Vector<Order>) request.getAttribute("listWaitforCf");
+                    <% Vector<Order> listWaitforCf = (Vector<Order>) request.getAttribute("listWaitforCf");
                         if (!listWaitforCf.isEmpty()) {
                     %>
                     <div class="col-12">

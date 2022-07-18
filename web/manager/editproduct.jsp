@@ -175,7 +175,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="editproduct?id=${requestScope.id}" method="post">
+                <form action="editproduct?id=${requestScope.id}" method="post" enctype="multipart/form-data">
                     <c:set var="id" value="${requestScope.id}"/>
                     <div class="modal-header">						
                         <h4 class="modal-title">Edit Product</h4>
@@ -235,8 +235,16 @@
                         </div>
                         <div class="form-group">
                             <label>Image</label>
-                            <input name="image" type="text" class="form-control" value="${requestScope.p.image}" required>
-                        </div>			
+                            <div class="product-img">
+                                                    <img src="./img/Laptop/${requestScope.p.image}" alt="">
+                                                    
+                                                </div>
+                            <input name="image" type="text" class="form-control" value="${requestScope.p.image}" readonly>
+                        </div>
+                        <div class="form-group">
+                                <label>Use other Image</label>
+                                <input type="file" name="file">          
+                            </div>			
                     </div>
                     <div class="modal-footer">
                         <a href="listmanage"><input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"></a>
