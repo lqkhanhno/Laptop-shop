@@ -15,17 +15,21 @@ import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import model.Category;
 import model.Product;
 import model.Supplier;
 
-/**
- *
- * @author LAM
- */
+@MultipartConfig(
+        location = "C:\\Users\\tuand\\OneDrive\\Máy tính\\laptop-shop-2\\Laptop-shop\\web\\img\\Laptop",
+        fileSizeThreshold = 1024 * 1024 * 1,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 100
+)
 public class EditProductServlet extends HttpServlet {
 
     /**
@@ -108,7 +112,10 @@ public class EditProductServlet extends HttpServlet {
         String rdate = request.getParameter("releasedate");
         String issell = request.getParameter("issell");
         
-        
+         Part filePart = request.getPart("file");
+        if (filePart.getSize()!=0){
+        image = filePart.getSubmittedFileName();
+        filePart.write(image);}
         
         int oprice1,sprice1,sale1,supid1;
         int amount1,id1;

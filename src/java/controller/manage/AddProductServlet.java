@@ -12,17 +12,21 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import model.Product;
 import model.Category;
 import model.Supplier;
 
-/**
- *
- * @author LAM
- */
+@MultipartConfig(
+        location = "C:\\Users\\tuand\\OneDrive\\Máy tính\\laptop-shop-2\\Laptop-shop\\web\\img\\Laptop",
+        fileSizeThreshold = 1024 * 1024 * 1,
+        maxFileSize = 1024 * 1024 * 10,
+        maxRequestSize = 1024 * 1024 * 100
+)
 public class AddProductServlet extends HttpServlet {
 
     /**
@@ -82,7 +86,7 @@ public class AddProductServlet extends HttpServlet {
         String name = request.getParameter("name");
         String decription = request.getParameter("description");
         String oprice = request.getParameter("oprice");
-        String image = request.getParameter("image");
+        
         String cate = request.getParameter("category");
         String sprice = request.getParameter("sellprice");
         String amount = request.getParameter("amount");
@@ -90,7 +94,9 @@ public class AddProductServlet extends HttpServlet {
         String supid = request.getParameter("supplierID");
         String rdate = request.getParameter("releasedate");
         
-        
+        Part filePart = request.getPart("file");
+        String image = filePart.getSubmittedFileName();
+        filePart.write(image);
         
         int oprice1,sprice1,sale1,sup1;
         int amount1, categoryID;

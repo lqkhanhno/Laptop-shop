@@ -232,7 +232,7 @@
         <div id="addEmployeeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="addproduct" method="post">
+                    <form action="addproduct" method="post" enctype="multipart/form-data">
                         <div class="modal-header">						
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -285,8 +285,9 @@
                                 <input name="releasedate" type="Date" class="form-control" required>
                             </div>
                             <div class="form-group">
+                                
                                 <label>Image</label>
-                                <input name="image" type="text" class="form-control" required>
+                                <input type="file" name="file">
                             </div>
                         </div>
                         <div class="modal-footer">
