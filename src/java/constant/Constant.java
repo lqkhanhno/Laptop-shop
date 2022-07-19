@@ -11,4 +11,17 @@ package constant;
 public class Constant {
     public static String EMAIL_REGEX = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
     public static String PHONE_REGEX = "\\d{8,10}";
+    public static int COMMON_ROLE = 0;
+    public static int ADMIN_ROLE = 1;
+    public static int SELLER_ROLE = 2;
+    public static int CUSTOMER_ROLE = 3;
+
+    public static String commonUrl[] = {"/login", "/register", "/search", "/home", "/product"};
+    public static String customerUrl[] = {"/faq", "/order", "/cart", "/checkout"};
+    public static String sellerUrl[] = {"/listmanage", "/editproduct", "/ordermanage", 
+                                        "ordermanage1", "/ordermanage2", "/ordermanage3"};
+    public static String adminUrl[] = {"/editfaq", "/faq", "/usermanage", "/adduser", "/edituser", "/deleteuser"};
+    public static String allUrlString[][] = {
+        commonUrl, adminUrl, sellerUrl, customerUrl
+    };
 }

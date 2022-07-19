@@ -94,6 +94,10 @@ public class Logout extends HttpServlet {
 
     public void dispath(HttpServletRequest request, HttpServletResponse response, String page) {
         //select jsp to view
+        HttpSession session = request.getSession();
+        session.removeAttribute("email");
+            session.removeAttribute("username");
+            session.removeAttribute("role");
         RequestDispatcher dispath = request.getRequestDispatcher(page);
         try {
             //run
