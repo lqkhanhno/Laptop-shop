@@ -89,11 +89,16 @@ public class HomeServlet extends HttpServlet {
         
         int productsInCart=0;
         HttpSession session = request.getSession();
-//        Object email = session.getAttribute("email");
-            Object email = "anhpn@gmail.com";
+        Object email = session.getAttribute("email");
+            //Object email = "anhpn@gmail.com";
         if(email!=null){
             ShoppingCart cart = new ShoppingCartDAO().getCartByEmail(email.toString());
-            int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+            int quantityCart;
+            if(cart!=null){
+                quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+            }else{
+                quantityCart = 0;
+            }
             request.setAttribute("quantityCart", quantityCart);
         }else{
             request.setAttribute("quantityCart", 0);

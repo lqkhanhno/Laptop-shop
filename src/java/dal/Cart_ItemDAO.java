@@ -137,7 +137,7 @@ public class Cart_ItemDAO extends DBContext{
         return m;
     }
 
-    public int getQuantityItemOfCartId(int id) {
+        public int getQuantityItemOfCartId(int id) {
         String query = "select count(*) from Cart_Item where  cart_ID=" + id;
         ResultSet rs = getData(query);
         int result=0;

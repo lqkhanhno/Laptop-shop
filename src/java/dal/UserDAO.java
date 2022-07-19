@@ -16,15 +16,16 @@ public class UserDAO extends DBContext {
 
     public void insert(User user) {
         String query = "INSERT INTO [dbo].[User]\n"
-                + " ([username],[password] ,[email] ,[roleID] ,[userAddress] ,[phonenumber])\n"
-                + "VALUES(?,? ,? ,3 ,? ,?)";
+                + " ([fullname],[username],[password] ,[email] ,[roleID] ,[userAddress] ,[phonenumber])\n"
+                + "VALUES(?,? ,?,? ,3  ,?,?)";
         try {
             PreparedStatement pre = connection.prepareStatement(query);
-            pre.setString(1, user.getUsername());
-            pre.setString(2, user.getPassword());
-            pre.setString(3, user.getEmail());
-            pre.setString(4, user.getUserAddress());
-            pre.setString(5, user.getPhoneNumber());
+            pre.setString(1, user.getFullname());
+            pre.setString(2, user.getUsername());
+            pre.setString(3, user.getPassword());
+            pre.setString(4, user.getEmail());
+            pre.setString(5, user.getUserAddress());
+            pre.setString(6, user.getPhoneNumber());
             pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);

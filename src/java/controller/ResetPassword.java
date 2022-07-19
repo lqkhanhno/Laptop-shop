@@ -88,7 +88,7 @@ public class ResetPassword extends HttpServlet {
         String email = request.getParameter("email");
         User user = userDAO.getIn4UserByEmail(email);
         if (user == null) {
-            request.setAttribute("msgEmail", "Email không tồn tại trong hệ thống");
+            request.setAttribute("msgEmail", "Email is not exist TT");
             request.setAttribute("email", email);
         } else {
             String newPassword = generatePassword();

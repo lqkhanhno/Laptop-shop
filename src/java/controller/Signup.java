@@ -65,6 +65,7 @@ public class Signup extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String username = request.getParameter("username");
+        String fullname = request.getParameter("fullname");
         String email = request.getParameter("email");
         String address = request.getParameter("address");
         String phone = request.getParameter("phone");
@@ -72,9 +73,11 @@ public class Signup extends HttpServlet {
         String rePassword = request.getParameter("repassword");
         
         request.setAttribute("username", username);
+        request.setAttribute("fullname", fullname);
         request.setAttribute("email", email);
         request.setAttribute("address", address);
         request.setAttribute("phone", phone);
+        
 
         boolean isValid = true;
         if(address.trim().isEmpty()) {
@@ -84,6 +87,10 @@ public class Signup extends HttpServlet {
         if(username.trim().isEmpty()) {
             isValid = false;
             request.setAttribute("msgUsername", "Username not blank");
+        }
+        if(fullname.trim().isEmpty()) {
+            isValid = false;
+            request.setAttribute("msgFullname", "Fullname not blank");
         }
         Pattern p = Pattern.compile(Constant.EMAIL_REGEX);
         Matcher m = p.matcher(email);
@@ -105,7 +112,7 @@ public class Signup extends HttpServlet {
             request.setAttribute("msgRePassword", "re-password not match");
         }
         if(isValid) {
-            new UserDAO().insert(new User(0, "", username, password, email, 3, address, phone));
+            new UserDAO().insert(new User(0, fullname, username, password, email, 3, address, phone));
             response.sendRedirect("login");
         }else {
             processRequest(request, response);
