@@ -81,7 +81,7 @@ public class SortController extends HttpServlet {
             id =Integer.parseInt(type);
         }     
         
-        request.setAttribute("type", type);
+        request.setAttribute("type", id);
         
         List<Product> list1 = db.getTopNewest();
         List<Product> list2 = db.getTopSell();

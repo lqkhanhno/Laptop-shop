@@ -258,14 +258,13 @@
 						<div class="store-filter clearfix">
                                                     <div class="store-sort">
                                                             <form action="sort" method="post">
-<!--                                                                <input id="type" name="type" value="${requestScope.type}">-->
-                                                                <input id="type" name="type" value="${document.E}">
+<!--                                                                <input id="type" name="type" value="${requestScope.type}">-->                                                              
                                                                 <label>                                                                  
                                                                     Sort By:
-                                                                    <select class="input-select" name="value" >
-									<option value="1">NEW PRODUCTS</option>
-									<option value="2">TOP SELLING</option>
-                                                                        <option value="3">TOP SALE</option>	
+                                                                    <select class="input-select" name="value" onchange="location.href = 'sort?type=' + this.value;">
+                                                                        <option value="1" <%= request.getAttribute("type").toString().equalsIgnoreCase("1")?  "selected":"" %>>NEW PRODUCTS</option>                                                                  
+									<option value="2" <%= request.getAttribute("type").toString().equalsIgnoreCase("2")?  "selected":"" %>>TOP SELLING</option>
+                                                                        <option value="3" <%= request.getAttribute("type").toString().equalsIgnoreCase("3")?  "selected":"" %>>TOP SALE</option>	
                                                                     </select>                                                                    
 								</label>
                                                                 <input type="submit" hidden>
@@ -312,19 +311,6 @@
                             </c:forEach>  
                         </div>
                     </div>
-                    <!-- Products tab & slick -->
-
-						<!-- store bottom filter -->
-						<div class="store-filter clearfix">
-							<ul class="store-pagination">
-								<li class="active">1</li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
-							</ul>
-						</div>
-						<!-- /store bottom filter -->
 					</div>
 					<!-- /STORE -->
 				</div>
