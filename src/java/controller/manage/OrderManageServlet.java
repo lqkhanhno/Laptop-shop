@@ -220,7 +220,7 @@ public class OrderManageServlet extends HttpServlet {
                 = new Order_DetailDAO().getOrderDetailForListOrder(listOrder);
         request.setAttribute("listOrder", listOrderMap);
         request.setAttribute("listOrderTotal", listOrder);
-        pirnt(listOrderMap);
+        //pirnt(listOrderMap);
 
         //return list and sort
         request.setAttribute("ListWaitforShip", sortListVector(ListWaitforShip, -1));

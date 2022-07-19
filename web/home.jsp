@@ -50,9 +50,8 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +84-369-909-625</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> ${sessionScope.email}</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 162 Thai Ha</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> khanhlq@fpt.edu.vn</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> FPT</a></li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
@@ -60,10 +59,10 @@
                             <li><a href="login.jsp"><i class="fa fa-user-o"></i> Login</a></li>
                             </c:if>
 
-                        <c:if test="${sessionScope.email != null}">                           
+                        <c:if test="${sessionScope.email != null}">
+                            <li><a href="#"><i class="fa fa-user-o"></i> ${sessionScope.username}</a></li>
                             <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
-                        </c:if>
-
+                            </c:if>
                     </ul>
                 </div>
             </div>
@@ -553,7 +552,7 @@
                                 <ul class="footer-links">
                                     <li><a href="#"><i class="fa fa-map-marker"></i>162 Thai Ha</a></li>
                                     <li><a href="#"><i class="fa fa-phone"></i>+84-369-909-625</a></li>
-                                    <li><a href="#"><i class="fa fa-envelope-o"></i>${sessionScope.email}</a></li>
+                                    <li><a href="#"><i class="fa fa-envelope-o"></i>fpt@fpt.edu.vn</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -577,9 +576,9 @@
                                 <h3 class="footer-title">Service</h3>
                                 <ul class="footer-links">
                                     <li><a href="userprofile">My Account</a></li>
-                                    <li><a href="#">View Cart</a></li>
-                                    <li><a href="#">Checkout</a></li>
-                                    <li><a href="#">Track My Order</a></li>
+                                    <li><a href="cart">View Cart</a></li>
+                                    <li><a href="checkout">Checkout</a></li>
+                                    <li><a href="order">Track My Order</a></li>
                                     <li><a href="faq">Help</a></li>
                                 </ul>
                             </div>

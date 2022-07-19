@@ -92,6 +92,10 @@
         <servlet-name>SortByType</servlet-name>
         <servlet-class>controller.SortByType</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>controller.Logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -183,6 +187,10 @@
     <servlet-mapping>
         <servlet-name>SortByType</servlet-name>
         <url-pattern>/sorttype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

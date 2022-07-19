@@ -120,7 +120,7 @@
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Your Cart</span>
                                         <% int qty = Integer.parseInt(request.getAttribute("quantityCart").toString());%>
-                                        <div class="qty"><%= qty%></div>
+                                        <div id="quantityCart" class="qty"><%= qty%></div>
                                     </a>
 
                                 </div>
@@ -419,8 +419,6 @@
                          console.log("servel" + respond) ;
                          $('#quantityCart').html(respond);
                          $('#quantityCart').data('value',respond);
-                         
-
                      })
                      .fail(function(error) {
                          console.log(error);
