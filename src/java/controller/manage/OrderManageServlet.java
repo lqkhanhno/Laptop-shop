@@ -5,6 +5,7 @@
 package controller.manage;
 
 import com.google.gson.Gson;
+import dal.OrderDAO;
 import dal.OrderManageDAO;
 import dal.Order_DetailDAO;
 import java.io.IOException;
@@ -142,12 +143,16 @@ public class OrderManageServlet extends HttpServlet {
         //delete success 
 
         //get order by order_id
-        Order o = new OrderManageDAO().getOrderByOrderId(Integer.parseInt(order_id));
         try {
+            Order o = new OrderDAO().getOrderByOrderId(Integer.parseInt(order_id));
+            Map<String, Map<String, String>> listProductOrderDetail = new Order_DetailDAO().getListDetailByOrderID(o.getID());
+            Vector vec = new Vector();
+            vec.add(o);
+            vec.add(listProductOrderDetail);
             //return to ajax to append
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(new Gson().toJson(o));
+            response.getWriter().write(new Gson().toJson(vec));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -219,7 +224,7 @@ public class OrderManageServlet extends HttpServlet {
 
         //return list and sort
         request.setAttribute("ListWaitforShip", sortListVector(ListWaitforShip, -1));
-        request.setAttribute("listWaitforCf", sortListVector(listWaitforCf, 1));
+        request.setAttribute("listWaitforCf", sortListVector(listWaitforCf, -1));
         request.setAttribute("listShipped", sortListVector(listShipped, -1));
         request.setAttribute("listCanceled", sortListVector(listCanceled, -1));
         request.getRequestDispatcher("manager/ordermanage.jsp").forward(request, response);
@@ -263,6 +268,7 @@ public class OrderManageServlet extends HttpServlet {
             }
             return;
         }
+        
         int n = new OrderManageDAO().AcceptOrder(order_id);
         if (n == 0) {
             try {
@@ -275,12 +281,16 @@ public class OrderManageServlet extends HttpServlet {
         //delete success 
 
         //get order by order_id
-        Order o = new OrderManageDAO().getOrderByOrderId(Integer.parseInt(order_id));
         try {
+            Order o = new OrderDAO().getOrderByOrderId(Integer.parseInt(order_id));
+            Map<String, Map<String, String>> listProductOrderDetail = new Order_DetailDAO().getListDetailByOrderID(o.getID());
+            Vector vec = new Vector();
+            vec.add(o);
+            vec.add(listProductOrderDetail);
             //return to ajax to append
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(new Gson().toJson(o));
+            response.getWriter().write(new Gson().toJson(vec));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -302,7 +312,7 @@ public class OrderManageServlet extends HttpServlet {
         //get status of order id 
         String status = new OrderManageDAO().getStatus(order_id);
         //check status is wait accept or not
-        if (!status.equalsIgnoreCase("Wait Accept")) {
+        if (!status.equalsIgnoreCase("Shipping")) {
             try {
                 //error
                 response.sendError(400, "This purchase order is not in the status of Shipping thanks");
@@ -323,12 +333,17 @@ public class OrderManageServlet extends HttpServlet {
         //delete success 
 
         //get order by order_id
-        Order o = new OrderManageDAO().getOrderByOrderId(Integer.parseInt(order_id));
+        
         try {
+            Order o = new OrderDAO().getOrderByOrderId(Integer.parseInt(order_id));
+            Map<String, Map<String, String>> listProductOrderDetail = new Order_DetailDAO().getListDetailByOrderID(o.getID());
+            Vector vec = new Vector();
+            vec.add(o);
+            vec.add(listProductOrderDetail);
             //return to ajax to append
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(new Gson().toJson(o));
+            response.getWriter().write(new Gson().toJson(vec));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

@@ -23,10 +23,10 @@ public class OrderManageDAO extends DBContext {
 
     public Vector<Order> getListOrderByStatus(String statusParam) {
         Vector<Order> listOrder = new Vector<>();
-        String query = "select * from [Order] where status = '"+statusParam+"'";
+        String query = "select * from [Order] where status = '" + statusParam + "'";
         ResultSet rs = getData(query);
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 int ID = rs.getInt(1);
                 int userID = rs.getInt(2);
                 int totalPrice = rs.getInt(3);
@@ -42,12 +42,13 @@ public class OrderManageDAO extends DBContext {
         }
         return listOrder;
     }
+
     public Vector<Order> getListOrder() {
         Vector<Order> listOrder = new Vector<>();
         String query = "select * from [Order]";
         ResultSet rs = getData(query);
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 int ID = rs.getInt(1);
                 int userID = rs.getInt(2);
                 int totalPrice = rs.getInt(3);
@@ -61,17 +62,18 @@ public class OrderManageDAO extends DBContext {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return listOrder;
     }
-    public Order getOrderByOrderId (int orderId){
+
+    public Order getOrderByOrderId(int orderId) {
         Order o = null;
 //        String query = "select id from [Order] where userID = "+userId+" and"
 //                + " id = (select MAX(id) from [Order] where userID="+userId+")";
-        String query = "select * from [Order] where ID="+orderId;
+        String query = "select * from [Order] where ID=" + orderId;
         ResultSet rs = getData(query);
         try {
-            if(rs.next()){
+            if (rs.next()) {
                 int ID = rs.getInt(1);
                 int userID = rs.getInt(2);
                 int totalPrice = rs.getInt(3);
@@ -84,7 +86,7 @@ public class OrderManageDAO extends DBContext {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return o;
     }
 
@@ -162,7 +164,6 @@ public class OrderManageDAO extends DBContext {
 //
 //        return listcanceled;
 //    }
-
     public int cancelOrder(String order_id) {
         //delete in order detail
         //int n = new Order_DetailDAO().deleteOrderDetail(order_id);
@@ -170,7 +171,8 @@ public class OrderManageDAO extends DBContext {
         //delete order
         //n = 0; //reset result
         int n = 0;
-        String query = "update [Order] set status = 'Canceled' where ID = " + order_id;
+        Timestamp update_at = new Order().getTimeNow();
+        String query = "update [Order] set status = 'Canceled', updated_at ='" + update_at + "' where ID = " + order_id;
         Statement st;
         try {
             st = connection.createStatement();
@@ -181,6 +183,7 @@ public class OrderManageDAO extends DBContext {
         //}
         return n;
     }
+
     public int AcceptOrder(String order_id) {
         //delete in order detail
         //int n = new Order_DetailDAO().deleteOrderDetail(order_id);
@@ -188,7 +191,8 @@ public class OrderManageDAO extends DBContext {
         //delete order
         //n = 0; //reset result
         int n = 0;
-        String query = "update [Order] set status = 'Shipping' where ID = " + order_id;
+        Timestamp update_at = new Order().getTimeNow();
+        String query = "update [Order] set status = 'Shipping', updated_at ='" + update_at + "' where ID = " + order_id;
         Statement st;
         try {
             st = connection.createStatement();
@@ -207,7 +211,8 @@ public class OrderManageDAO extends DBContext {
         //delete order
         //n = 0; //reset result
         int n = 0;
-        String query = "update [Order] set status = 'Shipped' where ID = " + order_id;
+        Timestamp update_at = new Order().getTimeNow();
+        String query = "update [Order] set status = 'Shipped', updated_at ='" + update_at + "' where ID = " + order_id;
         Statement st;
         try {
             st = connection.createStatement();

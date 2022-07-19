@@ -225,7 +225,7 @@ public class Purchase_OrderController extends HttpServlet {
 
         request.setAttribute("listOrder", listOrderMap);
         request.setAttribute("listOrderTotal", listOrder);
-        pirnt(listOrderMap);
+       // pirnt(listOrderMap);
 
         //return list and sort
         request.setAttribute("listShipping", sortListVector(listShipping, -1));

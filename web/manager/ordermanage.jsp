@@ -193,7 +193,7 @@
                                                     <a href="#" data-id="<%= o.getID()%>" class="btn btn-danger btnCancel">Cancel</a>
                                                 </td>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <td colspan="5">
                                                     <div >
@@ -232,7 +232,7 @@
 
                                                             <tr>
                                                         </table>
-                                                    
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -713,27 +713,54 @@
                                 order_id: order_id
                             },
                         })
-                                .done(function (order) {
+                                .done(function (response) {
                                     //const order = JSON.parse(response);
                                     //console.log(response.ID);
-                                    console.log(order);
-                                    btn.parents('tr').remove();
-//                            let name = $("#div-canceled").find("tbody").prop("tagName");
-                                    $("#div-canceled").find("tbody").prepend(`
-                                <tr>
-                                    <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#` + order.ID + `</a> </td>
-                                    <td>
-                                        ` + order.orderDate + `
-                                    </td>
-                                    <td>
-                                        ` + order.totalPrice + `
-                                    </td>
-                                    <td>
-                                        <h5><span class="badge badge-info-lighten">` + order.status + `</span></h5>
-                                    </td>
-                                    </td>
+//                            Object.keys(response[1]).forEach(function(key) {
+//                                console.log('Key : ' + key + ', Value : ' + response[1][key].image);
+//                            });
 
+                                    btn.parents('tr').remove();
+                                    $(".div_detail_" + response[0].ID).parents('tr').remove();
+//                            let name = $("#div-canceled").find("tbody").prop("tagName");
+                                    var $dataToBeAppended = "";
+                                    Object.keys(response[1]).forEach(function (key) {
+                                        $dataToBeAppended +=
+                                                `<td class="total">
+                                        ` + response[1][key].productPrice + `
+                                    </td>`;
+                                    });
+                                    $("#div-canceled").find("#body_append").prepend(`
+                                <tr>
+                                    <td><p><b>#` + response[0].ID + `</b></p> </td>
+                                    <td>
+                                        ` + response[0].orderDate + `
+                                    </td>
+                                    <td>
+                                        ` + response[0].totalPrice + `
+                                    </td>
+                                    <td>
+                                        <h5><span class="badge badge-info-lighten">` + response[0].status + `</span></h5>
+                                    </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="5">
+                                    <div >
+                                        <button id="` + response[0].ID + `" class="btn btn-info btn_detail" >Detail</button>
+                                        <table class="div_detail_` + response[0].ID + `" style="display: none">
+                                            <tr>
+                                        ` +
+                                            $dataToBeAppended
+                                            + `
+                                            </tr>
+                                            <tr>   
+                                                <td><b>Total Money: ` + response[0].totalPrice + `</b><td>
+                                            <tr>   
+                                        </table>
+                                    </div>
+                                    </td>
+                                </tr>
+                                    
                                 `);
                                     //console.log(name);
                                 })
@@ -744,8 +771,8 @@
                     }
                 });
                 $('.btnAccept').click(function (event) {
-                    
-        event.preventDefault();
+
+                    event.preventDefault();
                     let btn = $(this);
                     let order_id = btn.data('id');
                     if (confirm('Are you sure you want to accept this order?')) {
@@ -757,27 +784,53 @@
                                 order_id: order_id
                             },
                         })
-                                .done(function (order) {
+                                .done(function (response) {
                                     //const order = JSON.parse(response);
                                     //console.log(response.ID);
-                                    console.log(order);
+//                            Object.keys(response[1]).forEach(function(key) {
+//                                console.log('Key : ' + key + ', Value : ' + response[1][key].image);
+//                            });
                                     btn.parents('tr').remove();
+                                    $(".div_detail_" + response[0].ID).parents('tr').remove();
 //                            let name = $("#div-canceled").find("tbody").prop("tagName");
-                                    $("#div-wait").find("tbody").prepend(`
+                                    var $dataToBeAppended = "";
+                                    Object.keys(response[1]).forEach(function (key) {
+                                        $dataToBeAppended +=
+                                                `<td class="total">
+                                        ` + response[1][key].productPrice + `
+                                    </td>`;
+                                    });
+                                    $("#div-canceled").find("#body_append").prepend(`
                                 <tr>
-                                    <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#` + order.ID + `</a> </td>
+                                    <td><p><b>#` + response[0].ID + `</b></p> </td>
                                     <td>
-                                        ` + order.orderDate + `
-                                    </td>
-                                    <td>
-                                        ` + order.totalPrice + `
+                                        ` + response[0].orderDate + `
                                     </td>
                                     <td>
-                                        <h5><span class="badge badge-info-lighten">` + order.status + `</span></h5>
+                                        ` + response[0].totalPrice + `
                                     </td>
+                                    <td>
+                                        <h5><span class="badge badge-info-lighten">` + response[0].status + `</span></h5>
                                     </td>
-
                                 </tr>
+                                <tr>
+                                    <td colspan="5">
+                                    <div >
+                                        <button id="` + response[0].ID + `" class="btn btn-info btn_detail" >Detail</button>
+                                        <table class="div_detail_` + response[0].ID + `" style="display: none">
+                                            <tr>
+                                        ` +
+                                            $dataToBeAppended
+                                            + `
+                                            </tr>
+                                            <tr>   
+                                                <td><b>Total Money: ` + response[0].totalPrice + `</b><td>
+                                            <tr>   
+                                        </table>
+                                    </div>
+                                    </td>
+                                </tr>
+                                    
                                 `);
                                     //console.log(name);
                                 })
@@ -800,27 +853,54 @@
                                 order_id: order_id
                             },
                         })
-                                .done(function (order) {
+                                .done(function (response) {
                                     //const order = JSON.parse(response);
                                     //console.log(response.ID);
-                                    console.log(order);
-                                    btn.parents('tr').remove();
-//                            let name = $("#div-canceled").find("tbody").prop("tagName");
-                                    $("#div-wait").find("tbody").prepend(`
-                                <tr>
-                                    <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#` + order.ID + `</a> </td>
-                                    <td>
-                                        ` + order.orderDate + `
-                                    </td>
-                                    <td>
-                                        ` + order.totalPrice + `
-                                    </td>
-                                    <td>
-                                        <h5><span class="badge badge-info-lighten">` + order.status + `</span></h5>
-                                    </td>
-                                    </td>
+//                            Object.keys(response[1]).forEach(function(key) {
+//                                console.log('Key : ' + key + ', Value : ' + response[1][key].image);
+//                            });
 
+                                    btn.parents('tr').remove();
+                                    $(".div_detail_" + response[0].ID).parents('tr').remove();
+//                            let name = $("#div-canceled").find("tbody").prop("tagName");
+                                    var $dataToBeAppended = "";
+                                    Object.keys(response[1]).forEach(function (key) {
+                                        $dataToBeAppended +=
+                                                `<td class="total">
+                                        ` + response[1][key].productPrice + `
+                                    </td>`;
+                                    });
+                                    $("#div-canceled").find("#body_append").prepend(`
+                                <tr>
+                                    <td><p><b>#` + response[0].ID + `</b></p> </td>
+                                    <td>
+                                        ` + response[0].orderDate + `
+                                    </td>
+                                    <td>
+                                        ` + response[0].totalPrice + `
+                                    </td>
+                                    <td>
+                                        <h5><span class="badge badge-info-lighten">` + response[0].status + `</span></h5>
+                                    </td>
                                 </tr>
+                                <tr>
+                                    <td colspan="5">
+                                    <div >
+                                        <button id="` + response[0].ID + `" class="btn btn-info btn_detail" >Detail</button>
+                                        <table class="div_detail_` + response[0].ID + `" style="display: none">
+                                            <tr>
+                                        ` +
+                                            $dataToBeAppended
+                                            + `
+                                            </tr>
+                                            <tr>   
+                                                <td><b>Total Money: ` + response[0].totalPrice + `</b><td>
+                                            <tr>   
+                                        </table>
+                                    </div>
+                                    </td>
+                                </tr>
+                                    
                                 `);
                                     //console.log(name);
                                 })
@@ -847,7 +927,7 @@
                         $("#div-shipped").hide();
                         $("#div-canceled").hide();
 
-                    } else if (idthis == 'tab-shipping') {
+                    } else if (idthis == 'tab-accept') {
                         $("#div-wait").hide();
                         $("#div-shipping").show();
                         $("#div-shipped").hide();
