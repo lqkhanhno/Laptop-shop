@@ -18,8 +18,7 @@ public class Constant {
 
     public static String commonUrl[] = {"/login", "/register", "/search", "/home", "/product"};
     public static String customerUrl[] = {"/faq", "/order", "/cart", "/checkout"};
-    public static String sellerUrl[] = {"/listmanage", "/editproduct", "/ordermanage", 
-                                        "ordermanage1", "/ordermanage2", "/ordermanage3"};
+    public static String sellerUrl[] = {"/listmanage", "/editproduct", "/ordermanage"};
     public static String adminUrl[] = {"/editfaq", "/faq", "/usermanage", "/adduser", "/edituser", "/deleteuser"};
     public static String allUrlString[][] = {
         commonUrl, adminUrl, sellerUrl, customerUrl

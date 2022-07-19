@@ -3,11 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/manager/manageproduct.jsp</file>
-            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/manager/ordermanage.jsp</file>
-            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/order.jsp</file>
-            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/dal/OrderManageDAO.java</file>
-            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/manage/OrderManageServlet.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/HomeServlet.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/Logout.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/manage/AddCategory.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/WEB-INF/web.xml</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/dal/DBContext.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/manage/ListManageServlet.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/notification.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/NotificationController.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/dal/OrderDAO.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/AuthenFilter.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/Login.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/constant/Constant.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/manage/AddProductServlet.java</file>
         </group>
     </open-files>
 </project-private>
