@@ -154,6 +154,10 @@ button{
         <input type="text" value="${username}" name="username" placeholder="Username" id="username">
         <label style="color:red;margin-top: 0px" >${msgUsername}</label>
         
+        <label for="fullname">Fullname</label>
+        <input type="text" value="${fullname}" name="fullname" placeholder="Fullname" id="fullname">
+        <label style="color:red;margin-top: 0px" >${msgFullname}</label>
+        
         <label for="email">Email</label>
         <input type="text" value="${email}" name="email" placeholder="Email" id="email">
         <label style="color:red;margin-top: 0px" >${msgEmail}</label>
