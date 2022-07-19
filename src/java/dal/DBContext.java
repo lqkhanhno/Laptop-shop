@@ -21,7 +21,7 @@ public class DBContext {
         try {
             //Change the username password and url to connect your own database
             String username = "sa";
-            String password = "12345678";
+            String password = "sa";
 //            String username = "lelong";
 //            String password = "123";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=LaptopShop";
