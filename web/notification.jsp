@@ -150,7 +150,7 @@
                                             <table>
                                                 <tr>
                                                     <h5>
-                                                        <%= o.getStatus().equalsIgnoreCase("Shipping") ? "Successful delivery" : "Order has been accept" %> 
+                                                        <%= o.getStatus().equalsIgnoreCase("Canceled") ? "Successful delivery" : "Order has been canceled" %> 
                                                     </h5>
                                                 </tr>
                                                 <tr>Order #<b><%= o.getID()%></b> <%= o.getStatus().equalsIgnoreCase("Shipped") ? "Delivered to you" : "Successfully canceled"%> </tr>
@@ -167,7 +167,7 @@
                     <%
 
                     } else {%>
-                    <h4>List Wait Accept Empty</h4>
+                    <h4>There are no notification</h4>
                     <%}%>
                 </div>
                 <!-- /row -->

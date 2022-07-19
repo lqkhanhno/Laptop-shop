@@ -102,7 +102,7 @@ public class OrderDAO extends DBContext{
 
     public Vector<Order> getNotiWhenCancel(int userid) {
         Vector<Order> listOrder = new Vector<>();
-        String query = "select * from [Order] where userID = "+userid + " and status = 'Canceled'";
+        String query = "select * from [Order] where userID = "+userid + " and status = 'Canceled' or status = 'Shipped'";
         ResultSet rs = getData(query);
         try {
             while(rs.next()){
