@@ -154,6 +154,10 @@ button{
         <input type="text" value="${username}" name="username" placeholder="Username" id="username">
         <label style="color:red;margin-top: 0px" >${msgUsername}</label>
         
+        <label for="fullname">Fullname</label>
+        <input type="text" value="${fullname}" name="fullname" placeholder="Fullname" id="fullname">
+        <label style="color:red;margin-top: 0px" >${msgFullname}</label>
+        
         <label for="email">Email</label>
         <input type="text" value="${email}" name="email" placeholder="Email" id="email">
         <label style="color:red;margin-top: 0px" >${msgEmail}</label>
@@ -163,7 +167,7 @@ button{
         <label style="color:red;margin-top: 0px" >${msgAddress}</label>
 
         <label for="phone">Phone number</label>
-        <input name="phone" value="${phone}" type="phone" placeholder="Phone" id="phone">
+        <input name="phone" value="${phone}" type="text" placeholder="Phone" id="phone">
         <label style="color:red;margin-top: 0px" >${msgPhone}</label>
         
         <label for="password">Password</label>
@@ -175,7 +179,7 @@ button{
         <label style="color:red;margin-top: 0px" >${msgRePassword}</label>
         
         
-        <button type="submit">Log In</button>
+        <button type="submit">Create</button>
        
     </form>
 </body>

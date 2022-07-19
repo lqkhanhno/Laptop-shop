@@ -45,12 +45,56 @@
         <servlet-class>controller.Purchase_OrderController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>FaqController</servlet-name>
+        <servlet-class>controller.FaqController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchController</servlet-name>
+        <servlet-class>controller.SearchController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CategoryController</servlet-name>
+        <servlet-class>controller.CategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditFAQController</servlet-name>
+        <servlet-class>controller.EditFAQController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddComment</servlet-name>
+        <servlet-class>controller.AddComment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateFAQ</servlet-name>
+        <servlet-class>controller.UpdateFAQ</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>NotificationController</servlet-name>
         <servlet-class>controller.NotificationController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Order_DetailController</servlet-name>
         <servlet-class>controller.Order_DetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderManageServlet</servlet-name>
+        <servlet-class>controller.manage.OrderManageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SortController</servlet-name>
+        <servlet-class>controller.SortController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>controller.manage.UserProfile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SortByType</servlet-name>
+        <servlet-class>controller.SortByType</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>controller.Logout</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -103,6 +147,50 @@
     <servlet-mapping>
         <servlet-name>Order_DetailController</servlet-name>
         <url-pattern>/order_detail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderManageServlet</servlet-name>
+        <url-pattern>/ordermanage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FaqController</servlet-name>
+        <url-pattern>/faq</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchController</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryController</servlet-name>
+        <url-pattern>/catelist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditFAQController</servlet-name>
+        <url-pattern>/editfaq</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddComment</servlet-name>
+        <url-pattern>/addcomment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateFAQ</servlet-name>
+        <url-pattern>/updatefaq</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SortController</servlet-name>
+        <url-pattern>/sort</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserProfile</servlet-name>
+        <url-pattern>/userprofile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SortByType</servlet-name>
+        <url-pattern>/sorttype</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -9,7 +9,7 @@
 <html lang="en">
 <head>
   <!-- Design by foolishdeveloper.com -->
-    <title>Glassmorphism login Form Tutorial in html css</title>
+    <title>Login</title>
  
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -155,7 +155,8 @@ button{
         <label for="password">Password</label>
         <input name="password" value="${password}" type="password" placeholder="Password" id="password">
         <label style="color:red;margin-top: 0px" >${msgPassword}</label>
-
+        <a href="reset-password">Forgot password?</a><br>
+        <a href="register">Create New Account</a>
         <button type="submit">Log In</button>
        
     </form>

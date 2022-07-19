@@ -1,16 +1,16 @@
 
 <%@page import="model.Product"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean id="ourDate" class="java.util.Date"/>
 <jsp:setProperty name="ourDate" property="time" value="${ourDate.time - 86400000*270}"/>
+<%@ page contentType="text/html"  pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -42,7 +42,6 @@
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-
     </head>
     <body>
         <!-- HEADER -->
@@ -51,23 +50,17 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +84-369-909-625</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> electrovn@gmail.com</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 162 Thai Ha</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> khanhlq@fpt.edu.vn</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> FPT</a></li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                            <c:if test="${sessionScope.account == null}">
+                            <c:if test="${sessionScope.email == null}">
                             <li><a href="login.jsp"><i class="fa fa-user-o"></i> Login</a></li>
                             </c:if>
 
-                        <c:if test="${sessionScope.account != null}">
-                            <c:if test="${sessionScope.account.role == 0}">
-                                <li><a href="listmanage"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
-                                </c:if>
-                                <c:if test="${sessionScope.account.role == 1}">
-                                <li><a href="profile"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
-                                </c:if>
+                        <c:if test="${sessionScope.email != null}">
+                            <li><a href="#"><i class="fa fa-user-o"></i> ${sessionScope.username}</a></li>
                             <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
                             </c:if>
                     </ul>
@@ -105,17 +98,35 @@
                         <!-- ACCOUNT -->
                         <div class="col-md-3 clearfix">
                             <div class="header-ctn">
+                                <!-- Noti -->
+                                <div >
+                                    <a href="notification">
+                                        <i class="fa fa-bell"></i>
+                                        <span>Notification</span>
+                                    </a>
+                                </div>
+                                
+                                
                                 <!-- Cart -->
                                 <div >
                                     <a href="cart">
                                         <i class="fa fa-shopping-cart"></i>
                                         <span>Your Cart</span>
                                         <% int qty = Integer.parseInt(request.getAttribute("quantityCart").toString());%>
-                                        <div id="quantityCart" data-value="<%= qty%>" class="qty"><%= qty%></div>
+                                        <div id="quantityCart" class="qty"><%= qty%></div>
                                     </a>
 
                                 </div>
                                 <!-- /Cart -->
+                                
+                                <!-- order list -->
+                                <div >
+                                    <a href="order">
+                                        <i class="fa fa-bank"></i>
+                                        <span>Order List</span>
+                                    </a>
+
+                                </div>
 
                                 <!-- Menu Toogle -->
                                 <div class="menu-toggle">
@@ -137,7 +148,6 @@
         </header>
         <!-- /HEADER -->
 
-        <!-- NAVIGATION -->
         <nav id="navigation">
             <!-- container -->
             <div class="container">
@@ -145,13 +155,11 @@
                 <div id="responsive-nav">
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
-                        <li class="active"><a href="home">Home</a></li>
+                        <li><a href="home">Home</a></li>
 
                         <c:forEach items="${requestScope.sclist}" var="o">
-                            <li><a href="${o.categoryName.toLowerCase()}" value="${o.categoryName}">${o.categoryName}</a></li>
-                            </c:forEach>
-
-                        <li><a href="laptops">Laptops</a></li>
+                            <li><a href="catelist?id=${o.ID}" value="${o.ID}">${o.categoryName}</a></li>                       
+                        </c:forEach>                      
                     </ul>
                     <!-- /NAV -->
                 </div>
@@ -159,7 +167,6 @@
             </div>
             <!-- /container -->
         </nav>
-        <!-- /NAVIGATION -->
 
 
 
@@ -222,7 +229,51 @@
         </div>
         <!-- /SECTION -->
 
-
+        
+        
+        <section class="content-item" id="comments">
+            <div class="container">   
+                <div class="row">
+                    <div class="col-sm-8" id="comments-body">   
+                            <h3 class="pull-left">New Comment : </h3>
+                            <form action="addcomment" method="post">
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-sm-3 col-lg-2 hidden-xs">
+                                        </div>
+                                        <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                            <textarea class="form-control" id="comment" name="comment"  placeholder="Your message" maxlength="1000" title="Not over 1000 word"  required  ></textarea>
+                                            <input type="hidden" name="pid" value="${requestScope.id}" >
+                                            <input type="submit" value="Comment" class="btn btn-normal  btn-outline-success pull-right">                                         
+                                        </div>
+                                    </div>  	                                  
+                                </fieldset>
+                            </form>
+                            <a id="pid" value="${requestScope.id}" hidden=""></a>
+                        <br/><h3> Comments</h3>
+                        <div id="mediaes">
+                            <!-- COMMENT 1 - START -->
+                        <c:forEach items="${requestScope.cmtlist}" var="c" >
+                        <div class="media">
+                            <div class="media-body">
+                                <h5 class="media-heading">${c.user.username}</h5>
+                                <p>${c.comment}</p>
+                                <ul class="list-unstyled list-inline media-detail pull-left">
+                                    <li><sup>${c.date}</sup></li>
+                                </ul>
+                                <ul class="list-unstyled list-inline media-detail pull-right">
+                                </ul>
+                            </div>
+                        </div>    
+                        </c:forEach>
+                        
+                        <!-- COMMENT 1 - END -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+       
 
         <!-- NEWSLETTER -->
         <div id="newsletter" class="section">
@@ -233,24 +284,11 @@
                     <div class="col-md-12">
                         <div class="newsletter">
                             <p>Sign Up for the <strong>NEWSLETTER</strong></p>
-                            <form>
+                            <form action="home">
                                 <input class="input" type="email" placeholder="Enter Your Email">
                                 <button class="newsletter-btn"><i class="fa fa-envelope"></i> Subscribe</button>
                             </form>
-                            <ul class="newsletter-follow">
-                                <li>
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                </li>
-                            </ul>
+                            
                         </div>
                     </div>
                 </div>
@@ -259,6 +297,8 @@
             <!-- /container -->
         </div>
         <!-- /NEWSLETTER -->
+        
+        
 
         <!-- FOOTER -->
         <footer id="footer">
@@ -284,10 +324,9 @@
                             <div class="footer">
                                 <h3 class="footer-title">Categories</h3>
                                 <ul class="footer-links">
-                                    <li><a href="hotdeals">Hot deals</a></li>
-                                    <li><a href="laptops">Laptops</a></li>
-                                    <li><a href="#">Smartphones</a></li>
-                                    <li><a href="#">Cameras</a></li>
+                                    <c:forEach items="${requestScope.sclist}" var="o">
+                                        <li><a href="catelist?id=${o.ID}" value="${o.ID}">${o.categoryName}</a></li>                       
+                                    </c:forEach>  
                                 </ul>
                             </div>
                         </div>
@@ -311,11 +350,11 @@
                             <div class="footer">
                                 <h3 class="footer-title">Service</h3>
                                 <ul class="footer-links">
-                                    <li><a href="#">My Account</a></li>
+                                    <li><a href="profile">My Account</a></li>
                                     <li><a href="#">View Cart</a></li>
                                     <li><a href="#">Checkout</a></li>
                                     <li><a href="#">Track My Order</a></li>
-                                    <li><a href="#">Help</a></li>
+                                    <li><a href="editfaq">Help</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -332,17 +371,9 @@
                     <!-- row -->
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <ul class="footer-payments">
-                                <li><a href="#"><i class="fa fa-cc-visa"></i></a></li>
-                                <li><a href="#"><i class="fa fa-credit-card"></i></a></li>
-                                <li><a href="#"><i class="fa fa-cc-paypal"></i></a></li>
-                                <li><a href="#"><i class="fa fa-cc-mastercard"></i></a></li>
-                                <li><a href="#"><i class="fa fa-cc-discover"></i></a></li>
-                                <li><a href="#"><i class="fa fa-cc-amex"></i></a></li>
-                            </ul>
                             <span class="copyright">
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved 
+                                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </span>
                         </div>
@@ -354,6 +385,10 @@
             <!-- /bottom footer -->
         </footer>
         <!-- /FOOTER -->
+        
+                    
+        
+
 
         <!-- jQuery Plugins -->
         <script src="js/jquery.min.js"></script>
@@ -377,8 +412,6 @@
                          console.log("servel" + respond) ;
                          $('#quantityCart').html(respond);
                          $('#quantityCart').data('value',respond);
-                         
-
                      })
                      .fail(function(error) {
                          console.log(error);
@@ -389,5 +422,7 @@
                 });
             
         </script>
+        <script src="js/productDetail.js"></script>
+
     </body>
 </html>

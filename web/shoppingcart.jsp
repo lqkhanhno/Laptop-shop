@@ -1,3 +1,5 @@
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.Locale"%>
 <%@page import="java.util.Set"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
@@ -58,9 +60,8 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +84-369-909-625</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> electrovn@gmail.com</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 162 Thai Ha</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> khanhlq@fpt.edu.vn</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> FPT</a></li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
@@ -69,7 +70,7 @@
                             </c:if>
 
                         <c:if test="${sessionScope.email != null}">
-                            <li><a href="#"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
+                            <li><a href="#"><i class="fa fa-user-o"></i> ${sessionScope.username}</a></li>
                             <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
                             </c:if>
                     </ul>
@@ -145,7 +146,11 @@
                 </div>
             </div>
             <!-- end page title -->
+            
             <%
+                Locale vn = new Locale("vi", "VN");
+                    // Create a formatter given the Locale
+                    NumberFormat vnFormat = NumberFormat.getCurrencyInstance(vn);
                 HashMap<String, HashMap<String, String>> listIdPro
                         = (HashMap<String, HashMap<String, String>>) request.getAttribute("Cart");
                 Set<String> keySet = listIdPro.keySet();
@@ -190,7 +195,7 @@
                                                         </p>
                                                     </td>
                                                     <td>
-                                                        <%= infoProduct.get("price")%> VND
+                                                        <%=vnFormat.format(Integer.parseInt(infoProduct.get("price"))) %> VND
                                                     </td>
                                                     <td>
                                                         <input type="number" min="1" value="<%= infoProduct.get("quantity")%>" class="form-control update-quantity" 
@@ -199,7 +204,7 @@
                                                                >
                                                     </td>
                                                     <td class="total">
-                                                        <%= order_Summary.get(key)%> VND
+                                                        <%= vnFormat.format(Integer.parseInt(order_Summary.get(key)))%> VND
                                                     </td>
                                                     <td>
                                                         <a class="delete-product" href="cart?s=deleteProduct" class="action-icon" data-id="<%= infoProduct.get("id")%>"> 
@@ -245,15 +250,15 @@
                                                 <tbody>
                                                     <tr>
                                                         <td>Grand Total :</td>
-                                                        <td id="totalGrand"><%=order_Summary.get("totalGrand")%> VND</td>
+                                                        <td id="totalGrand"><%=vnFormat.format(Integer.parseInt(order_Summary.get("totalGrand")))%> VND</td>
                                                     </tr>
                                                     <tr>
                                                         <td>Discount : </td>
-                                                        <td id="discount"> - <%=order_Summary.get("discount")%> VND</td>
+                                                        <td id="discount"> - <%=vnFormat.format(Integer.parseInt(order_Summary.get("discount")))%> VND</td>
                                                     </tr>
                                                     <tr>
                                                         <th>Total :</th>
-                                                        <th id="totalCart"><%=order_Summary.get("totalCart")%> VND</th>
+                                                        <th id="totalCart"><%=vnFormat.format(Integer.parseInt(order_Summary.get("totalCart")))%> VND</th>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -423,7 +428,7 @@
                                                     }
                                                 });
                                                 $('#totalGrand').html(response['totalGrand'] + " VND");
-                                                $('#discount').html(response['discount'] + " VND");
+                                                $('#discount').html("- "+response['discount'] + " VND");
                                                 $('#totalCart').html(response['totalCart'] + " VND");
                                             })
                                             .fail(function (error) {
@@ -449,7 +454,7 @@
                                                 if (response['totalGrand'] != 0) {
                                                     tagInput.parents('tr').remove();
                                                     $('#totalGrand').html(response['totalGrand'] + " VND");
-                                                    $('#discount').html(response['discount' + " VND"]);
+                                                    $('#discount').html("- "+response['discount'] + " VND");
                                                     $('#totalCart').html(response['totalCart'] + " VND");
                                                 } else {
 //                        console.log(12121212);

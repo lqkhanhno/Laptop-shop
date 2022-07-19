@@ -7,6 +7,7 @@ package controller;
 
 import dal.Cart_ItemDAO;
 import dal.CategoryDAO;
+import dal.ProductDAO;
 import dal.ShoppingCartDAO;
 import dal.SupplierDAO;
 import dal.TypeProductDAO;
@@ -73,21 +74,31 @@ public class HomeServlet extends HttpServlet {
         List<Product> list1 = db.getTopNewest();
         List<Product> list2 = db.getTopSell();
         List<Product> list3 = db.getTopSale();
-            
+        
+        ProductDAO db1 = new ProductDAO();
+        List<Product> list = db1.getAll();
+        
+        request.setAttribute("data", list);
         request.setAttribute("data1", list1);
         request.setAttribute("data2", list2);
         request.setAttribute("data3", list3);
+        
 
         CategoryDAO c = new CategoryDAO();
         List<Category> sclist = c.getAll();
         
         int productsInCart=0;
         HttpSession session = request.getSession();
-//        Object email = session.getAttribute("email");
-            Object email = "anhpn@gmail.com";
+        Object email = session.getAttribute("email");
+            //Object email = "anhpn@gmail.com";
         if(email!=null){
             ShoppingCart cart = new ShoppingCartDAO().getCartByEmail(email.toString());
-            int quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+            int quantityCart;
+            if(cart!=null){
+                quantityCart = new Cart_ItemDAO().getQuantityItemOfCartId(cart.getID());
+            }else{
+                quantityCart = 0;
+            }
             request.setAttribute("quantityCart", quantityCart);
         }else{
             request.setAttribute("quantityCart", 0);

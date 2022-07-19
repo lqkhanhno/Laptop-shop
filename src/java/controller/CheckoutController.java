@@ -214,16 +214,18 @@ public class CheckoutController extends HttpServlet {
     private int getTotalPrice(HashMap<String, HashMap<String, String>> listIdProduct) {
         int totalPrice=0;
         Set<String> keySet = listIdProduct.keySet();
+        int discount=0;
         for(Object key: keySet){
             Map<String, String> infoProduct = listIdProduct.get(key);
             int quantity =Integer.parseInt(infoProduct.get("quantity"));
             int sale_percent =Integer.parseInt(infoProduct.get("sale_percent"));
             int price =Integer.parseInt(infoProduct.get("price"));
             int total = price * quantity;
-            totalPrice+= total-(quantity*price*sale_percent);
+            discount+=(total*sale_percent/100);
+            totalPrice+=total;
         }
         
-        return totalPrice;
+        return totalPrice -  discount;
     }
 
     

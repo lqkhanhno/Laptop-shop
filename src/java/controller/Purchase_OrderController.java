@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
@@ -44,20 +45,20 @@ public class Purchase_OrderController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String service = request.getParameter("s");
-        if(service == null){
+        if (service == null) {
             service = "Display";
         }
-        
+
         try ( PrintWriter out = response.getWriter()) {
             switch (service) {
                 case "Process Cancel":
-                    process_Cancel(request,response);
+                    process_Cancel(request, response);
                     break;
                 case "Display":
-                    display(request,response);
+                    display(request, response);
                     break;
             }
-            
+
         }
     }
 
@@ -117,96 +118,89 @@ public class Purchase_OrderController extends HttpServlet {
     private void process_Cancel(HttpServletRequest request, HttpServletResponse response) {
         String order_id = request.getParameter("order_id");
         try {
-            Integer.parseInt(order_id);
-        } catch (Exception e) {
             try {
-                response.sendError(400,"order id is not exist");
-                
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                Integer.parseInt(order_id);
+            } catch (Exception e) {
+                response.sendError(400, "order id is not exist");
+                return;
             }
-            return;
-        }
-        //get status of order id 
-        String status = new OrderDAO().getStatus(order_id);
-        //check status is wait accept or not
-        if(!status.equalsIgnoreCase("Wait Accept") ){
-            try {
+
+            //get status of order id 
+            String status = new OrderDAO().getStatus(order_id);
+            //check status is wait accept or not
+            if (!status.equalsIgnoreCase("Wait Accept")) {
                 //error
-                response.sendError(400,"This purchase order is not in the status of Wait To Accept thanks");
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                response.sendError(400, "This purchase order is not in the status of Wait To Accept thanks");
+                return;
             }
-            return;
-        }
-        int n = new OrderDAO().cancelOrder(order_id);
-        if(n == 0){
-            try {
+            int n = new OrderDAO().cancelOrder(order_id);
+            if (n == 0) {
                 //delete error
-                response.sendError(400,"Can't delete this order");
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                response.sendError(400, "Can't cancel this order");
+                return;
             }
-        }
-        //delete success 
-        
-        //get order by order_id
-        Order o = new OrderDAO().getOrderByOrderId(Integer.parseInt(order_id));
-        try {
+            //delete success 
+
+            //get order by order_id
+            Order o = new OrderDAO().getOrderByOrderId(Integer.parseInt(order_id));
+            Map<String, Map<String, String>> listProductOrderDetail = new Order_DetailDAO().getListDetailByOrderID(o.getID());
+            Vector vec = new Vector();
+            vec.add(o);
+            vec.add(listProductOrderDetail);
             //return to ajax to append
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(new Gson().toJson(o));
+            response.getWriter().write(new Gson().toJson(vec));
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
     }
 
     private Vector<Order> sortListVector(Vector<Order> vec, int type) {
-        
+
         Collections.sort(vec, new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-                
-                if(type == 1) // sap xep theo id
+
+                if (type == 1) // sap xep theo id
                 {
-                    if(o1.getID() < o2.getID()){
+                    if (o1.getID() < o2.getID()) {
                         return 1;
-                    }else if(o1.getID() > o2.getID()){
+                    } else if (o1.getID() > o2.getID()) {
                         return -1;
-                    }else{
+                    } else {
                         return 0;
                     }
-                }else{ //sap xep theo ngay
-                    if(o1.getUpdated_At().before(o2.getUpdated_At()) ){
+                } else { //sap xep theo ngay
+                    if (o1.getUpdated_At().before(o2.getUpdated_At())) {
                         return 1;
-                    }else if(o1.getUpdated_At().after(o2.getUpdated_At())){
+                    } else if (o1.getUpdated_At().after(o2.getUpdated_At())) {
                         return -1;
-                    }else{
+                    } else {
                         return 0;
                     }
                 }
-                
+
             }
-        });        
+        });
         return vec;
     }
 
     private void display(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        String email = (String)session.getAttribute("email");
-//        if(email == null || email.isEmpty()){
-//            dispath(request, response, "/login.jsp");
-//            return;
-//        }
-        email = "anhpn@gmail.com";
+        String email = (String) session.getAttribute("email");
+        if (email == null || email.isEmpty()) {
+            dispath(request, response, "/login.jsp");
+            return;
+        }
+        //email = "anhpn@gmail.com";
         int userid = new UserDAO().getIdByEmail(email);
-        Vector<Order> listShipping = new OrderDAO().getListOrderByUserIDAndStatus(userid,"Shipping");
-        Vector<Order> listWait = new OrderDAO().getListOrderByUserIDAndStatus(userid,"Wait Accept");
-        Vector<Order> listShipped = new OrderDAO().getListOrderByUserIDAndStatus(userid,"Shipped");
-        Vector<Order> listCanceled = new OrderDAO().getListOrderByUserIDAndStatus(userid,"Canceled");
-        
+        Vector<Order> listShipping = new OrderDAO().getListOrderByUserIDAndStatus(userid, "Shipping");
+        Vector<Order> listWait = new OrderDAO().getListOrderByUserIDAndStatus(userid, "Wait Accept");
+        Vector<Order> listShipped = new OrderDAO().getListOrderByUserIDAndStatus(userid, "Shipped");
+        Vector<Order> listCanceled = new OrderDAO().getListOrderByUserIDAndStatus(userid, "Canceled");
+
         /*
         order detail
         map<order_id, map<product_id,map<String,String>>>
@@ -224,32 +218,33 @@ public class Purchase_OrderController extends HttpServlet {
                     }
             }
         }
-        */
+         */
         Vector<Order> listOrder = new OrderDAO().getListOrderByUserID(userid);
-        Map<String, Map<String,Map<String,String>>> listOrderMap = 
-                new Order_DetailDAO().getOrderDetailForListOrder(listOrder);
+        Map<String, Map<String, Map<String, String>>> listOrderMap
+                = new Order_DetailDAO().getOrderDetailForListOrder(listOrder);
+
         request.setAttribute("listOrder", listOrderMap);
         request.setAttribute("listOrderTotal", listOrder);
-        pirnt(listOrderMap);
-        
+       // pirnt(listOrderMap);
+
         //return list and sort
         request.setAttribute("listShipping", sortListVector(listShipping, -1));
         request.setAttribute("listWait", sortListVector(listWait, 1));
         request.setAttribute("listShipped", sortListVector(listShipped, -1));
         request.setAttribute("listCanceled", sortListVector(listCanceled, -1));
-        
+
         dispath(request, response, "/order.jsp");
-        
+
     }
-    
-    private void pirnt( Map<String, Map<String,Map<String,String>>> listOrder ){
-        Map<String,Map<String,String>> listProductODetail =
-            listOrder.get("11");
+
+    private void pirnt(Map<String, Map<String, Map<String, String>>> listOrder) {
+        Map<String, Map<String, String>> listProductODetail
+                = listOrder.get("11");
         Set<String> keySet = listProductODetail.keySet();
-        for(Object objKey : keySet){
-            Map<String,String> listAtrr = listProductODetail.get(objKey);
+        for (Object objKey : keySet) {
+            Map<String, String> listAtrr = listProductODetail.get(objKey);
             System.out.println(listAtrr.get("productName"));
-            
+
         }
     }
 }

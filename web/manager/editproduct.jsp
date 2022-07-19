@@ -58,18 +58,17 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +84-369-909-625</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> electrovn@gmail.com</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 162 Thai Ha</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> khanhlq@fpt.edu.vn</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> FPT</a></li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                            <c:if test="${sessionScope.account == null}">
+                            <c:if test="${sessionScope.email == null}">
                             <li><a href="login.jsp"><i class="fa fa-user-o"></i> Login</a></li>
                             </c:if>
 
-                        <c:if test="${sessionScope.account != null}">
-                            <li><a href="#"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
+                        <c:if test="${sessionScope.email != null}">
+                            <li><a href="#"><i class="fa fa-user-o"></i> ${sessionScope.username}</a></li>
                             <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
                             </c:if>
                     </ul>
@@ -175,7 +174,7 @@
                         </div>
                     </div>
                 </div>
-                <form action="editproduct?id=${requestScope.id}" method="post">
+                <form action="editproduct?id=${requestScope.id}" method="post" enctype="multipart/form-data">
                     <c:set var="id" value="${requestScope.id}"/>
                     <div class="modal-header">						
                         <h4 class="modal-title">Edit Product</h4>
@@ -235,8 +234,16 @@
                         </div>
                         <div class="form-group">
                             <label>Image</label>
-                            <input name="image" type="text" class="form-control" value="${requestScope.p.image}" required>
-                        </div>			
+                            <div class="product-img">
+                                                    <img src="./img/Laptop/${requestScope.p.image}" alt="">
+                                                    
+                                                </div>
+                            <input name="image" type="text" class="form-control" value="${requestScope.p.image}" readonly>
+                        </div>
+                        <div class="form-group">
+                                <label>Use other Image</label>
+                                <input type="file" name="file">          
+                            </div>			
                     </div>
                     <div class="modal-footer">
                         <a href="listmanage"><input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"></a>

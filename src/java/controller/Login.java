@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.User;
 
 /**
@@ -71,12 +72,16 @@ public class Login extends HttpServlet {
             request.setAttribute("email", email);
             request.setAttribute("msgEmail", "Email not found in system!");
         }else
-        if(user.getPassword().equals(password)) {
+        if(!user.getPassword().equals(password)) {
             isValid = false;
             request.setAttribute("msgPassword", "Password not match!");
         }
         
         if(isValid) {
+            HttpSession session = request.getSession();
+            session.setAttribute("email", email);
+            session.setAttribute("username", user.getUsername());
+            session.setAttribute("role", user.getRoleID());
             response.sendRedirect("home");
         }else{
             processRequest(request, response);

@@ -3,10 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP/Laptop-shop/src/java/dal/OrderDAO.java</file>
-            <file>file:/D:/SWP/Laptop-shop/src/java/controller/manage/ListManageServlet.java</file>
-            <file>file:/D:/SWP/Laptop-shop/src/java/dal/SupplierDAO.java</file>
-            <file>file:/D:/SWP/Laptop-shop/src/java/controller/manage/EditProductServlet.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/manager/manageproduct.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/manager/ordermanage.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/web/order.jsp</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/dal/OrderManageDAO.java</file>
+            <file>file:/D:/SWP/kAHAnh/Laptop-shop/src/java/controller/manage/OrderManageServlet.java</file>
         </group>
     </open-files>
 </project-private>

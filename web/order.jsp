@@ -46,13 +46,19 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +021-95-51-84</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> khanhlq@fpt.edu.vn</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> FPT</a></li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                        <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+                            <c:if test="${sessionScope.email == null}">
+                            <li><a href="login.jsp"><i class="fa fa-user-o"></i> Login</a></li>
+                            </c:if>
+
+                        <c:if test="${sessionScope.email != null}">
+                            <li><a href="#"><i class="fa fa-user-o"></i> ${sessionScope.username}</a></li>
+                            <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
+                            </c:if>
                     </ul>
                 </div>
             </div>
@@ -264,8 +270,8 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="5">
-                                                <div >
-                                                    <button id="<%= o.getID() %>" class="btn btn-info btn_detail" >Detail</button>
+                                                <div>  
+                                                    <button id="<%= o.getID() %>" class="btn btn-info btn_detail">Detail</button>
                                                     <table class="div_detail_<%= o.getID()%>" style="display: none">
                                                             <% 
                                                                 Map<String,Map<String,String>> listProductODetail =
@@ -525,7 +531,7 @@
                                                 <th>Order Status</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="body_append">
                                             <%for (Order o : listCanceled) {%>
                                             <tr>
                                                 <td><p><b>#<%= o.getID()%></b></p> </td>
@@ -539,7 +545,6 @@
                                                 </td>
                                                 <td>
                                                     <h5><span class="badge badge-info-lighten"><%= o.getStatus()%></span></h5>
-                                                </td>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -758,27 +763,54 @@
                                 order_id: order_id
                             },
                         })
-                        .done(function (order) {
+                        .done(function (response) {
                             //const order = JSON.parse(response);
                             //console.log(response.ID);
-                            console.log(order);
+//                            Object.keys(response[1]).forEach(function(key) {
+//                                console.log('Key : ' + key + ', Value : ' + response[1][key].image);
+//                            });
+                            
                             btn.parents('tr').remove();
+                            $(".div_detail_"+response[0].ID).parents('tr').remove();
 //                            let name = $("#div-canceled").find("tbody").prop("tagName");
-                            $("#div-canceled").find("tbody").prepend(`
+                            var $dataToBeAppended="";
+                            Object.keys(response[1]).forEach(function(key) {
+                                $dataToBeAppended+= 
+                                    `<td class="total">
+                                        `+response[1][key].productPrice+`
+                                    </td>`;                                                   
+                            });
+                            $("#div-canceled").find("#body_append").prepend(`
                                 <tr>
-                                    <td><a href="apps-ecommerce-orders-details.html" class="text-body font-weight-bold">#`+order.ID+`</a> </td>
+                                    <td><p><b>#`+response[0].ID+`</b></p> </td>
                                     <td>
-                                        `+order.orderDate+`
-                                    </td>
-                                    <td>
-                                        `+order.totalPrice+`
+                                        `+ response[0].orderDate +`
                                     </td>
                                     <td>
-                                        <h5><span class="badge badge-info-lighten">`+order.status+`</span></h5>
+                                        `+ response[0].totalPrice +`
                                     </td>
+                                    <td>
+                                        <h5><span class="badge badge-info-lighten">`+ response[0].status +`</span></h5>
                                     </td>
-
                                 </tr>
+                                <tr>
+                                    <td colspan="5">
+                                    <div >
+                                        <button id="`+response[0].ID+`" class="btn btn-info btn_detail" >Detail</button>
+                                        <table class="div_detail_`+response[0].ID+`" style="display: none">
+                                            <tr>
+                                        `+
+                                            $dataToBeAppended
+                                        +`
+                                            </tr>
+                                            <tr>   
+                                                <td><b>Total Money: `+response[0].totalPrice+`</b><td>
+                                            <tr>   
+                                        </table>
+                                    </div>
+                                    </td>
+                                </tr>
+                                    
                                 `);
                             //console.log(name);
                         })
@@ -826,6 +858,7 @@
 
                   });
                 $(".btn_detail").click(function(){
+                    console.log("detail");
                     let id = $(this).attr('id');
                     $(".div_detail_"+id).toggle();
                 });

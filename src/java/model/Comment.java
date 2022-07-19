@@ -4,42 +4,56 @@
  */
 package model;
 
+import java.util.Date;
+
 public class Comment {
-    int cmtID;
-    int productID;
-    int comment;
+    private User user;
+    private int produtID;
+    private String comment;
+    private String date;
 
     public Comment() {
     }
 
-    public Comment(int cmtID, int productID, int comment) {
-        this.cmtID = cmtID;
-        this.productID = productID;
-        this.comment = comment;
+    public User getUser() {
+        return user;
     }
 
-    public int getCmtID() {
-        return cmtID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setCmtID(int cmtID) {
-        this.cmtID = cmtID;
+    public int getProdutID() {
+        return produtID;
     }
 
-    public int getProductID() {
-        return productID;
+    public void setProdutID(int produtID) {
+        this.produtID = produtID;
     }
 
-    public void setProductID(int productID) {
-        this.productID = productID;
-    }
-
-    public int getComment() {
+    public String getComment() {
         return comment;
     }
 
-    public void setComment(int comment) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Comment(User user, int produtID, String comment, String date) {
+        this.user = user;
+        this.produtID = produtID;
+        this.comment = comment;
+        this.date = date;
+    }
+
+    
     
 }

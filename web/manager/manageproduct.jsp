@@ -53,18 +53,17 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="#"><i class="fa fa-phone"></i> +84-369-909-625</a></li>
-                        <li><a href="#"><i class="fa fa-envelope-o"></i> electrovn@gmail.com</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i> 162 Thai Ha</a></li>
+                        <li><a href="#"><i class="fa fa-envelope-o"></i> khanhlq@fpt.edu.vn</a></li>
+                        <li><a href="#"><i class="fa fa-map-marker"></i> FPT</a></li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> USD</a></li>
-                            <c:if test="${sessionScope.account == null}">
+                            <c:if test="${sessionScope.email == null}">
                             <li><a href="login.jsp"><i class="fa fa-user-o"></i> Login</a></li>
                             </c:if>
 
-                        <c:if test="${sessionScope.account != null}">
-                            <li><a href="#"><i class="fa fa-user-o"></i> Hello ${sessionScope.account.user}</a></li>
+                        <c:if test="${sessionScope.email != null}">
+                            <li><a href="#"><i class="fa fa-user-o"></i> ${sessionScope.username}</a></li>
                             <li><a href="logout"><i class="fa fa-user-o"></i> Logout</a></li>
                             </c:if>
                     </ul>
@@ -150,6 +149,7 @@
                     <!-- NAV -->
                     <ul class="main-nav nav navbar-nav">
                         <li class="active"><a href="listmanage">Manage Product</a></li>
+                        <li class="active"><a href="ordermanage">Manage Order</a></li>
                         <!--                                            <li><a href="listuser">Manage User</a></li>-->
                     </ul>
                     <!-- /NAV -->
@@ -231,7 +231,7 @@
         <div id="addEmployeeModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="addproduct" method="post">
+                    <form action="addproduct" method="post" enctype="multipart/form-data">
                         <div class="modal-header">						
                             <h4 class="modal-title">Add Product</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -284,8 +284,9 @@
                                 <input name="releasedate" type="Date" class="form-control" required>
                             </div>
                             <div class="form-group">
+                                
                                 <label>Image</label>
-                                <input name="image" type="text" class="form-control" required>
+                                <input type="file" name="file">
                             </div>
                         </div>
                         <div class="modal-footer">

@@ -18,11 +18,12 @@ import model.Order;
 import model.OrderDetail;
 import model.Product;
 
-public class Order_DetailDAO extends DBContext{
-    public int addOrder_Detail(OrderDetail od){
-        int n=0;
-        String query = "INSERT INTO [Order_detail] ([orderID],[productID],[productName]" 
-                +",[productPrice],[quantity]) VALUES(?,?,?,?,?)";
+public class Order_DetailDAO extends DBContext {
+
+    public int addOrder_Detail(OrderDetail od) {
+        int n = 0;
+        String query = "INSERT INTO [Order_detail] ([orderID],[productID],[productName]"
+                + ",[productPrice],[quantity]) VALUES(?,?,?,?,?)";
         try {
             PreparedStatement pre = connection.prepareStatement(query);
             pre.setInt(1, od.getOrderID());
@@ -34,15 +35,15 @@ public class Order_DetailDAO extends DBContext{
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
+
         return n;
     }
 
     public int addListCart2OrderDetail(HashMap<String, HashMap<String, String>> listIdPro, int orderId) {
         Set<String> keySet = listIdPro.keySet();
-        int m=0;
-        int n=0;
-        for(Object key: keySet){
+        int m = 0;
+        int n = 0;
+        for (Object key : keySet) {
             HashMap<String, String> infoProduct = listIdPro.get(key);
             int productID = Integer.parseInt(infoProduct.get("id"));
             String productName = infoProduct.get("name");
@@ -50,24 +51,24 @@ public class Order_DetailDAO extends DBContext{
             int quantity = Integer.parseInt(infoProduct.get("quantity"));
             OrderDetail od = new OrderDetail(orderId, productID, productName, productPrice, quantity);
             n = addOrder_Detail(od);
-            if(n==0){
-                System.out.println("can't add order detail product :"+productID);
-                m=1;
+            if (n == 0) {
+                System.out.println("can't add order detail product :" + productID);
+                m = 1;
                 break;
-                
+
             }
-            n=0;
+            n = 0;
         }
         return m;
     }
 
     public int deleteOrderDetail(String order_id) {
-        String query = "delete from [Order_detail] where orderID = "+order_id;
-        int n=0;
+        String query = "delete from [Order_detail] where orderID = " + order_id;
+        int n = 0;
         try {
             Statement st = connection.createStatement();
             n = st.executeUpdate(query);
-           
+
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -78,7 +79,7 @@ public class Order_DetailDAO extends DBContext{
         String query = "select * from [Order] where [ID] = " + order_Id + " and userID = " + userId;
         ResultSet rs = getData(query);
         try {
-            if(rs.next()){
+            if (rs.next()) {
                 return true;
             }
         } catch (SQLException ex) {
@@ -105,40 +106,43 @@ public class Order_DetailDAO extends DBContext{
                     }
             }
         }
-        */
+         */
         Map<String, Map<String, Map<String, String>>> listO = new HashMap<>();
-        for(Order o : listOrder){
-            String query = "  select * from Order_detail where orderID = " + o.getID();
-            ResultSet rs = getData(query);
-            Map<String, Map<String,String>> listProductOrderDetail = new HashMap<>();
-            try {
-                
-                while(rs.next()){
-                    int productID = rs.getInt("productID");
-                    String productName = rs.getString("productName");
-                    String price = rs.getString("productPrice");
-                    String quantity = rs.getString("quantity");
-                    
-                    Product p = new ProductDAO().getProductByID(productID);
-                    String image = p.getImage();
-                    
-                    Map<String,String> listAttributeOfProductOrder = new HashMap<>();
-                    listAttributeOfProductOrder.put("image", image);
-                    listAttributeOfProductOrder.put("productName", productName);
-                    listAttributeOfProductOrder.put("productPrice", price);
-                    listAttributeOfProductOrder.put("quantity", quantity);
-                    
-                    listProductOrderDetail.put(""+productID, listAttributeOfProductOrder);
-                }
-                
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            listO.put(""+o.getID(), listProductOrderDetail);
+        for (Order o : listOrder) {
+            Map<String, Map<String, String>> listProductOrderDetail = getListDetailByOrderID(o.getID());
+
+            listO.put("" + o.getID(), listProductOrderDetail);
         }
         return listO;
-        
+
     }
-    
-    
+
+    public Map<String, Map<String, String>> getListDetailByOrderID(int id) {
+        Map<String, Map<String, String>> listProductOrderDetail = new HashMap<>();
+        String query = "select * from Order_detail where orderID = " + id;
+        ResultSet rs = getData(query);
+        try {
+            while (rs.next()) {
+                int productID = rs.getInt("productID");
+                String productName = rs.getString("productName");
+                String price = rs.getString("productPrice");
+                String quantity = rs.getString("quantity");
+                
+                Product p = new ProductDAO().getProductByID(productID);
+                String image = p.getImage();
+
+                Map<String, String> listAttributeOfProductOrder = new HashMap<>();
+                listAttributeOfProductOrder.put("image", image);
+                listAttributeOfProductOrder.put("productName", productName);
+                listAttributeOfProductOrder.put("productPrice", price);
+                listAttributeOfProductOrder.put("quantity", quantity);
+                
+                listProductOrderDetail.put("" + productID, listAttributeOfProductOrder);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return listProductOrderDetail;
+    }
+
 }
